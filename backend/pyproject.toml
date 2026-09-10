@@ -30,6 +30,7 @@ dev = [
     "black>=24.4",
     "mypy>=1.10",
     "pg8000>=1.31.5",
+    "rsa>=4.9.1",
 ]
 
 [tool.pytest.ini_options]

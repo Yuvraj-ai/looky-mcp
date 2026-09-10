@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import {
   generateMcpKey,
   getMcpCredentialStatus,
+  getOpenCodeSnippet,
   revokeMcpKey,
   type McpCredentialStatus,
 } from "../api/mcpCredential";
@@ -9,12 +10,14 @@ import {
 export default function McpAccess() {
   const [status, setStatus] = useState<McpCredentialStatus | null>(null);
   const [freshKey, setFreshKey] = useState<string | null>(null);
+  const [snippet, setSnippet] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
     try {
       setStatus(await getMcpCredentialStatus());
+      setSnippet((await getOpenCodeSnippet()).snippet);
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load");
@@ -92,6 +95,18 @@ export default function McpAccess() {
           )}
         </div>
       </div>
+
+      {snippet && (
+        <div className="card" style={{ marginTop: "1rem" }}>
+          <h2>OpenCode Configuration</h2>
+          <p className="notice">
+            Add this to <code>opencode.json</code> and set the{" "}
+            <code>VISION_MCP_KEY</code> environment variable to your MCP key.
+            The key itself is deliberately not embedded here.
+          </p>
+          <div className="mono">{snippet}</div>
+        </div>
+      )}
     </section>
   );
 }

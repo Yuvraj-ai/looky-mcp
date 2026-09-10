@@ -14,8 +14,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from mcp.server.transport_security import TransportSecuritySettings
 
 from app.api import auth_routes, mcp_credential, system_prompts, vision_profiles
+from app.api import settings as settings_routes
 from app.auth.mcp_auth import McpAuthMiddleware, _CachedSessionFactory
 from app.config import settings
+from app.mcp import server as mcp_server_mod
 from app.mcp.server import create_mcp_server
 
 
@@ -64,19 +66,17 @@ def create_app(mcp_session_factory_fn=None) -> FastAPI:
     app.include_router(system_prompts.router)
     app.include_router(vision_profiles.router)
     app.include_router(mcp_credential.router)
+    app.include_router(settings_routes.router)
 
     @app.get("/api/health")
     async def health() -> dict[str, str]:
         return {"status": "ok"}
 
-    # mounted last: REST routes above match first
-    app.mount(
-        "/",
-        McpAuthMiddleware(
-            mcp_app,
-            session_factory_fn=mcp_session_factory_fn or _CachedSessionFactory(),
-        ),
-    )
+    # mounted last: REST routes above match first. The injected factory (tests)
+    # is shared by auth middleware AND tool execution so both hit the test DB.
+    factory_fn = mcp_session_factory_fn or _CachedSessionFactory()
+    mcp_server_mod.set_session_factory_fn(factory_fn)
+    app.mount("/", McpAuthMiddleware(mcp_app, session_factory_fn=factory_fn))
 
     return app
 

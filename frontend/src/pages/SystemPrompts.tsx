@@ -6,6 +6,7 @@ import {
   updateSystemPrompt,
   type SystemPrompt,
 } from "../api/systemPrompts";
+import ExtraInstructionsCard from "./ExtraInstructionsCard";
 import PromptForm from "./PromptForm";
 
 type Mode =
@@ -108,6 +109,10 @@ export default function SystemPrompts() {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="card-list" style={{ marginTop: "2rem" }}>
+        <ExtraInstructionsCard />
       </div>
     </section>
   );

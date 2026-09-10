@@ -29,6 +29,13 @@ def get_session_factory() -> async_sessionmaker[AsyncSession]:
     return _session_factory
 
 
+def build_session_factory() -> async_sessionmaker[AsyncSession]:
+    """Fresh factory over a fresh engine (used by loop-sensitive callers that
+    must create the engine inside their own event loop)."""
+    engine = create_async_engine(settings.DATABASE_URL, pool_pre_ping=True)
+    return async_sessionmaker(engine, expire_on_commit=False)
+
+
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
     """FastAPI dependency: yields a session, always closed after the request."""
     factory = get_session_factory()

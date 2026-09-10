@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.auth.session import get_current_user_id
+from app.config import settings
 from app.crypto import generate_mcp_key, hash_mcp_key
 from app.db.session import get_db
 from app.repositories.mcp_credentials import McpCredentialRepository
@@ -57,3 +58,30 @@ async def revoke(
     cred = await repo.get_for_user(user_id)
     if cred is not None:
         await repo.revoke(cred)
+
+
+class OpenCodeSnippet(BaseModel):
+    snippet: str
+
+
+@router.get("/opencode-snippet", response_model=OpenCodeSnippet)
+async def opencode_snippet(
+    _: uuid.UUID = Depends(get_current_user_id),
+) -> OpenCodeSnippet:
+    """Ready-to-copy OpenCode config; key is intentionally omitted and referenced
+    via {env:VISION_MCP_KEY} instead (Decision #7)."""
+    snippet = (
+        "{\n"
+        '  "mcp": {\n'
+        '    "vision": {\n'
+        '      "type": "remote",\n'
+        f'      "url": "{settings.PUBLIC_BASE_URL}/mcp",\n'
+        '      "oauth": false,\n'
+        '      "headers": {\n'
+        '        "Authorization": "Bearer {env:VISION_MCP_KEY}"\n'
+        "      }\n"
+        "    }\n"
+        "  }\n"
+        "}"
+    )
+    return OpenCodeSnippet(snippet=snippet)

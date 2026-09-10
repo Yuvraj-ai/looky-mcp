@@ -16,3 +16,10 @@ export const generateMcpKey = () =>
   api.post<McpCredentialGenerated>("/mcp-credential/generate");
 
 export const revokeMcpKey = () => api.post<void>("/mcp-credential/revoke");
+
+export interface OpenCodeSnippet {
+  snippet: string;
+}
+
+export const getOpenCodeSnippet = () =>
+  api.get<OpenCodeSnippet>("/mcp-credential/opencode-snippet");

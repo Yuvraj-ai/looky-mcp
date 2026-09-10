@@ -103,3 +103,10 @@ Format: one entry per phase — completed, tests passing, next.
 - 7/7 OAuth tests (fake JWKS + token endpoint); suite 103/103; lint/format/mypy clean.
 
 **Next:** Phase 13 — OpenCode config snippet endpoint + docs.
+
+## 2026-09-11 — Phase 13: OpenCode config snippet
+
+- GET /api/mcp-credential/opencode-snippet: copy-paste opencode.json block, key referenced via {env:VISION_MCP_KEY}, never embedded. Displayed on MCP Access page.
+- 3/3 tests; suite 106/106; all lint/format/typecheck clean.
+
+**Next:** Phase 14 — e2e hardening (real-provider opt-in test) + Phase 15 — deployment artifacts.

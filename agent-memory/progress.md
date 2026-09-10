@@ -63,3 +63,13 @@ Format: one entry per phase — completed, tests passing, next.
 - Lint/format/typecheck clean both sides.
 
 **Next:** Phase 7 — MCP endpoint + auth middleware (mount /mcp via MCP SDK, Bearer→user_id).
+
+## 2026-09-10 — Phase 7: MCP endpoint + auth middleware
+
+- /mcp mounted via mcp SDK v2 MCPServer.streamable_http_app() inside the FastAPI process (no redirect: root mount last, path /mcp).
+- Bearer auth: pure-ASGI middleware (SHA-256 → mcp_credentials → contextvar), 401 on missing/invalid/revoked/regenerated-old key.
+- Origin validation via SDK TransportSecuritySettings (Decision #8) — questions.md Q5 resolved.
+- describe_image/ocr_image registered with exact locked signatures.
+- Tests: 57/57 backend total (5 new MCP endpoint tests via live uvicorn on random port). Live official-client smoke: initialize + tools/list OK.
+
+**Next:** Phase 8 — image validation layer (Pillow, standalone).

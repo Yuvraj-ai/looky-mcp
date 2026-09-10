@@ -1,0 +1,9 @@
+- generic [ref=e24]:
+  - heading "Vision MCP" [level=1] [ref=e25]
+  - generic [ref=e26]:
+    - text: Email
+    - textbox "Email" [ref=e27]
+  - generic [ref=e28]:
+    - text: Password
+    - textbox "Password" [ref=e29]
+  - button "Sign in" [ref=e30] [cursor=pointer]

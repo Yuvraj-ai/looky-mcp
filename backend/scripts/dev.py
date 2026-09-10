@@ -54,15 +54,14 @@ def main() -> None:
     ensure_env()
     start_postgres()
     if "--migrate" in sys.argv:
-        os.environ["DATABASE_URL"] = (
-            "postgresql+pg8000://postgres:@/vision_mcp"
-            f"?unix_sock={BACKEND_DIR}/.pgdata/.s.PGSQL.5432"
-        )
-        from alembic import command
-        from alembic.config import Config
+        # run migrations in a subprocess so the pg8000 sync URL doesn't leak
+        # into this process's env (the app itself needs the asyncpg URL)
+        import subprocess
 
-        cfg = Config("alembic.ini")
-        command.upgrade(cfg, "head")
+        sock = f"{BACKEND_DIR}/.pgdata/.s.PGSQL.5432"
+        env = dict(os.environ)
+        env["DATABASE_URL"] = f"postgresql+pg8000://postgres:@/vision_mcp?unix_sock={sock}"
+        subprocess.run(["uv", "run", "alembic", "upgrade", "head"], env=env, check=True)
         print("migrations applied")
 
     import uvicorn

@@ -27,3 +27,12 @@ Format: one entry per phase — completed, tests passing, next.
 - Dev loop: `scripts/dev.py` keeps pgserver Postgres + uvicorn alive in one process.
 
 **Next:** Phase 3 — frontend auth (email/password, session cookie, create_user script).
+
+## 2026-09-10 — Phase 3: frontend auth
+
+- Backend: argon2id password hashing, itsdangerous-signed session cookie (HttpOnly/SameSite=Lax/7d), /api/auth/login|logout|me, create_user.py admin script (no signup route).
+- Frontend: data router with auth guards, AuthContext, Login page, Layout + 3 page stubs, /api dev proxy.
+- Tests: 20/20 backend (auth API + provisioning script); ruff/black/mypy clean; frontend build+lint+format clean.
+- Browser smoke test (Playwright/Chromium after human symlinked chrome binary): login→protected page→logout all verified live against real Postgres.
+
+**Next:** Phase 4 — System Prompts CRUD (API + UI).

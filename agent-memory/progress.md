@@ -54,3 +54,12 @@ Format: one entry per phase — completed, tests passing, next.
 - All lint/format/typecheck clean.
 
 **Next:** Phase 6 — MCP credential issuance (API + UI).
+
+## 2026-09-10 — Phase 6: MCP credential issuance
+
+- Backend: /api/mcp-credential (status/generate/revoke). Plaintext key shown once; only SHA-256 hash stored; regenerate invalidates old key immediately (row reuse forced by UNIQUE(user_id)).
+- Frontend: McpAccess page with generate-once banner, regenerate, revoke.
+- Tests: 52/52 backend total (6 new). Browser-verified full lifecycle; caught+fixed a 405 (DELETE vs POST) via smoke test.
+- Lint/format/typecheck clean both sides.
+
+**Next:** Phase 7 — MCP endpoint + auth middleware (mount /mcp via MCP SDK, Bearer→user_id).

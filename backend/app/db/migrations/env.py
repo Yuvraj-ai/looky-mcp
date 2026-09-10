@@ -9,7 +9,9 @@ from app.db.models import Base
 config = context.config
 
 if not config.get_main_option("sqlalchemy.url"):
-    config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
+    # alembic runs synchronously — convert the app's asyncpg URL to pg8000
+    url = settings.DATABASE_URL.replace("+asyncpg", "+pg8000")
+    config.set_main_option("sqlalchemy.url", url)
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)

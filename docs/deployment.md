@@ -7,4 +7,7 @@ Per Architecture §23:
 - Postgres runs as normal system service or managed instance
 - No cluster/replica setup implied
 
-Current state: `Dockerfile` provided for convenience; no production deployment executed.
+Current state: deployment artifacts complete in `deploy/` (Dockerfile,
+docker-compose.yml, Caddyfile, nginx.conf, vision-mcp.service, README with
+steps). No production deployment executed — requires a real server/domain/TLS,
+reserved for the operator. See `deploy/README.md`.

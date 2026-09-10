@@ -110,3 +110,12 @@ Format: one entry per phase — completed, tests passing, next.
 - 3/3 tests; suite 106/106; all lint/format/typecheck clean.
 
 **Next:** Phase 14 — e2e hardening (real-provider opt-in test) + Phase 15 — deployment artifacts.
+
+## 2026-09-11 — Phases 14 + 15: e2e hardening + deployment artifacts
+
+- Phase 14: real-provider e2e test (opt-in via VISION_E2E_BASE_URL/KEY/MODEL, skips otherwise); mock-provider full-stack e2e already covered in test_e2e_tools.py; Q3 remains open for a human-provided real key.
+- Phase 15: deploy/ artifacts — Dockerfile, docker-compose.yml, Caddyfile, nginx.conf, vision-mcp.service, README with steps. No live deploy (operator action).
+- Alembic env.py now auto-converts asyncpg→pg8000 (removes Phase-2 URL hacks); pg8000 promoted to runtime dep.
+- Final state: 106 passed + 1 opt-in skip; ruff/black/mypy clean; frontend build/lint/format clean.
+
+**Project complete against Architecture §25's phase list.** Remaining human items tracked in questions.md: Q3 (real-provider e2e env vars), Q4 (real Google OAuth credentials), optional live deployment.

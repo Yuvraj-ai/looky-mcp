@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: vision
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: vision_mcp
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vision"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: ../deploy/Dockerfile
+    environment:
+      DATABASE_URL: postgresql+asyncpg://vision:${POSTGRES_PASSWORD}@postgres:5432/vision_mcp
+      APP_SECRET_KEY: ${APP_SECRET_KEY:?set APP_SECRET_KEY}
+      VISION_ENCRYPTION_KEY: ${VISION_ENCRYPTION_KEY:?set VISION_ENCRYPTION_KEY}
+      GOOGLE_OAUTH_CLIENT_ID: ${GOOGLE_OAUTH_CLIENT_ID:-}
+      GOOGLE_OAUTH_CLIENT_SECRET: ${GOOGLE_OAUTH_CLIENT_SECRET:-}
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8000}
+      CORS_ALLOWED_ORIGIN: ${CORS_ALLOWED_ORIGIN:-http://localhost:8080}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    # migrations first (env.py converts the asyncpg URL to pg8000 automatically),
+    # then serve; single worker: in-memory limiter state matches Decision #9
+    command: >
+      sh -c "alembic upgrade head &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1"
+
+volumes:
+  pgdata:

@@ -96,3 +96,10 @@ Format: one entry per phase — completed, tests passing, next.
 - Tests: 96/96 backend (13 vision service, 4 settings, 3 e2e tool roundtrips through the official MCP client + mock OpenAI-compatible HTTP provider). Frontend build/lint/format clean.
 
 **Next:** Phase 12 — Google OAuth (code complete, real credentials human-provided), then 13 (snippet), 14 (e2e), 15 (deploy artifacts).
+
+## 2026-09-11 — Phase 12: Google OAuth
+
+- Authorization-code flow + manual id_token verification (RS256/JWKS/iss/aud/exp/email_verified), auto-link by verified email (§28.2a), no-signup 403 for unknown emails. Login page link added.
+- 7/7 OAuth tests (fake JWKS + token endpoint); suite 103/103; lint/format/mypy clean.
+
+**Next:** Phase 13 — OpenCode config snippet endpoint + docs.

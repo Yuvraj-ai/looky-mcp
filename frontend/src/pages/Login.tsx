@@ -49,6 +49,9 @@ export default function Login() {
         <button type="submit" disabled={busy}>
           {busy ? "Signing in..." : "Sign in"}
         </button>
+        <a className="google-link" href="/api/auth/google/start">
+          Sign in with Google
+        </a>
       </form>
     </div>
   );

@@ -16,6 +16,7 @@ from mcp.server.transport_security import TransportSecuritySettings
 from app.api import auth_routes, mcp_credential, system_prompts, vision_profiles
 from app.api import settings as settings_routes
 from app.auth.mcp_auth import McpAuthMiddleware, _CachedSessionFactory
+from app.auth.oauth import router as google_oauth_router
 from app.config import settings
 from app.mcp import server as mcp_server_mod
 from app.mcp.server import create_mcp_server
@@ -63,6 +64,7 @@ def create_app(mcp_session_factory_fn=None) -> FastAPI:
     )
 
     app.include_router(auth_routes.router)
+    app.include_router(google_oauth_router)
     app.include_router(system_prompts.router)
     app.include_router(vision_profiles.router)
     app.include_router(mcp_credential.router)

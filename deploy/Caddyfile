@@ -1,0 +1,29 @@
+# Caddy reverse proxy (Architecture §23): TLS + static SPA + proxy /api and /mcp.
+#
+#   1) put this file in /etc/caddy/Caddyfile (or caddy add-config)
+#   2) build the frontend:  cd frontend && npm run build   →  dist/
+#   3) set the paths below to your checkout; caddy handles TLS certificates automatically
+
+your-domain.com {
+	encode gzip
+
+	# built SPA (Vite dist)
+	root * /srv/vision-mcp/frontend/dist
+
+	# REST API and MCP endpoint → single uvicorn worker
+	handle /api/* {
+		reverse_proxy 127.0.0.1:8000
+	}
+	handle /mcp {
+		reverse_proxy 127.0.0.1:8000
+	}
+	handle /mcp/* {
+		reverse_proxy 127.0.0.1:8000
+	}
+
+	# SPA history fallback
+	handle {
+		try_files {path} /index.html
+		file_server
+	}
+}

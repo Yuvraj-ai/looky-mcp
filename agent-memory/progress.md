@@ -73,3 +73,16 @@ Format: one entry per phase — completed, tests passing, next.
 - Tests: 57/57 backend total (5 new MCP endpoint tests via live uvicorn on random port). Live official-client smoke: initialize + tools/list OK.
 
 **Next:** Phase 8 — image validation layer (Pillow, standalone).
+
+## 2026-09-10 — Phase 8: image validation layer
+
+- Pillow validator: base64 validate → 5MB → sniffed format (JPEG/PNG/WebP only, GIF rejected by signature) → full decode → 8.3MP. Stable error strings. No image modification.
+- 10/10 tests incl. disguised-format and under-5MB-over-8.3MP cases.
+
+## 2026-09-10 — Phase 9: rate + concurrency limiters
+
+- Sliding-window 20/60s per user (deque+lock, lazy cleanup); 3-concurrent per user (semaphore, reject-no-queue, release on all outcomes).
+- 9/9 tests incl. window sliding, burst boundary, slot release after exception/cancel.
+- Suite: 76/76 backend; ruff/black/mypy clean.
+
+**Next:** Phase 10 — VisionService + LangChain (ties auth/profiles/validation/limiters together).

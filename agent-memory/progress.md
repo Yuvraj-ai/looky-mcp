@@ -36,3 +36,12 @@ Format: one entry per phase — completed, tests passing, next.
 - Browser smoke test (Playwright/Chromium after human symlinked chrome binary): login→protected page→logout all verified live against real Postgres.
 
 **Next:** Phase 4 — System Prompts CRUD (API + UI).
+
+## 2026-09-10 — Phase 4: System Prompts CRUD
+
+- Backend: /api/system-prompts CRUD, ownership-scoped (foreign id → 404), delete-referenced → 409 with profile names.
+- Frontend: SystemPrompts page + PromptForm (create/edit/delete).
+- Tests: 31/31 backend total; browser-verified CRUD round-trip.
+- Lint/format/typecheck clean both sides.
+
+**Next:** Phase 5 — Vision Profiles CRUD (needs a system prompt to exist first — verified it does).

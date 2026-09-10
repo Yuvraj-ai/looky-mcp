@@ -1,0 +1,18 @@
+- generic [ref=e12]:
+  - banner [ref=e13]:
+    - generic [ref=e14]: Vision MCP
+    - navigation [ref=e15]:
+      - link "System Prompts" [ref=e16] [cursor=pointer]:
+        - /url: /system-prompts
+      - link "Vision Profiles" [ref=e17] [cursor=pointer]:
+        - /url: /vision-profiles
+      - link "MCP Access" [ref=e18] [cursor=pointer]:
+        - /url: /mcp-access
+    - generic [ref=e19]:
+      - text: smoke@example.com
+      - button "Sign out" [ref=e20] [cursor=pointer]
+  - main [ref=e21]:
+    - generic [ref=e22]:
+      - heading "System Prompts" [level=1] [ref=e23]
+      - button "New System Prompt" [ref=e24] [cursor=pointer]
+      - paragraph [ref=e26]: No system prompts yet. Create one to use in a Vision Profile.

@@ -1,0 +1,189 @@
+2026-09-10 19:08:34.745 IST [148784] LOG:  starting PostgreSQL 16.2 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 10.2.1 20210130 (Red Hat 10.2.1-11), 64-bit
+2026-09-10 19:08:34.749 IST [148784] LOG:  listening on Unix socket "/home/imyuvi/projects/looky/backend/.pgdata-test/.s.PGSQL.5432"
+2026-09-10 19:08:34.761 IST [148787] LOG:  database system was shut down at 2026-09-10 19:08:34 IST
+2026-09-10 19:08:34.766 IST [148784] LOG:  database system is ready to accept connections
+2026-09-10 19:08:36.981 IST [148785] LOG:  checkpoint starting: immediate force wait
+2026-09-10 19:08:37.031 IST [148785] LOG:  checkpoint complete: wrote 6 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.018 s, total=0.051 s; sync files=5, longest=0.005 s, average=0.004 s; distance=4030 kB, estimate=4030 kB; lsn=0/18704B8, redo lsn=0/1870480
+2026-09-10 19:08:37.151 IST [148784] LOG:  received fast shutdown request
+2026-09-10 19:08:37.162 IST [148784] LOG:  aborting any active transactions
+2026-09-10 19:08:37.162 IST [148784] LOG:  background worker "logical replication launcher" (PID 148790) exited with exit code 1
+2026-09-10 19:08:37.164 IST [148785] LOG:  shutting down
+2026-09-10 19:08:37.167 IST [148785] LOG:  checkpoint starting: shutdown immediate
+2026-09-10 19:08:37.191 IST [148785] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.004 s, total=0.028 s; sync files=1, longest=0.004 s, average=0.004 s; distance=0 kB, estimate=3627 kB; lsn=0/18705C0, redo lsn=0/18705C0
+2026-09-10 19:08:37.195 IST [148784] LOG:  database system is shut down
+2026-09-10 19:08:49.341 IST [148884] LOG:  starting PostgreSQL 16.2 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 10.2.1 20210130 (Red Hat 10.2.1-11), 64-bit
+2026-09-10 19:08:49.344 IST [148884] LOG:  listening on Unix socket "/home/imyuvi/projects/looky/backend/.pgdata-test/.s.PGSQL.5432"
+2026-09-10 19:08:49.356 IST [148887] LOG:  database system was shut down at 2026-09-10 19:08:37 IST
+2026-09-10 19:08:49.362 IST [148884] LOG:  database system is ready to accept connections
+2026-09-10 19:08:51.494 IST [148885] LOG:  checkpoint starting: immediate force wait
+2026-09-10 19:08:51.573 IST [148885] LOG:  checkpoint complete: wrote 6 buffers (0.0%); 1 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.018 s, total=0.079 s; sync files=5, longest=0.004 s, average=0.004 s; distance=4030 kB, estimate=4030 kB; lsn=0/1C60070, redo lsn=0/1C60038
+2026-09-10 19:08:51.690 IST [148884] LOG:  received fast shutdown request
+2026-09-10 19:08:51.700 IST [148884] LOG:  aborting any active transactions
+2026-09-10 19:08:51.700 IST [148884] LOG:  background worker "logical replication launcher" (PID 148890) exited with exit code 1
+2026-09-10 19:08:51.700 IST [148885] LOG:  shutting down
+2026-09-10 19:08:51.704 IST [148885] LOG:  checkpoint starting: shutdown immediate
+2026-09-10 19:08:51.724 IST [148885] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.004 s, total=0.025 s; sync files=1, longest=0.004 s, average=0.004 s; distance=0 kB, estimate=3627 kB; lsn=0/1C60178, redo lsn=0/1C60178
+2026-09-10 19:08:51.729 IST [148884] LOG:  database system is shut down
+2026-09-10 19:09:06.941 IST [149013] LOG:  starting PostgreSQL 16.2 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 10.2.1 20210130 (Red Hat 10.2.1-11), 64-bit
+2026-09-10 19:09:06.944 IST [149013] LOG:  listening on Unix socket "/home/imyuvi/projects/looky/backend/.pgdata-test/.s.PGSQL.5432"
+2026-09-10 19:09:06.956 IST [149016] LOG:  database system was shut down at 2026-09-10 19:08:51 IST
+2026-09-10 19:09:06.960 IST [149013] LOG:  database system is ready to accept connections
+2026-09-10 19:09:07.554 IST [149014] LOG:  checkpoint starting: immediate force wait
+2026-09-10 19:09:07.604 IST [149014] LOG:  checkpoint complete: wrote 6 buffers (0.0%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.006 s, sync=0.020 s, total=0.051 s; sync files=5, longest=0.005 s, average=0.004 s; distance=4030 kB, estimate=4030 kB; lsn=0/204FCE0, redo lsn=0/204FCA8
+2026-09-10 19:09:07.715 IST [149013] LOG:  received fast shutdown request
+2026-09-10 19:09:07.727 IST [149013] LOG:  aborting any active transactions
+2026-09-10 19:09:07.727 IST [149013] LOG:  background worker "logical replication launcher" (PID 149019) exited with exit code 1
+2026-09-10 19:09:07.727 IST [149014] LOG:  shutting down
+2026-09-10 19:09:07.731 IST [149014] LOG:  checkpoint starting: shutdown immediate
+2026-09-10 19:09:07.754 IST [149014] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.004 s, total=0.027 s; sync files=1, longest=0.004 s, average=0.004 s; distance=0 kB, estimate=3627 kB; lsn=0/204FDE8, redo lsn=0/204FDE8
+2026-09-10 19:09:07.758 IST [149013] LOG:  database system is shut down
+2026-09-10 19:09:45.108 IST [149248] LOG:  starting PostgreSQL 16.2 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 10.2.1 20210130 (Red Hat 10.2.1-11), 64-bit
+2026-09-10 19:09:45.111 IST [149248] LOG:  listening on Unix socket "/home/imyuvi/projects/looky/backend/.pgdata-test/.s.PGSQL.5432"
+2026-09-10 19:09:45.123 IST [149251] LOG:  database system was shut down at 2026-09-10 19:09:07 IST
+2026-09-10 19:09:45.127 IST [149248] LOG:  database system is ready to accept connections
+2026-09-10 19:09:45.637 IST [149249] LOG:  checkpoint starting: immediate force wait
+2026-09-10 19:09:45.689 IST [149249] LOG:  checkpoint complete: wrote 6 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.018 s, total=0.052 s; sync files=5, longest=0.004 s, average=0.004 s; distance=4031 kB, estimate=4031 kB; lsn=0/243FA30, redo lsn=0/243F9F8
+2026-09-10 19:09:45.774 IST [149248] LOG:  received fast shutdown request
+2026-09-10 19:09:45.778 IST [149248] LOG:  aborting any active transactions
+2026-09-10 19:09:45.778 IST [149248] LOG:  background worker "logical replication launcher" (PID 149254) exited with exit code 1
+2026-09-10 19:09:45.778 IST [149249] LOG:  shutting down
+2026-09-10 19:09:45.781 IST [149249] LOG:  checkpoint starting: shutdown immediate
+2026-09-10 19:09:45.817 IST [149249] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.004 s, total=0.040 s; sync files=1, longest=0.004 s, average=0.004 s; distance=0 kB, estimate=3627 kB; lsn=0/243FB38, redo lsn=0/243FB38
+2026-09-10 19:09:45.820 IST [149248] LOG:  database system is shut down
+2026-09-10 19:09:46.825 IST [149270] LOG:  starting PostgreSQL 16.2 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 10.2.1 20210130 (Red Hat 10.2.1-11), 64-bit
+2026-09-10 19:09:46.829 IST [149270] LOG:  listening on Unix socket "/home/imyuvi/projects/looky/backend/.pgdata-test/.s.PGSQL.5432"
+2026-09-10 19:09:46.840 IST [149273] LOG:  database system was shut down at 2026-09-10 19:09:45 IST
+2026-09-10 19:09:46.845 IST [149270] LOG:  database system is ready to accept connections
+2026-09-10 19:09:47.351 IST [149271] LOG:  checkpoint starting: immediate force wait
+2026-09-10 19:09:47.400 IST [149271] LOG:  checkpoint complete: wrote 6 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.018 s, total=0.050 s; sync files=5, longest=0.004 s, average=0.004 s; distance=4031 kB, estimate=4031 kB; lsn=0/282F840, redo lsn=0/282F808
+2026-09-10 19:09:47.485 IST [149270] LOG:  received fast shutdown request
+2026-09-10 19:09:47.488 IST [149270] LOG:  aborting any active transactions
+2026-09-10 19:09:47.489 IST [149270] LOG:  background worker "logical replication launcher" (PID 149276) exited with exit code 1
+2026-09-10 19:09:47.489 IST [149271] LOG:  shutting down
+2026-09-10 19:09:47.492 IST [149271] LOG:  checkpoint starting: shutdown immediate
+2026-09-10 19:09:47.521 IST [149271] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.004 s, total=0.033 s; sync files=1, longest=0.004 s, average=0.004 s; distance=0 kB, estimate=3628 kB; lsn=0/282F948, redo lsn=0/282F948
+2026-09-10 19:09:47.524 IST [149270] LOG:  database system is shut down
+2026-09-10 19:10:53.865 IST [149602] LOG:  starting PostgreSQL 16.2 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 10.2.1 20210130 (Red Hat 10.2.1-11), 64-bit
+2026-09-10 19:10:53.869 IST [149602] LOG:  listening on Unix socket "/home/imyuvi/projects/looky/backend/.pgdata-test/.s.PGSQL.5432"
+2026-09-10 19:10:53.880 IST [149605] LOG:  database system was shut down at 2026-09-10 19:09:47 IST
+2026-09-10 19:10:53.885 IST [149602] LOG:  database system is ready to accept connections
+2026-09-10 19:10:54.297 IST [149612] ERROR:  duplicate key value violates unique constraint "users_email_key"
+2026-09-10 19:10:54.297 IST [149612] DETAIL:  Key (email)=(a@b.c) already exists.
+2026-09-10 19:10:54.297 IST [149612] STATEMENT:  INSERT INTO users (email, password_hash, google_sub) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR) RETURNING users.id, users.created_at, users.updated_at
+2026-09-10 19:10:54.315 IST [149613] ERROR:  duplicate key value violates unique constraint "uq_one_active_profile_per_user"
+2026-09-10 19:10:54.315 IST [149613] DETAIL:  Key (user_id)=(63f0e5fa-44a0-40ef-a0f6-3aa1aafaf5f3) already exists.
+2026-09-10 19:10:54.315 IST [149613] STATEMENT:  INSERT INTO vision_profiles (user_id, name, endpoint, model, system_prompt_id, encrypted_api_key, is_active) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::UUID, $6::BYTEA, $7::BOOLEAN) RETURNING vision_profiles.id, vision_profiles.created_at, vision_profiles.updated_at
+2026-09-10 19:10:54.375 IST [149616] ERROR:  update or delete on table "system_prompts" violates foreign key constraint "vision_profiles_system_prompt_id_fkey" on table "vision_profiles"
+2026-09-10 19:10:54.375 IST [149616] DETAIL:  Key (id)=(741457e0-01d7-4e93-a2a8-8a16a9064a23) is still referenced from table "vision_profiles".
+2026-09-10 19:10:54.375 IST [149616] STATEMENT:  DELETE FROM system_prompts WHERE system_prompts.id = $1::UUID
+2026-09-10 19:10:54.472 IST [149618] ERROR:  duplicate key value violates unique constraint "mcp_credentials_user_id_key"
+2026-09-10 19:10:54.472 IST [149618] DETAIL:  Key (user_id)=(7782cc03-0d28-48ee-b0aa-76f45865e458) already exists.
+2026-09-10 19:10:54.472 IST [149618] STATEMENT:  INSERT INTO mcp_credentials (user_id, key_hash, revoked_at) VALUES ($1::UUID, $2::VARCHAR, $3::TIMESTAMP WITH TIME ZONE) RETURNING mcp_credentials.id, mcp_credentials.created_at
+2026-09-10 19:10:54.592 IST [149602] LOG:  received fast shutdown request
+2026-09-10 19:10:54.605 IST [149602] LOG:  aborting any active transactions
+2026-09-10 19:10:54.606 IST [149602] LOG:  background worker "logical replication launcher" (PID 149608) exited with exit code 1
+2026-09-10 19:10:54.606 IST [149603] LOG:  shutting down
+2026-09-10 19:10:54.610 IST [149603] LOG:  checkpoint starting: shutdown immediate
+2026-09-10 19:10:55.646 IST [149603] LOG:  checkpoint complete: wrote 936 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.026 s, sync=0.984 s, total=1.041 s; sync files=325, longest=0.006 s, average=0.004 s; distance=4161 kB, estimate=4161 kB; lsn=0/2C3FF38, redo lsn=0/2C3FF38
+2026-09-10 19:10:55.649 IST [149602] LOG:  database system is shut down
+2026-09-10 19:11:35.523 IST [149780] LOG:  starting PostgreSQL 16.2 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 10.2.1 20210130 (Red Hat 10.2.1-11), 64-bit
+2026-09-10 19:11:35.527 IST [149780] LOG:  listening on Unix socket "/home/imyuvi/projects/looky/backend/.pgdata-test/.s.PGSQL.5432"
+2026-09-10 19:11:35.539 IST [149783] LOG:  database system was shut down at 2026-09-10 19:10:55 IST
+2026-09-10 19:11:35.545 IST [149780] LOG:  database system is ready to accept connections
+2026-09-10 19:11:35.654 IST [149781] LOG:  checkpoint starting: immediate force wait
+2026-09-10 19:11:35.695 IST [149781] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.011 s, total=0.041 s; sync files=3, longest=0.004 s, average=0.004 s; distance=1 kB, estimate=1 kB; lsn=0/2C40670, redo lsn=0/2C40638
+2026-09-10 19:11:36.167 IST [149780] LOG:  received fast shutdown request
+2026-09-10 19:11:36.181 IST [149780] LOG:  aborting any active transactions
+2026-09-10 19:11:36.181 IST [149780] LOG:  background worker "logical replication launcher" (PID 149786) exited with exit code 1
+2026-09-10 19:11:36.182 IST [149781] LOG:  shutting down
+2026-09-10 19:11:36.185 IST [149781] LOG:  checkpoint starting: shutdown immediate
+2026-09-10 19:11:37.209 IST [149781] LOG:  checkpoint complete: wrote 932 buffers (5.7%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.022 s, sync=0.974 s, total=1.028 s; sync files=324, longest=0.008 s, average=0.004 s; distance=4153 kB, estimate=4153 kB; lsn=0/304EC38, redo lsn=0/304EC38
+2026-09-10 19:11:37.213 IST [149780] LOG:  database system is shut down
+2026-09-10 19:12:18.163 IST [149956] LOG:  starting PostgreSQL 16.2 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 10.2.1 20210130 (Red Hat 10.2.1-11), 64-bit
+2026-09-10 19:12:18.166 IST [149956] LOG:  listening on Unix socket "/home/imyuvi/projects/looky/backend/.pgdata-test/.s.PGSQL.5432"
+2026-09-10 19:12:18.178 IST [149959] LOG:  database system was shut down at 2026-09-10 19:11:37 IST
+2026-09-10 19:12:18.183 IST [149956] LOG:  database system is ready to accept connections
+2026-09-10 19:12:18.293 IST [149957] LOG:  checkpoint starting: immediate force wait
+2026-09-10 19:12:18.335 IST [149957] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.011 s, total=0.042 s; sync files=3, longest=0.004 s, average=0.004 s; distance=1 kB, estimate=1 kB; lsn=0/304F3F0, redo lsn=0/304F3B8
+2026-09-10 19:12:18.791 IST [149956] LOG:  received fast shutdown request
+2026-09-10 19:12:18.809 IST [149956] LOG:  aborting any active transactions
+2026-09-10 19:12:18.810 IST [149956] LOG:  background worker "logical replication launcher" (PID 149962) exited with exit code 1
+2026-09-10 19:12:18.810 IST [149957] LOG:  shutting down
+2026-09-10 19:12:18.814 IST [149957] LOG:  checkpoint starting: shutdown immediate
+2026-09-10 19:12:19.875 IST [149957] LOG:  checkpoint complete: wrote 932 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.026 s, sync=1.005 s, total=1.065 s; sync files=324, longest=0.010 s, average=0.004 s; distance=4153 kB, estimate=4153 kB; lsn=0/345DA80, redo lsn=0/345DA80
+2026-09-10 19:12:19.880 IST [149956] LOG:  database system is shut down
+2026-09-10 19:13:40.888 IST [150382] LOG:  starting PostgreSQL 16.2 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 10.2.1 20210130 (Red Hat 10.2.1-11), 64-bit
+2026-09-10 19:13:40.892 IST [150382] LOG:  listening on Unix socket "/home/imyuvi/projects/looky/backend/.pgdata-test/.s.PGSQL.5432"
+2026-09-10 19:13:40.903 IST [150385] LOG:  database system was shut down at 2026-09-10 19:12:19 IST
+2026-09-10 19:13:40.912 IST [150382] LOG:  database system is ready to accept connections
+2026-09-10 19:13:41.013 IST [150383] LOG:  checkpoint starting: immediate force wait
+2026-09-10 19:13:41.086 IST [150383] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.011 s, total=0.074 s; sync files=3, longest=0.004 s, average=0.004 s; distance=2 kB, estimate=2 kB; lsn=0/345E2F0, redo lsn=0/345E2B8
+2026-09-10 19:13:41.414 IST [150393] ERROR:  duplicate key value violates unique constraint "users_email_key"
+2026-09-10 19:13:41.414 IST [150393] DETAIL:  Key (email)=(a@b.c) already exists.
+2026-09-10 19:13:41.414 IST [150393] STATEMENT:  INSERT INTO users (email, password_hash, google_sub) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR) RETURNING users.id, users.created_at, users.updated_at
+2026-09-10 19:13:41.427 IST [150394] ERROR:  duplicate key value violates unique constraint "uq_one_active_profile_per_user"
+2026-09-10 19:13:41.427 IST [150394] DETAIL:  Key (user_id)=(69369d3b-6f93-4f8e-99b1-9e742487f4ea) already exists.
+2026-09-10 19:13:41.427 IST [150394] STATEMENT:  INSERT INTO vision_profiles (user_id, name, endpoint, model, system_prompt_id, encrypted_api_key, is_active) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::UUID, $6::BYTEA, $7::BOOLEAN) RETURNING vision_profiles.id, vision_profiles.created_at, vision_profiles.updated_at
+2026-09-10 19:13:41.489 IST [150399] ERROR:  update or delete on table "system_prompts" violates foreign key constraint "vision_profiles_system_prompt_id_fkey" on table "vision_profiles"
+2026-09-10 19:13:41.489 IST [150399] DETAIL:  Key (id)=(2f54219c-3ef3-4f9b-8b60-5ab0fec5c56f) is still referenced from table "vision_profiles".
+2026-09-10 19:13:41.489 IST [150399] STATEMENT:  DELETE FROM system_prompts WHERE system_prompts.id = $1::UUID
+2026-09-10 19:13:41.535 IST [150401] ERROR:  duplicate key value violates unique constraint "mcp_credentials_user_id_key"
+2026-09-10 19:13:41.535 IST [150401] DETAIL:  Key (user_id)=(00f31bad-52b4-4f22-96af-c2328cf095b7) already exists.
+2026-09-10 19:13:41.535 IST [150401] STATEMENT:  INSERT INTO mcp_credentials (user_id, key_hash, revoked_at) VALUES ($1::UUID, $2::VARCHAR, $3::TIMESTAMP WITH TIME ZONE) RETURNING mcp_credentials.id, mcp_credentials.created_at
+2026-09-10 19:13:41.645 IST [150382] LOG:  received fast shutdown request
+2026-09-10 19:13:41.650 IST [150382] LOG:  aborting any active transactions
+2026-09-10 19:13:41.650 IST [150382] LOG:  background worker "logical replication launcher" (PID 150388) exited with exit code 1
+2026-09-10 19:13:41.650 IST [150383] LOG:  shutting down
+2026-09-10 19:13:41.654 IST [150383] LOG:  checkpoint starting: shutdown immediate
+2026-09-10 19:13:42.722 IST [150383] LOG:  checkpoint complete: wrote 934 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.034 s, sync=0.996 s, total=1.072 s; sync files=324, longest=0.010 s, average=0.004 s; distance=4162 kB, estimate=4162 kB; lsn=0/386EBC8, redo lsn=0/386EBC8
+2026-09-10 19:13:42.726 IST [150382] LOG:  database system is shut down
+2026-09-10 19:14:23.239 IST [150711] LOG:  starting PostgreSQL 16.2 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 10.2.1 20210130 (Red Hat 10.2.1-11), 64-bit
+2026-09-10 19:14:23.243 IST [150711] LOG:  listening on Unix socket "/home/imyuvi/projects/looky/backend/.pgdata-test/.s.PGSQL.5432"
+2026-09-10 19:14:23.255 IST [150714] LOG:  database system was shut down at 2026-09-10 19:13:42 IST
+2026-09-10 19:14:23.260 IST [150711] LOG:  database system is ready to accept connections
+2026-09-10 19:14:23.380 IST [150712] LOG:  checkpoint starting: immediate force wait
+2026-09-10 19:14:23.428 IST [150712] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.012 s, total=0.049 s; sync files=3, longest=0.004 s, average=0.004 s; distance=2 kB, estimate=2 kB; lsn=0/386F4B8, redo lsn=0/386F480
+2026-09-10 19:14:23.755 IST [150723] ERROR:  duplicate key value violates unique constraint "users_email_key"
+2026-09-10 19:14:23.755 IST [150723] DETAIL:  Key (email)=(a@b.c) already exists.
+2026-09-10 19:14:23.755 IST [150723] STATEMENT:  INSERT INTO users (email, password_hash, google_sub) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR) RETURNING users.id, users.created_at, users.updated_at
+2026-09-10 19:14:23.771 IST [150724] ERROR:  duplicate key value violates unique constraint "uq_one_active_profile_per_user"
+2026-09-10 19:14:23.771 IST [150724] DETAIL:  Key (user_id)=(6aa40306-de31-4b30-ba0e-88e2c6671205) already exists.
+2026-09-10 19:14:23.771 IST [150724] STATEMENT:  INSERT INTO vision_profiles (user_id, name, endpoint, model, system_prompt_id, encrypted_api_key, is_active) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::UUID, $6::BYTEA, $7::BOOLEAN) RETURNING vision_profiles.id, vision_profiles.created_at, vision_profiles.updated_at
+2026-09-10 19:14:23.829 IST [150727] ERROR:  update or delete on table "system_prompts" violates foreign key constraint "vision_profiles_system_prompt_id_fkey" on table "vision_profiles"
+2026-09-10 19:14:23.829 IST [150727] DETAIL:  Key (id)=(0c8edb4c-6267-486e-bcf6-387afa3163a3) is still referenced from table "vision_profiles".
+2026-09-10 19:14:23.829 IST [150727] STATEMENT:  DELETE FROM system_prompts WHERE system_prompts.id = $1::UUID
+2026-09-10 19:14:23.873 IST [150729] ERROR:  duplicate key value violates unique constraint "mcp_credentials_user_id_key"
+2026-09-10 19:14:23.873 IST [150729] DETAIL:  Key (user_id)=(d95cc59b-4b94-446e-a601-1b7c9f6538d1) already exists.
+2026-09-10 19:14:23.873 IST [150729] STATEMENT:  INSERT INTO mcp_credentials (user_id, key_hash, revoked_at) VALUES ($1::UUID, $2::VARCHAR, $3::TIMESTAMP WITH TIME ZONE) RETURNING mcp_credentials.id, mcp_credentials.created_at
+2026-09-10 19:14:23.987 IST [150711] LOG:  received fast shutdown request
+2026-09-10 19:14:23.991 IST [150711] LOG:  aborting any active transactions
+2026-09-10 19:14:23.991 IST [150711] LOG:  background worker "logical replication launcher" (PID 150717) exited with exit code 1
+2026-09-10 19:14:23.992 IST [150712] LOG:  shutting down
+2026-09-10 19:14:23.995 IST [150712] LOG:  checkpoint starting: shutdown immediate
+2026-09-10 19:14:25.034 IST [150712] LOG:  checkpoint complete: wrote 934 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.030 s, sync=0.983 s, total=1.043 s; sync files=324, longest=0.009 s, average=0.004 s; distance=4162 kB, estimate=4162 kB; lsn=0/3C7FE68, redo lsn=0/3C7FE68
+2026-09-10 19:14:25.037 IST [150711] LOG:  database system is shut down
+2026-09-10 19:16:09.605 IST [151362] LOG:  starting PostgreSQL 16.2 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 10.2.1 20210130 (Red Hat 10.2.1-11), 64-bit
+2026-09-10 19:16:09.608 IST [151362] LOG:  listening on Unix socket "/home/imyuvi/projects/looky/backend/.pgdata-test/.s.PGSQL.5432"
+2026-09-10 19:16:09.619 IST [151365] LOG:  database system was shut down at 2026-09-10 19:14:25 IST
+2026-09-10 19:16:09.624 IST [151362] LOG:  database system is ready to accept connections
+2026-09-10 19:16:09.736 IST [151363] LOG:  checkpoint starting: immediate force wait
+2026-09-10 19:16:09.789 IST [151363] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.011 s, total=0.053 s; sync files=3, longest=0.004 s, average=0.004 s; distance=2 kB, estimate=2 kB; lsn=0/3C80810, redo lsn=0/3C807D8
+2026-09-10 19:16:10.088 IST [151374] ERROR:  duplicate key value violates unique constraint "users_email_key"
+2026-09-10 19:16:10.088 IST [151374] DETAIL:  Key (email)=(a@b.c) already exists.
+2026-09-10 19:16:10.088 IST [151374] STATEMENT:  INSERT INTO users (email, password_hash, google_sub) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR) RETURNING users.id, users.created_at, users.updated_at
+2026-09-10 19:16:10.103 IST [151375] ERROR:  duplicate key value violates unique constraint "uq_one_active_profile_per_user"
+2026-09-10 19:16:10.103 IST [151375] DETAIL:  Key (user_id)=(b0514d57-8e59-4434-b3c3-6a0ce445284a) already exists.
+2026-09-10 19:16:10.103 IST [151375] STATEMENT:  INSERT INTO vision_profiles (user_id, name, endpoint, model, system_prompt_id, encrypted_api_key, is_active) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::UUID, $6::BYTEA, $7::BOOLEAN) RETURNING vision_profiles.id, vision_profiles.created_at, vision_profiles.updated_at
+2026-09-10 19:16:10.154 IST [151378] ERROR:  update or delete on table "system_prompts" violates foreign key constraint "vision_profiles_system_prompt_id_fkey" on table "vision_profiles"
+2026-09-10 19:16:10.154 IST [151378] DETAIL:  Key (id)=(f48fc18d-da2c-4059-bfa2-6262c91f3964) is still referenced from table "vision_profiles".
+2026-09-10 19:16:10.154 IST [151378] STATEMENT:  DELETE FROM system_prompts WHERE system_prompts.id = $1::UUID
+2026-09-10 19:16:10.194 IST [151380] ERROR:  duplicate key value violates unique constraint "mcp_credentials_user_id_key"
+2026-09-10 19:16:10.194 IST [151380] DETAIL:  Key (user_id)=(25b5eda7-b2dd-4531-878e-ba3da4bd3f7f) already exists.
+2026-09-10 19:16:10.194 IST [151380] STATEMENT:  INSERT INTO mcp_credentials (user_id, key_hash, revoked_at) VALUES ($1::UUID, $2::VARCHAR, $3::TIMESTAMP WITH TIME ZONE) RETURNING mcp_credentials.id, mcp_credentials.created_at
+2026-09-10 19:16:10.295 IST [151362] LOG:  received fast shutdown request
+2026-09-10 19:16:10.311 IST [151362] LOG:  aborting any active transactions
+2026-09-10 19:16:10.312 IST [151362] LOG:  background worker "logical replication launcher" (PID 151368) exited with exit code 1
+2026-09-10 19:16:10.312 IST [151363] LOG:  shutting down
+2026-09-10 19:16:10.315 IST [151363] LOG:  checkpoint starting: shutdown immediate
+2026-09-10 19:16:11.379 IST [151363] LOG:  checkpoint complete: wrote 934 buffers (5.7%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.026 s, sync=1.009 s, total=1.068 s; sync files=324, longest=0.005 s, average=0.004 s; distance=4162 kB, estimate=4162 kB; lsn=0/4091290, redo lsn=0/4091290
+2026-09-10 19:16:11.384 IST [151362] LOG:  database system is shut down

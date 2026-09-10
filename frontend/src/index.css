@@ -14,4 +14,218 @@ body {
     "Segoe UI",
     Roboto,
     sans-serif;
+  background: #f5f5f7;
+  color: #1d1d1f;
+}
+
+/* layout */
+.layout header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.75rem 1.5rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e5ea;
+}
+
+.layout .brand {
+  font-weight: 700;
+}
+
+.layout nav {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+}
+
+.layout nav a {
+  color: inherit;
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+}
+
+.layout nav a.active {
+  background: #e8e8ed;
+}
+
+.layout .user {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+main {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* forms & controls */
+button {
+  cursor: pointer;
+  border: 1px solid #d2d2d7;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.95rem;
+}
+
+button:hover:not(:disabled) {
+  background: #f0f0f3;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid #d2d2d7;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: #515154;
+}
+
+.error {
+  color: #c1272d;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* login */
+.login-wrap {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+.login-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 340px;
+  padding: 2rem;
+  background: #ffffff;
+  border: 1px solid #e5e5ea;
+  border-radius: 12px;
+}
+
+.login-card h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+/* cards list */
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e5e5ea;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+}
+
+.card h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.card .meta {
+  color: #515154;
+  font-size: 0.9rem;
+  display: grid;
+  gap: 0.15rem;
+  margin-bottom: 0.75rem;
+}
+
+.card .actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.loading {
+  display: grid;
+  place-items: center;
+  min-height: 50vh;
+}
+
+/* modal form */
+.form-grid {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0.75rem 0 1rem;
+}
+
+.mono {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  background: #f0f0f3;
+  padding: 0.75rem;
+  border-radius: 6px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.notice {
+  color: #515154;
+  font-size: 0.85rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #161618;
+    color: #f5f5f7;
+  }
+
+  .layout header,
+  .login-card,
+  .card {
+    background: #1f1f22;
+    border-color: #333338;
+  }
+
+  button {
+    background: #1f1f22;
+    border-color: #3a3a40;
+  }
+
+  button:hover:not(:disabled) {
+    background: #2a2a2e;
+  }
+
+  input,
+  select,
+  textarea {
+    background: #161618;
+    border-color: #3a3a40;
+    color: #f5f5f7;
+  }
+
+  .layout nav a.active,
+  .mono {
+    background: #2a2a2e;
+  }
+
+  .error {
+    color: #ff6b6e;
+  }
 }

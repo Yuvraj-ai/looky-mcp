@@ -1,0 +1,30 @@
+- generic [ref=e4]:
+  - banner [ref=e5]:
+    - generic [ref=e6]: Vision MCP
+    - navigation [ref=e7]:
+      - link "System Prompts" [ref=e8] [cursor=pointer]:
+        - /url: /system-prompts
+      - link "Vision Profiles" [ref=e9] [cursor=pointer]:
+        - /url: /vision-profiles
+      - link "MCP Access" [ref=e10] [cursor=pointer]:
+        - /url: /mcp-access
+    - generic [ref=e11]:
+      - text: smoke@example.com
+      - button "Sign out" [ref=e12] [cursor=pointer]
+  - main [ref=e13]:
+    - generic [ref=e14]:
+      - heading "MCP Access" [level=1] [ref=e15]
+      - paragraph [ref=e28]: Method Not Allowed
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - generic [ref=e18]: "Status: Configured"
+          - generic [ref=e21]: "Created: 10/09/2026, 21:48:41"
+        - generic [ref=e22]:
+          - paragraph [ref=e23]:
+            - text: Copy this key now — it will not be shown again. Put it in an environment variable (e.g.
+            - code [ref=e24]: VISION_MCP_KEY
+            - text: ) and never commit it to a repo.
+          - generic [ref=e25]: mcp_EEfJHTEhERIssqRtsVjwxsVKo262boSa2FymklW3uRc
+        - generic [ref=e19]:
+          - button "Regenerate MCP Key" [ref=e26] [cursor=pointer]
+          - button "Revoke MCP Access" [ref=e27] [cursor=pointer]

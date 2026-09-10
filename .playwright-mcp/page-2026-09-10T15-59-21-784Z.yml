@@ -1,0 +1,29 @@
+- generic [ref=e4]:
+  - banner [ref=e5]:
+    - generic [ref=e6]: Vision MCP
+    - navigation [ref=e7]:
+      - link "System Prompts" [ref=e8] [cursor=pointer]:
+        - /url: /system-prompts
+      - link "Vision Profiles" [ref=e9] [cursor=pointer]:
+        - /url: /vision-profiles
+      - link "MCP Access" [ref=e10] [cursor=pointer]:
+        - /url: /mcp-access
+    - generic [ref=e11]:
+      - text: smoke@example.com
+      - button "Sign out" [ref=e12] [cursor=pointer]
+  - main [ref=e13]:
+    - generic [ref=e14]:
+      - heading "System Prompts" [level=1] [ref=e15]
+      - generic [ref=e19]:
+        - heading "Create System Prompt" [level=2] [ref=e20]
+        - generic [ref=e21]:
+          - generic [ref=e22]:
+            - generic [ref=e23]:
+              - text: Title
+              - textbox "Title" [ref=e24]
+            - generic [ref=e25]:
+              - text: Content
+              - textbox "Content" [ref=e26]
+          - generic [ref=e27]:
+            - button "Create" [ref=e28] [cursor=pointer]
+            - button "Cancel" [ref=e29] [cursor=pointer]

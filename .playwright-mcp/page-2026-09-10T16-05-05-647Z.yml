@@ -1,0 +1,28 @@
+- generic [ref=e4]:
+  - banner [ref=e5]:
+    - generic [ref=e6]: Vision MCP
+    - navigation [ref=e7]:
+      - link "System Prompts" [ref=e8] [cursor=pointer]:
+        - /url: /system-prompts
+      - link "Vision Profiles" [ref=e9] [cursor=pointer]:
+        - /url: /vision-profiles
+      - link "MCP Access" [ref=e10] [cursor=pointer]:
+        - /url: /mcp-access
+    - generic [ref=e11]:
+      - text: smoke@example.com
+      - button "Sign out" [ref=e12] [cursor=pointer]
+  - main [ref=e13]:
+    - generic [ref=e37]:
+      - heading "Vision Profiles" [level=1] [ref=e38]
+      - button "New Vision Profile" [ref=e59] [cursor=pointer]
+      - generic [ref=e60]:
+        - heading "Test Vision ●" [level=2] [ref=e71]
+        - generic [ref=e62]:
+          - generic [ref=e63]: "Model: test-vision-model"
+          - generic [ref=e64]: "Endpoint: https://api.example.com/v1"
+          - generic [ref=e65]: "System Prompt: General Analysis"
+          - generic [ref=e66]: "API Key: ✓ Configured"
+        - generic [ref=e67]:
+          - button "Active" [disabled] [ref=e72]
+          - button "Edit" [ref=e69] [cursor=pointer]
+          - button "Delete" [ref=e70] [cursor=pointer]

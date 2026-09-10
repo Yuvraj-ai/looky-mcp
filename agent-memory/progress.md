@@ -45,3 +45,12 @@ Format: one entry per phase — completed, tests passing, next.
 - Lint/format/typecheck clean both sides.
 
 **Next:** Phase 5 — Vision Profiles CRUD (needs a system prompt to exist first — verified it does).
+
+## 2026-09-10 — Phase 5: Vision Profiles CRUD
+
+- Backend: vision-profiles CRUD + /activate (transactional swap), Fernet key encryption (crypto.py), key never in any response; blank key on PUT = unchanged.
+- Frontend: VisionProfiles page + ProfileForm (prompt select, masked key field).
+- Tests: 46/46 backend total (15 new profile tests incl. concurrent activation → exactly-one-active; 4 crypto tests). Browser-verified create/activate.
+- All lint/format/typecheck clean.
+
+**Next:** Phase 6 — MCP credential issuance (API + UI).

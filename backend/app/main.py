@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth_routes, system_prompts
+from app.api import auth_routes, system_prompts, vision_profiles
 from app.config import settings
 
 
@@ -29,6 +29,7 @@ def create_app() -> FastAPI:
 
     app.include_router(auth_routes.router)
     app.include_router(system_prompts.router)
+    app.include_router(vision_profiles.router)
 
     @app.get("/api/health")
     async def health() -> dict[str, str]:

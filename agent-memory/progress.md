@@ -86,3 +86,13 @@ Format: one entry per phase — completed, tests passing, next.
 - Suite: 76/76 backend; ruff/black/mypy clean.
 
 **Next:** Phase 10 — VisionService + LangChain (ties auth/profiles/validation/limiters together).
+
+## 2026-09-11 — Phases 10 + 11: VisionService + tool wiring (+ Extra Instructions)
+
+- app_settings table (migration 4884015c3395) + GET/PUT /api/settings/extra-instructions + UI card (Q2 interpretation).
+- VisionService: limits → validation → profile/prompt/extra resolution → Fernet decrypt → ChatOpenAI(timeout=60, max_retries=0) → stable error translation (Decision #10 §14 table verbatim).
+- Tools execute end-to-end: stable errors surface as MCP ToolErrors with exact messages.
+- Debugging note: openai SDK's global per-loop httpx2 client breaks across server restarts — fresh AsyncClient per provider call fixes it.
+- Tests: 96/96 backend (13 vision service, 4 settings, 3 e2e tool roundtrips through the official MCP client + mock OpenAI-compatible HTTP provider). Frontend build/lint/format clean.
+
+**Next:** Phase 12 — Google OAuth (code complete, real credentials human-provided), then 13 (snippet), 14 (e2e), 15 (deploy artifacts).

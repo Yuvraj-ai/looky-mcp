@@ -10,10 +10,8 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
     async_sessionmaker,
-    create_async_engine,
 )
 
-from app.config import settings
 from app.crypto import hash_mcp_key
 from app.db import models
 
@@ -23,13 +21,11 @@ current_mcp_user_id: contextvars.ContextVar[uuid.UUID | None] = contextvars.Cont
 
 
 def default_session_factory_fn() -> async_sessionmaker[AsyncSession]:
-    """App default: session factory bound to the app's shared engine.
+    """Fresh engine lazily on first use so it binds to whatever event loop is
+    running (uvicorn worker loop); cached so the process keeps one engine."""
+    from app.db.session import build_session_factory
 
-    A fresh engine is created lazily on first use so it binds to whatever event
-    loop is running (uvicorn worker loop), and is cached on the factory object
-    itself so the app process keeps exactly one engine."""
-    engine = create_async_engine(settings.DATABASE_URL, pool_pre_ping=True)
-    return async_sessionmaker(engine, expire_on_commit=False)
+    return build_session_factory()
 
 
 class _CachedSessionFactory:

@@ -33,3 +33,14 @@ class RateLimiter:
             if len(dq) >= self.max_calls:
                 raise RateLimitError()
             dq.append(now)
+
+
+# shared per-process instance (single uvicorn worker — Decision #9)
+_default: RateLimiter | None = None
+
+
+def get_default_limiter() -> RateLimiter:
+    global _default
+    if _default is None:
+        _default = RateLimiter()
+    return _default

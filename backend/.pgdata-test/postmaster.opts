@@ -1,1 +1,0 @@
-/home/imyuvi/projects/looky/backend/.venv/lib/python3.12/site-packages/pgserver/pginstall/bin/postgres "-D" "/home/imyuvi/projects/looky/backend/.pgdata-test" "-h" "" "-k" "/home/imyuvi/projects/looky/backend/.pgdata-test"

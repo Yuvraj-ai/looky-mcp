@@ -119,3 +119,7 @@ Format: one entry per phase — completed, tests passing, next.
 - Final state: 106 passed + 1 opt-in skip; ruff/black/mypy clean; frontend build/lint/format clean.
 
 **Project complete against Architecture §25's phase list.** Remaining human items tracked in questions.md: Q3 (real-provider e2e env vars), Q4 (real Google OAuth credentials), optional live deployment.
+
+## 2026-09-11 — Post-completion cleanup
+
+- backend/.pgdata-test/ (test Postgres data dir) had been accidentally tracked; added to backend/.gitignore and untracked (678764e). main is clean.

@@ -2,6 +2,7 @@ from logging.config import fileConfig
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool
+from sqlalchemy.engine import make_url
 
 from app.config import settings
 from app.db.models import Base
@@ -10,8 +11,12 @@ config = context.config
 
 if not config.get_main_option("sqlalchemy.url"):
     # alembic runs synchronously — convert the app's asyncpg URL to pg8000
-    url = settings.DATABASE_URL.replace("+asyncpg", "+pg8000")
-    config.set_main_option("sqlalchemy.url", url)
+    db_url = make_url(settings.DATABASE_URL)
+    query = dict(db_url.query)
+    query.pop("ssl", None)
+    query.pop("sslmode", None)
+    sync_url = db_url.set(drivername="postgresql+pg8000", query=query)
+    config.set_main_option("sqlalchemy.url", sync_url.render_as_string(hide_password=False))
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)

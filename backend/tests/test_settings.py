@@ -34,3 +34,36 @@ class TestExtraInstructions:
         repo = AppSettingsRepository(db_session)
         await repo.set_extra_instructions("")
         assert await repo.get_extra_instructions() == ""
+
+
+class TestSettingsNormalization:
+    def test_normalizes_postgres_scheme(self):
+        from app.config import Settings
+
+        s = Settings(
+            DATABASE_URL="postgres://user:pass@host:5432/db",
+            APP_SECRET_KEY="key",
+            VISION_ENCRYPTION_KEY="enc",
+        )
+        assert s.DATABASE_URL == "postgresql+asyncpg://user:pass@host:5432/db"
+
+    def test_normalizes_postgresql_scheme(self):
+        from app.config import Settings
+
+        s = Settings(
+            DATABASE_URL="postgresql://user:pass@host:5432/db",
+            APP_SECRET_KEY="key",
+            VISION_ENCRYPTION_KEY="enc",
+        )
+        assert s.DATABASE_URL == "postgresql+asyncpg://user:pass@host:5432/db"
+
+    def test_preserves_asyncpg_scheme(self):
+        from app.config import Settings
+
+        s = Settings(
+            DATABASE_URL="postgresql+asyncpg://user:pass@host:5432/db",
+            APP_SECRET_KEY="key",
+            VISION_ENCRYPTION_KEY="enc",
+        )
+        assert s.DATABASE_URL == "postgresql+asyncpg://user:pass@host:5432/db"
+

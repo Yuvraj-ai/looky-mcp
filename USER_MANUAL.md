@@ -135,36 +135,58 @@ The page also shows a ready-to-copy **OpenCode config snippet** (see next sectio
 
 ---
 
-## 7. Connecting an Agent (OpenCode)
+## 7. Connecting an Agent (OpenCode, Claude Code, Codex)
 
 On the **MCP Access** page:
 
-1. Click **Generate** and copy the key.
+1. Click **Generate MCP Key** and copy the key.
 2. Export it in your shell environment:
 
    ```bash
-   export VISION_MCP_KEY="vmcp-...your-key..."
+   export VISION_MCP_KEY="mcp_...your-key..."
    ```
 
-3. Copy the **OpenCode snippet** from the page and paste it into your `opencode.json` config file. It looks like:
+3. Select your agent's tab on the MCP Access page and copy the snippet:
 
-   ```json
-   {
-     "mcp": {
-       "vision": {
-         "type": "http",
-         "url": "http://localhost:8000/mcp",
-         "headers": { "Authorization": "Bearer {env:VISION_MCP_KEY}" }
+   - **OpenCode (`opencode.json`)**:
+     ```json
+     {
+       "mcp": {
+         "vision": {
+           "type": "remote",
+           "url": "http://localhost:8000/mcp",
+           "headers": { "Authorization": "Bearer {env:VISION_MCP_KEY}" }
+         }
        }
      }
-   }
-   ```
+     ```
 
-   The key is referenced via `{env:VISION_MCP_KEY}` so it never gets pasted into a config file.
+   - **Claude Code (CLI)**:
+     ```bash
+     claude mcp add --transport http vision http://localhost:8000/mcp --header "Authorization: Bearer $VISION_MCP_KEY"
+     ```
 
-4. Restart OpenCode. The `vision` MCP server's tools (`describe_image`, `ocr_image`) are now available.
+   - **Claude Code (`.mcp.json` / `~/.claude.json`)**:
+     ```json
+     {
+       "mcpServers": {
+         "vision": {
+           "type": "http",
+           "url": "http://localhost:8000/mcp",
+           "headers": { "Authorization": "Bearer ${VISION_MCP_KEY}" }
+         }
+       }
+     }
+     ```
 
-For other MCP-capable clients: the server endpoint is `http://<host>:8000/mcp` (Streamable HTTP), with header `Authorization: Bearer vmcp-...`.
+   - **Codex (`~/.codex/config.toml`)**:
+     ```toml
+     [mcp_servers.vision]
+     url = "http://localhost:8000/mcp"
+     http_headers = { "Authorization" = "Bearer ${VISION_MCP_KEY}" }
+     ```
+
+4. Restart your agent. The `vision` MCP server's tools (`describe_image`, `ocr_image`) are now active.
 
 ---
 

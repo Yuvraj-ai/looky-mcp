@@ -46,6 +46,8 @@ class ImageValidator:
         return ValidatedImage(raw_bytes=raw_bytes, mime_type=mime, width=width, height=height)
 
     def _decode_base64(self, data: str) -> bytes:
+        if "," in data and data.strip().startswith("data:"):
+            data = data.split(",", 1)[1]
         try:
             return base64.b64decode(data, validate=True)
         except (binascii.Error, ValueError) as exc:

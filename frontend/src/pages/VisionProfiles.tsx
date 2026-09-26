@@ -58,6 +58,13 @@ export default function VisionProfiles() {
   }
 
   async function handleDelete(profile: VisionProfile) {
+    if (
+      !window.confirm(
+        `Are you sure you want to delete profile "${profile.name}"?`,
+      )
+    ) {
+      return;
+    }
     setError(null);
     try {
       await deleteVisionProfile(profile.id);
@@ -130,9 +137,17 @@ export default function VisionProfiles() {
         )}
         {profiles.map((p) => (
           <div className="card" key={p.id}>
-            <h2>
-              {p.name} {p.is_active && <span title="Active">●</span>}
-            </h2>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "0.5rem",
+              }}
+            >
+              <h2 style={{ margin: 0 }}>{p.name}</h2>
+              {p.is_active && <span className="badge badge-active">Active</span>}
+            </div>
             <div className="meta">
               <span>Model: {p.model}</span>
               <span>Endpoint: {p.endpoint}</span>

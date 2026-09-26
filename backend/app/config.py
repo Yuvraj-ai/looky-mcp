@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     GOOGLE_OAUTH_CLIENT_SECRET: str = ""
     PUBLIC_BASE_URL: str = "http://localhost:8000"
     CORS_ALLOWED_ORIGIN: str = "http://localhost:5173"
+    VISION_PROVIDER_TIMEOUT_SECONDS: int = 60
 
     model_config = {"env_file": ".env", "extra": "ignore"}
 

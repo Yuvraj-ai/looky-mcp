@@ -4,6 +4,7 @@ decryption, message composition, provider call, error translation.
 
 The REST API never calls this; it only manages the data VisionService reads."""
 
+import logging
 import uuid
 from collections.abc import Callable
 
@@ -12,6 +13,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from mcp.types import ImageContent
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
+from app.config import settings
 from app.crypto import decrypt_api_key
 from app.repositories.settings import AppSettingsRepository
 from app.repositories.system_prompts import SystemPromptRepository
@@ -44,6 +46,8 @@ class VisionServiceError(Exception):
     exact strings — do not paraphrase."""
 
 
+logger = logging.getLogger(__name__)
+
 _ERROR_BY_STATUS = {
     401: "Vision Profile authentication failed",
     400: "Vision request rejected",
@@ -64,7 +68,9 @@ class VisionService:
         self._http_transport = http_transport  # tests inject MockTransport
         self._session_factory_fn = session_factory_fn or _CachedSessionFactory()
 
-    async def run(self, *, user_id: uuid.UUID, mode: str, image: ImageContent, prompt: str) -> str:
+    async def run(
+        self, *, user_id: uuid.UUID, mode: str, image: ImageContent | str, prompt: str
+    ) -> str:
         """mode: "describe" | "ocr" — set by tool identity, never an LLM flag."""
         if self._rate_limiter is None:
             from app.services import rate_limiter as rl
@@ -83,10 +89,11 @@ class VisionService:
             raise VisionServiceError("Too many concurrent vision calls") from exc
 
     async def _execute(
-        self, user_id: uuid.UUID, mode: str, image: ImageContent, prompt: str
+        self, user_id: uuid.UUID, mode: str, image: ImageContent | str, prompt: str
     ) -> str:
+        raw_data = image.data if isinstance(image, ImageContent) else image
         try:
-            validated = ImageValidator().validate(image.data)
+            validated = ImageValidator().validate(raw_data)
         except ImageValidationError:
             raise  # already a stable message
 
@@ -126,6 +133,13 @@ class VisionService:
         ):  # pragma: no cover
             raise
         except Exception as exc:
+            logger.warning(
+                "Upstream vision provider error [%s: %s] | endpoint=%s model=%s",
+                type(exc).__name__,
+                exc,
+                profile.endpoint,
+                profile.model,
+            )
             raise self._translate(exc) from exc
 
         if not answer.strip():
@@ -162,7 +176,7 @@ class VisionService:
             model=model,
             api_key=api_key,
             base_url=endpoint,
-            timeout=60,  # Decision #10: locked 60s
+            timeout=settings.VISION_PROVIDER_TIMEOUT_SECONDS,
             max_retries=0,  # Decision #10: zero automatic retries
             **kwargs,
         )

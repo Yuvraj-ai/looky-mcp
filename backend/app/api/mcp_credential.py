@@ -64,6 +64,13 @@ class OpenCodeSnippet(BaseModel):
     snippet: str
 
 
+class ConfigSnippets(BaseModel):
+    opencode: str
+    claude_code_cli: str
+    claude_code_json: str
+    codex_toml: str
+
+
 @router.get("/opencode-snippet", response_model=OpenCodeSnippet)
 async def opencode_snippet(
     _: uuid.UUID = Depends(get_current_user_id),
@@ -85,3 +92,53 @@ async def opencode_snippet(
         "}"
     )
     return OpenCodeSnippet(snippet=snippet)
+
+
+@router.get("/config-snippets", response_model=ConfigSnippets)
+async def config_snippets(
+    _: uuid.UUID = Depends(get_current_user_id),
+) -> ConfigSnippets:
+    """Ready-to-copy configuration snippets for OpenCode, Claude Code, and Codex."""
+    url = f"{settings.PUBLIC_BASE_URL}/mcp"
+    opencode = (
+        "{\n"
+        '  "mcp": {\n'
+        '    "vision": {\n'
+        '      "type": "remote",\n'
+        f'      "url": "{url}",\n'
+        '      "oauth": false,\n'
+        '      "headers": {\n'
+        '        "Authorization": "Bearer {env:VISION_MCP_KEY}"\n'
+        "      }\n"
+        "    }\n"
+        "  }\n"
+        "}"
+    )
+    claude_cli = (
+        f'claude mcp add --transport http vision "{url}" '
+        '--header "Authorization: Bearer $VISION_MCP_KEY"'
+    )
+    claude_json = (
+        "{\n"
+        '  "mcpServers": {\n'
+        '    "vision": {\n'
+        '      "type": "http",\n'
+        f'      "url": "{url}",\n'
+        '      "headers": {\n'
+        '        "Authorization": "Bearer ${VISION_MCP_KEY}"\n'
+        "      }\n"
+        "    }\n"
+        "  }\n"
+        "}"
+    )
+    codex_toml = (
+        "[mcp_servers.vision]\n"
+        f'url = "{url}"\n'
+        'http_headers = { "Authorization" = "Bearer ${VISION_MCP_KEY}" }\n'
+    )
+    return ConfigSnippets(
+        opencode=opencode,
+        claude_code_cli=claude_cli,
+        claude_code_json=claude_json,
+        codex_toml=codex_toml,
+    )

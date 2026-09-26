@@ -64,6 +64,13 @@ class TestValid:
         # compress well under 5MB trivially
         validator.validate(_b64(buf.getvalue()))
 
+    async def test_data_uri_passes(self):
+        validator = ImageValidator()
+        data_uri = f"data:image/png;base64,{_b64(_png_bytes())}"
+        validated = validator.validate(data_uri)
+        assert validated.mime_type == "image/png"
+        assert validated.raw_bytes
+
 
 class TestRejected:
     async def test_invalid_base64(self):

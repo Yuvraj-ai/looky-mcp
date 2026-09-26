@@ -34,6 +34,8 @@ class UserResponse(BaseModel):
 async def login(
     body: LoginRequest, response: Response, db: AsyncSession = Depends(get_db)
 ) -> UserResponse:
+    # FastAPI injects Response so we can modify metadata (e.g. set cookies, headers)
+    # inside the route function.
     repo = UserRepository(db)
     user = await repo.get_by_email(body.email)
     # Same generic error for unknown email and wrong password (no enumeration).

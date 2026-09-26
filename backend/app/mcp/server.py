@@ -46,21 +46,23 @@ def create_mcp_server() -> MCPServer:
     mcp = MCPServer("vision")
 
     @mcp.tool()
-    async def describe_image(image: ImageContent, prompt: str) -> str:
+    async def describe_image(image: ImageContent | str, prompt: str) -> str:
         """Analyze/describe the contents of an image. Use for general visual
-        understanding, screenshots, diagrams, UI review, etc."""
+        understanding, screenshots, diagrams, UI review, etc. Accepts an MCP
+        ImageContent object, base64-encoded string, or data URI."""
         return await _run_tool("describe", image, prompt)
 
     @mcp.tool()
-    async def ocr_image(image: ImageContent, prompt: str) -> str:
+    async def ocr_image(image: ImageContent | str, prompt: str) -> str:
         """Extract text from an image via OCR. Use when you need the literal
-        text content of an image (error messages, code, documents)."""
+        text content of an image (error messages, code, documents). Accepts an
+        MCP ImageContent object, base64-encoded string, or data URI."""
         return await _run_tool("ocr", image, prompt)
 
     return mcp
 
 
-async def _run_tool(mode: str, image: ImageContent, prompt: str) -> str:
+async def _run_tool(mode: str, image: ImageContent | str, prompt: str) -> str:
     from app.services.image_validator import ImageValidationError
     from app.services.vision_service import VisionService, VisionServiceError
 

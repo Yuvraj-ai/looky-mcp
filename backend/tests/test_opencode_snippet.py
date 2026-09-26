@@ -67,3 +67,15 @@ class TestSnippet:
     async def test_requires_auth(self, client):
         resp = await client.get("/api/mcp-credential/opencode-snippet")
         assert resp.status_code == 401
+
+    async def test_config_snippets_multi_client(self, client, auth_headers):
+        resp = await client.get("/api/mcp-credential/config-snippets", headers=auth_headers)
+        assert resp.status_code == 200
+        data = resp.json()
+        assert "opencode" in data
+        assert "claude_code_cli" in data
+        assert "claude_code_json" in data
+        assert "codex_toml" in data
+        assert "claude mcp add --transport http" in data["claude_code_cli"]
+        assert "[mcp_servers.vision]" in data["codex_toml"]
+        assert '"mcpServers"' in data["claude_code_json"]

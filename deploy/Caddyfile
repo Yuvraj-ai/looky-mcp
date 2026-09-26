@@ -10,6 +10,10 @@ your-domain.com {
 	# built SPA (Vite dist)
 	root * /srv/vision-mcp/frontend/dist
 
+	request_body {
+		max_size 8MB
+	}
+
 	# REST API and MCP endpoint → single uvicorn worker
 	handle /api/* {
 		reverse_proxy 127.0.0.1:8000

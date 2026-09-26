@@ -106,13 +106,19 @@ Full walkthrough: [`USER_MANUAL.md`](./USER_MANUAL.md).
 
 ## Connect an agent
 
-The **MCP Access** page shows a ready-to-copy OpenCode config snippet:
+The **MCP Access** page provides ready-to-copy configuration snippets for OpenCode, Claude Code, and Codex.
 
+Export your generated key first:
+```bash
+export VISION_MCP_KEY=mcp_...
+```
+
+### 1. OpenCode (`opencode.json`)
 ```json
 {
   "mcp": {
     "vision": {
-      "type": "http",
+      "type": "remote",
       "url": "http://localhost:8000/mcp",
       "headers": { "Authorization": "Bearer {env:VISION_MCP_KEY}" }
     }
@@ -120,7 +126,32 @@ The **MCP Access** page shows a ready-to-copy OpenCode config snippet:
 }
 ```
 
-Export the key (`export VISION_MCP_KEY=vmcp-...`), paste the snippet into `opencode.json`, restart the agent — it can now call `describe_image` and `ocr_image`.
+### 2. Claude Code
+Run via CLI:
+```bash
+claude mcp add --transport http vision http://localhost:8000/mcp --header "Authorization: Bearer $VISION_MCP_KEY"
+```
+Or add to `.mcp.json` / `~/.claude.json`:
+```json
+{
+  "mcpServers": {
+    "vision": {
+      "type": "http",
+      "url": "http://localhost:8000/mcp",
+      "headers": { "Authorization": "Bearer ${VISION_MCP_KEY}" }
+    }
+  }
+}
+```
+
+### 3. Codex (`~/.codex/config.toml`)
+```toml
+[mcp_servers.vision]
+url = "http://localhost:8000/mcp"
+http_headers = { "Authorization" = "Bearer ${VISION_MCP_KEY}" }
+```
+
+Tools accept standard MCP `ImageContent` objects, raw base64 strings, or `data:image/...;base64,...` data URIs.
 
 ## Development
 

@@ -251,3 +251,27 @@ class TestToolExecution:
         # reactivate for other tests
         await db_session.execute(update(models.VisionProfile).values(is_active=True))
         await db_session.commit()
+
+    async def test_describe_image_with_data_uri_string(self, e2e_app, mcp_user, provider):
+        from mcp import ClientSession
+        from mcp.client.streamable_http import streamable_http_client
+
+        data_uri = f"data:image/png;base64,{_png_b64()}"
+        async with streamable_http_client(
+            e2e_app["base_url"] + "/mcp",
+            http_client=httpx.AsyncClient(
+                headers={"Authorization": f"Bearer {mcp_user['mcp_key']}"}
+            ),
+        ) as (read, write):
+            async with ClientSession(read, write) as session:
+                await session.initialize()
+                result = await session.call_tool(
+                    "describe_image",
+                    {
+                        "image": data_uri,
+                        "prompt": "What is this?",
+                    },
+                )
+                assert not result.is_error
+                text = result.content[0].text if result.content else ""
+                assert "A red square." in text

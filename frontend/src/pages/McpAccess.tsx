@@ -1,23 +1,32 @@
 import { useCallback, useEffect, useState } from "react";
 import {
   generateMcpKey,
+  getConfigSnippets,
   getMcpCredentialStatus,
-  getOpenCodeSnippet,
   revokeMcpKey,
+  type ConfigSnippets,
   type McpCredentialStatus,
 } from "../api/mcpCredential";
+
+type ClientTab = "opencode" | "claude_cli" | "claude_json" | "codex";
 
 export default function McpAccess() {
   const [status, setStatus] = useState<McpCredentialStatus | null>(null);
   const [freshKey, setFreshKey] = useState<string | null>(null);
-  const [snippet, setSnippet] = useState<string | null>(null);
+  const [snippets, setSnippets] = useState<ConfigSnippets | null>(null);
+  const [activeTab, setActiveTab] = useState<ClientTab>("opencode");
+  const [copiedField, setCopiedField] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
     try {
-      setStatus(await getMcpCredentialStatus());
-      setSnippet((await getOpenCodeSnippet()).snippet);
+      const [s, sn] = await Promise.all([
+        getMcpCredentialStatus(),
+        getConfigSnippets().catch(() => null),
+      ]);
+      setStatus(s);
+      setSnippets(sn);
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load");
@@ -28,7 +37,27 @@ export default function McpAccess() {
     void refresh();
   }, [refresh]);
 
+  async function copyToClipboard(text: string, fieldId: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedField(fieldId);
+      setTimeout(() => setCopiedField(null), 2000);
+    } catch {
+      // Fallback if clipboard API is restricted
+      setError("Failed to copy to clipboard");
+    }
+  }
+
   async function handleGenerate() {
+    if (
+      status?.configured &&
+      !window.confirm(
+        "Regenerating your key will immediately invalidate your active key. Any connected coding agents must be updated with the new key. Continue?"
+      )
+    ) {
+      return;
+    }
+
     setBusy(true);
     setError(null);
     try {
@@ -43,6 +72,14 @@ export default function McpAccess() {
   }
 
   async function handleRevoke() {
+    if (
+      !window.confirm(
+        "Are you sure you want to revoke MCP access? Connected coding agents will lose access immediately until you generate a new key."
+      )
+    ) {
+      return;
+    }
+
     setBusy(true);
     setError(null);
     try {
@@ -57,6 +94,29 @@ export default function McpAccess() {
   }
 
   if (status === null) return <div className="loading">Loading...</div>;
+
+  let currentSnippet = "";
+  let snippetDescription = "";
+
+  if (snippets) {
+    if (activeTab === "opencode") {
+      currentSnippet = snippets.opencode;
+      snippetDescription =
+        "Add this to opencode.json. Set the VISION_MCP_KEY environment variable to your MCP key.";
+    } else if (activeTab === "claude_cli") {
+      currentSnippet = snippets.claude_code_cli;
+      snippetDescription =
+        "Run this command in your terminal to connect Claude Code to Vision MCP.";
+    } else if (activeTab === "claude_json") {
+      currentSnippet = snippets.claude_code_json;
+      snippetDescription =
+        "Add this to your project .mcp.json or global ~/.claude.json configuration file.";
+    } else if (activeTab === "codex") {
+      currentSnippet = snippets.codex_toml;
+      snippetDescription =
+        "Add this to your ~/.codex/config.toml configuration file.";
+    }
+  }
 
   return (
     <section>
@@ -74,13 +134,22 @@ export default function McpAccess() {
         </div>
 
         {freshKey && (
-          <div>
-            <p className="notice">
-              Copy this key now — it will not be shown again. Put it in an
+          <div style={{ marginBottom: "1rem" }}>
+            <p className="notice" style={{ color: "#d97706" }}>
+              ⚠️ Copy this key now — it will not be shown again. Put it in an
               environment variable (e.g. <code>VISION_MCP_KEY</code>) and never
-              commit it to a repo.
+              commit it to a public repository.
             </p>
-            <div className="mono">{freshKey}</div>
+            <div className="code-container">
+              <button
+                type="button"
+                className="copy-button"
+                onClick={() => void copyToClipboard(freshKey, "key")}
+              >
+                {copiedField === "key" ? "Copied!" : "Copy Key"}
+              </button>
+              <div className="mono">{freshKey}</div>
+            </div>
           </div>
         )}
 
@@ -96,15 +165,52 @@ export default function McpAccess() {
         </div>
       </div>
 
-      {snippet && (
-        <div className="card" style={{ marginTop: "1rem" }}>
-          <h2>OpenCode Configuration</h2>
-          <p className="notice">
-            Add this to <code>opencode.json</code> and set the{" "}
-            <code>VISION_MCP_KEY</code> environment variable to your MCP key.
-            The key itself is deliberately not embedded here.
-          </p>
-          <div className="mono">{snippet}</div>
+      {snippets && (
+        <div className="card" style={{ marginTop: "1.5rem" }}>
+          <h2>Agent Configuration Snippets</h2>
+          <div className="tab-group">
+            <button
+              type="button"
+              className={`tab-btn ${activeTab === "opencode" ? "active" : ""}`}
+              onClick={() => setActiveTab("opencode")}
+            >
+              OpenCode (opencode.json)
+            </button>
+            <button
+              type="button"
+              className={`tab-btn ${activeTab === "claude_cli" ? "active" : ""}`}
+              onClick={() => setActiveTab("claude_cli")}
+            >
+              Claude Code (CLI)
+            </button>
+            <button
+              type="button"
+              className={`tab-btn ${activeTab === "claude_json" ? "active" : ""}`}
+              onClick={() => setActiveTab("claude_json")}
+            >
+              Claude Code (.mcp.json)
+            </button>
+            <button
+              type="button"
+              className={`tab-btn ${activeTab === "codex" ? "active" : ""}`}
+              onClick={() => setActiveTab("codex")}
+            >
+              Codex (config.toml)
+            </button>
+          </div>
+
+          <p className="notice">{snippetDescription}</p>
+
+          <div className="code-container">
+            <button
+              type="button"
+              className="copy-button"
+              onClick={() => void copyToClipboard(currentSnippet, "snippet")}
+            >
+              {copiedField === "snippet" ? "Copied!" : "Copy Snippet"}
+            </button>
+            <div className="mono">{currentSnippet}</div>
+          </div>
         </div>
       )}
     </section>

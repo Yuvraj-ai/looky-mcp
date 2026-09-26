@@ -36,6 +36,13 @@ export default function SystemPrompts() {
   }, [refresh]);
 
   async function handleDelete(prompt: SystemPrompt) {
+    if (
+      !window.confirm(
+        `Are you sure you want to delete system prompt "${prompt.title}"?`,
+      )
+    ) {
+      return;
+    }
     setError(null);
     try {
       await deleteSystemPrompt(prompt.id);

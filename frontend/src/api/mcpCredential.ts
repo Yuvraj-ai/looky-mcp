@@ -23,3 +23,14 @@ export interface OpenCodeSnippet {
 
 export const getOpenCodeSnippet = () =>
   api.get<OpenCodeSnippet>("/mcp-credential/opencode-snippet");
+
+export interface ConfigSnippets {
+  opencode: string;
+  claude_code_cli: string;
+  claude_code_json: string;
+  codex_toml: string;
+}
+
+export const getConfigSnippets = () =>
+  api.get<ConfigSnippets>("/mcp-credential/config-snippets");
+

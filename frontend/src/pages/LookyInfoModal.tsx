@@ -300,9 +300,21 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
                 <div className="looky-step-card">
                   <div className="looky-step-num">1</div>
                   <div className="looky-step-content">
-                    <h5>Sign In &amp; Configure System Prompts</h5>
+                    <h5>Account Provisioning &amp; Sign In</h5>
+                    <div className="looky-signup-alert">
+                      <span className="alert-icon">⚠️</span>
+                      <div className="alert-text">
+                        <strong>Important Note on the Signup Process:</strong> Looky MCP is a private, self-hosted system with <em>no public self-registration</em>. Accounts must be provisioned directly by the host admin on the server via the CLI:
+                        <div className="looky-code-preview" style={{ margin: "0.5rem 0" }}>
+                          <pre>
+                            <code>uv run python scripts/create_user.py --email you@example.com --password &apos;your-password&apos;</code>
+                          </pre>
+                        </div>
+                        Or for pre-authorized Google sign-in: <code>uv run python scripts/create_user.py --email you@example.com --google-sub &apos;sub_id&apos;</code>.
+                      </div>
+                    </div>
                     <p>
-                      Log into Looky MCP. Go to <strong>System Prompts</strong> to craft instructions for how your
+                      Once provisioned, log into Looky MCP with your credentials. Go to <strong>System Prompts</strong> to craft instructions for how your
                       vision model should extract UI, identify bugs, or read text. Expand{" "}
                       <strong>Universal Extra Instructions</strong> to apply global directives across every prompt.
                     </p>
@@ -373,6 +385,14 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
               {/* FAQs Section */}
               <h4 className="looky-section-title">Frequently Asked Questions (FAQs)</h4>
               <div className="looky-faqs-grid">
+                <div className="looky-faq-card looky-faq-highlight">
+                  <h6>How does the signup / account creation process work?</h6>
+                  <p>
+                    Because Looky MCP is a private, self-hosted system, there is no public self-registration form.
+                    Accounts are provisioned directly on the server by running <code>uv run python scripts/create_user.py --email &lt;email&gt; --password &apos;&lt;pwd&gt;&apos;</code> or pre-linking via Google OAuth.
+                  </p>
+                </div>
+
                 <div className="looky-faq-card">
                   <h6>Which vision models and providers are supported?</h6>
                   <p>

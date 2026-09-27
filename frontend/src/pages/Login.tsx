@@ -70,6 +70,12 @@ export default function Login() {
         <a className="google-link" href="/api/auth/google/start">
           Sign in with Google
         </a>
+        <div className="login-signup-note">
+          <span className="signup-note-badge">Note</span>
+          <span>
+            No public signup. Accounts are provisioned via <code>create_user.py</code> on the server or pre-authorized Google accounts.
+          </span>
+        </div>
       </form>
       <div className="login-footer-left">
         <GitHubCard className="github-card-login" />

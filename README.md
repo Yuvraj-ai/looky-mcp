@@ -5,9 +5,9 @@
 
 # Looky MCP
 
-Self-hosted vision for your coding agent
+Give eyes to smart open-source models without native vision support
 
-**Bring-your-own-model MCP server for image understanding** — connect any OpenAI-compatible vision LLM to OpenCode (or any MCP client) with per-user profiles, prompts, and keys.
+**Connect non-vision open-source coding agents to external vision LLMs on demand** — leverage the deep engineering intellect and cost efficiency of capable open-source models (DeepSeek Coder, Qwen, Llama 3) while delegating visual tasks through a self-hosted Model Context Protocol (MCP) server.
 
 [FastAPI](https://fastapi.tiangolo.com) • [Model Context Protocol](https://modelcontextprotocol.io) • [LangChain](https://python.langchain.com) • [React](https://react.dev) • [PostgreSQL](https://www.postgresql.org)
 
@@ -19,9 +19,16 @@ Self-hosted vision for your coding agent
 
 ## Overview
 
-Coding agents can't see. Looky MCP gives them eyes: an MCP server that exposes `describe_image` and `ocr_image` tools, backed by **your own vision model** (OpenAI, OpenRouter, a local vLLM endpoint — anything OpenAI-compatible).
+Many of the smartest, most capable open-source LLMs (such as DeepSeek Coder, Qwen Coder, or Llama 3) are world-class software engineers, but lack native multimodal vision support. When coding agents run on these text-only models, they cannot directly inspect screenshots of layout bugs, error popups, Figma mockups, or system architecture diagrams.
 
-You configure everything through a small web app: system prompts, vision model profiles (endpoint, model, API key — encrypted at rest), and a personal MCP key. The agent authenticates with that key, and every tool call routes through your **active profile** — you switch models without touching the agent's config.
+**Looky MCP bridges this gap.** It operates as an MCP server that exposes `describe_image` and `ocr_image` tools to your coding agent. When visual analysis is required, Looky MCP routes the image to a dedicated vision-capable model (OpenAI GPT-4o, Claude via OpenRouter, or a local vLLM/Ollama vision endpoint) with your tailored system prompt, and returns the extracted visual intelligence directly back to your open-source model.
+
+### Why This Matters
+
+- **Supercharges Non-Vision Models**: Increases the versatility of powerful text-only open-source models, allowing them to solve frontend layout bugs, verify UI changes, and parse diagrams without switching models.
+- **Best-of-Both-Worlds Pairing**: Pair models that have superior coding reasoning (like DeepSeek Coder) with models that excel at visual perception (like GPT-4o or specialized vision LLMs), avoiding compromises on either front.
+- **Massive Cost Optimization**: Use cheap, fast, or self-hosted open-source models for 99% of your codebase generation, routing strictly visual inspection calls to vision-capable endpoints only when an image is involved.
+- **Centralized Control & Privacy**: You configure system prompts, universal guidelines, and vision profiles through a clean web dashboard. Your API keys are encrypted at rest with AES-GCM and tool calls execute through your personal self-hosted gateway.
 
 ```
                         ┌───────────────────┐

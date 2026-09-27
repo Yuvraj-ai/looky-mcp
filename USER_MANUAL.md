@@ -1,6 +1,8 @@
 # Looky MCP — User Manual
 
-Looky MCP is a self-hosted **Model Context Protocol (MCP) server for image understanding**. You configure vision model profiles (any OpenAI-compatible endpoint), write system prompts, and then connect coding agents like **OpenCode** to it. When the agent needs to "see" an image — a screenshot, a diagram, an error dialog — it calls one of the MCP tools here, which forwards the image to your configured vision model with your chosen system prompt.
+Looky MCP is a self-hosted **Model Context Protocol (MCP) server that empowers smart, non-vision open-source models with external vision capabilities**. Many leading open-source models (such as DeepSeek Coder, Qwen Coder, or Llama 3) have outstanding software engineering reasoning but lack native vision support. 
+
+By connecting your coding agent (OpenCode, Claude Code, Cursor, Cline) to Looky MCP, the text-only model can delegate visual tasks (screenshots, layout bug verification, OCR, architecture diagrams) to dedicated vision models (OpenAI GPT-4o, Claude via OpenRouter, or local vLLM endpoints). This unlocks visual problem-solving for non-vision models while slashing inference costs by using inexpensive open-source models for general coding and reserving vision LLMs solely for image analysis.
 
 ---
 

@@ -63,7 +63,7 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
               </svg>
               <h2 id="looky-modal-title">Looky MCP</h2>
             </div>
-            <span className="looky-modal-tagline">Self-Hosted Vision for AI Coding Agents</span>
+            <span className="looky-modal-tagline">Giving Eyes to Smart Non-Vision Open-Source Models</span>
           </div>
 
           <div className="looky-modal-header-right">
@@ -146,18 +146,22 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
             <div className="looky-tab-content fade-in">
               {/* Hero Banner */}
               <div className="looky-hero-box">
-                <h3>Coding agents can&apos;t see. Looky MCP gives them eyes.</h3>
+                <h3>Giving eyes to capable open-source models without vision support.</h3>
                 <p>
-                  Leading AI coding agents like <strong>Claude Code</strong>, <strong>OpenCode</strong>,{" "}
-                  <strong>Cursor</strong>, and <strong>Cline</strong> excel at writing and refactoring code, but they
-                  are text-bound. When you share a screenshot of an error dialog, a Figma UI mockup, or a complex
-                  database ER diagram, they are blind to the pixels.
+                  Many of the smartest, most capable open-source LLMs (such as <strong>DeepSeek Coder</strong>,{" "}
+                  <strong>Qwen Coder</strong>, <strong>Llama 3</strong>, and <strong>StarCoder</strong>) are exceptional software engineers,
+                  yet they are text-only and lack native multimodal vision support. Coding agents running on these models cannot
+                  directly inspect screenshots of UI bugs, verify CSS layout differences, read error dialogs, or analyze architecture diagrams.
                 </p>
                 <p>
-                  <strong>Looky MCP</strong> bridges this gap. It operates as a self-hosted{" "}
-                  <strong>Model Context Protocol (MCP)</strong> server that exposes <code>describe_image</code> and{" "}
-                  <code>ocr_image</code> tools directly to your coding assistant, routing queries through your own
-                  configured vision LLM.
+                  <strong>Looky MCP</strong> bridges this gap. It acts as an intelligent visual bridge: your open-source coding agent uses Looky MCP&apos;s{" "}
+                  <code>describe_image</code> and <code>ocr_image</code> tools to delegate visual perception to dedicated vision-capable LLMs (such as GPT-4o,
+                  Claude via OpenRouter, or local vision models). The agent receives the extracted visual intelligence and runs on that information to complete your coding task.
+                </p>
+                <p>
+                  <strong>Supercharge usability and slash inference costs:</strong> Instead of paying premium frontier rates for an entire coding session,
+                  you can rely on fast, affordable, or self-hosted open-source models for 99% of your logic and code generation, routing only occasional visual queries
+                  to vision-capable endpoints when an image is present.
                 </p>
               </div>
 
@@ -165,11 +169,29 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
               <h4 className="looky-section-title">Why Looky MCP?</h4>
               <div className="looky-feature-grid">
                 <div className="looky-feature-card">
-                  <div className="looky-feature-icon">👁️</div>
-                  <h5>Bring Your Own Vision Model</h5>
+                  <div className="looky-feature-icon">🚀</div>
+                  <h5>Supercharge Non-Vision Models</h5>
                   <p>
-                    Use any OpenAI-compatible vision endpoint: OpenAI (GPT-4o, GPT-4o-mini), Anthropic via OpenRouter,
-                    Groq, or run completely private local vision models via vLLM or Ollama.
+                    Enable smart, text-only open-source models (DeepSeek Coder, Qwen, Llama 3) to tackle visual engineering,
+                    frontend UI fixes, and diagram reasoning without switching your primary coding brain.
+                  </p>
+                </div>
+
+                <div className="looky-feature-card">
+                  <div className="looky-feature-icon">💰</div>
+                  <h5>Slash Inference Costs</h5>
+                  <p>
+                    Use inexpensive, fast, or self-hosted open-source models for 99% of your coding workflow,
+                    invoking costly multimodal LLMs strictly when an image needs to be inspected.
+                  </p>
+                </div>
+
+                <div className="looky-feature-card">
+                  <div className="looky-feature-icon">🤝</div>
+                  <h5>Best-of-Breed Intelligence Synergy</h5>
+                  <p>
+                    Pair models that have superior coding intellect with models that excel at visual perception,
+                    bypassing the restrictions and compromises of all-in-one models.
                   </p>
                 </div>
 
@@ -197,24 +219,6 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
                   <p>
                     All API keys are encrypted at rest with AES-GCM in PostgreSQL. Your images and tokens never pass
                     through third-party telemetry or cloud middlemen.
-                  </p>
-                </div>
-
-                <div className="looky-feature-card">
-                  <div className="looky-feature-icon">⚡</div>
-                  <h5>Zero-Touch Model Switching</h5>
-                  <p>
-                    Activate a new vision profile in the web app and all connected agents immediately use the new model
-                    and prompt without restarting your terminal or touching configuration files.
-                  </p>
-                </div>
-
-                <div className="looky-feature-card">
-                  <div className="looky-feature-icon">🛡️</div>
-                  <h5>Protection &amp; Limits</h5>
-                  <p>
-                    Built-in concurrency and rate limiters safeguard your budget from rogue runaway agent loops,
-                    with up to 20 custom system prompts and 30 active vision profiles.
                   </p>
                 </div>
               </div>
@@ -259,11 +263,11 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
 
                     {/* Step 1: Agent */}
                     <rect x="20" y="30" width="180" height="110" rx="12" fill="url(#boxGrad1)" stroke="#3b82f6" strokeWidth="1.5" />
-                    <text x="110" y="60" textAnchor="middle" fill="currentColor" fontWeight="700" fontSize="14">AI Coding Agent</text>
-                    <text x="110" y="80" textAnchor="middle" fill="#888894" fontSize="11">Claude Code / OpenCode</text>
-                    <text x="110" y="98" textAnchor="middle" fill="#888894" fontSize="11">Cursor / Windsurf</text>
-                    <rect x="35" y="110" width="150" height="20" rx="5" fill="rgba(59,130,246,0.15)" />
-                    <text x="110" y="124" textAnchor="middle" fill="#60a5fa" fontSize="10" fontWeight="600">Calls describe_image</text>
+                    <text x="110" y="55" textAnchor="middle" fill="currentColor" fontWeight="700" fontSize="13">Non-Vision Agent</text>
+                    <text x="110" y="75" textAnchor="middle" fill="#888894" fontSize="11">DeepSeek / Qwen / Llama</text>
+                    <text x="110" y="93" textAnchor="middle" fill="#888894" fontSize="11">OpenCode / Claude Code</text>
+                    <rect x="35" y="105" width="150" height="24" rx="5" fill="rgba(59,130,246,0.15)" />
+                    <text x="110" y="121" textAnchor="middle" fill="#60a5fa" fontSize="9.5" fontWeight="600">Delegates Vision via MCP</text>
 
                     {/* Arrow 1 */}
                     <path d="M 200 85 L 260 85" stroke="#888894" strokeWidth="1.8" markerEnd="url(#arrowhead)" />
@@ -284,11 +288,11 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
 
                     {/* Step 3: Vision Provider */}
                     <rect x="540" y="30" width="180" height="110" rx="12" fill="url(#boxGrad3)" stroke="#8b5cf6" strokeWidth="1.5" />
-                    <text x="630" y="60" textAnchor="middle" fill="currentColor" fontWeight="700" fontSize="14">Vision Model</text>
-                    <text x="630" y="80" textAnchor="middle" fill="#888894" fontSize="11">OpenAI GPT-4o</text>
-                    <text x="630" y="98" textAnchor="middle" fill="#888894" fontSize="11">OpenRouter / Groq</text>
-                    <rect x="555" y="110" width="150" height="20" rx="5" fill="rgba(139,92,246,0.15)" />
-                    <text x="630" y="124" textAnchor="middle" fill="#c084fc" fontSize="10" fontWeight="600">Local Ollama / vLLM</text>
+                    <text x="630" y="55" textAnchor="middle" fill="currentColor" fontWeight="700" fontSize="13">Vision-Capable LLM</text>
+                    <text x="630" y="75" textAnchor="middle" fill="#888894" fontSize="11">OpenAI GPT-4o / Claude</text>
+                    <text x="630" y="93" textAnchor="middle" fill="#888894" fontSize="11">Local Ollama / vLLM Vision</text>
+                    <rect x="555" y="105" width="150" height="24" rx="5" fill="rgba(139,92,246,0.15)" />
+                    <text x="630" y="121" textAnchor="middle" fill="#c084fc" fontSize="9.5" fontWeight="600">Extracts Visual Insights</text>
                   </svg>
                 </div>
               </div>
@@ -367,16 +371,18 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
                 <div className="looky-step-card">
                   <div className="looky-step-num">4</div>
                   <div className="looky-step-content">
-                    <h5>Ask Your Agent to See!</h5>
+                    <h5>Supercharge Your Non-Vision Agent!</h5>
                     <p>
-                      Now simply ask your coding agent to inspect an image or UI error. For example:
+                      Now simply ask your coding agent to inspect an image or UI error. Even if your agent runs on a text-only
+                      open-source model (like <strong>DeepSeek Coder</strong>, <strong>Qwen</strong>, or <strong>Llama 3</strong>), it autonomously calls
+                      Looky MCP&apos;s <code>describe_image</code> tool:
                     </p>
                     <div className="looky-prompt-quote">
                       &ldquo;Look at frontend/src/assets/bug-screenshot.png and fix the misalignment in the navbar.&rdquo;
                     </div>
                     <p>
-                      The agent autonomously invokes Looky MCP&apos;s <code>describe_image</code> tool, receives accurate visual
-                      analysis, and writes the code fix for you!
+                      Looky MCP forwards the image to your configured vision LLM, extracts the visual layout discrepancies,
+                      and feeds the insight straight back to your open-source model to write the fix!
                     </p>
                   </div>
                 </div>
@@ -385,6 +391,17 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
               {/* FAQs Section */}
               <h4 className="looky-section-title">Frequently Asked Questions (FAQs)</h4>
               <div className="looky-faqs-grid">
+                <div className="looky-faq-card looky-faq-highlight">
+                  <h6>Why use Looky MCP instead of directly using a multimodal LLM for all coding?</h6>
+                  <p>
+                    Specialized open-source models (such as DeepSeek Coder or Qwen Coder) often surpass general multimodal LLMs
+                    at deep code refactoring, complex logic, and repository reasoning, but are completely text-only. Meanwhile,
+                    multimodal models (like GPT-4o) are expensive and rate-limited. Looky MCP decouples coding intelligence from vision:
+                    you run 99% of your workflow on cheap, fast, or self-hosted open-source models and borrow vision capabilities
+                    strictly when an image needs to be inspected.
+                  </p>
+                </div>
+
                 <div className="looky-faq-card looky-faq-highlight">
                   <h6>How does the signup / account creation process work?</h6>
                   <p>

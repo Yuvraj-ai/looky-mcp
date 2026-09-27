@@ -42,7 +42,7 @@ export default function Login() {
       </video>
       <div className="login-video-overlay" aria-hidden="true" />
       <form className="login-card" onSubmit={onSubmit}>
-        <h1>Looky MCP</h1>
+        <h1><span className="looky-brand-name">Looky</span> MCP</h1>
         <label>
           Email
           <input
@@ -89,7 +89,7 @@ export default function Login() {
           title="Learn more about Looky MCP"
         >
           <span className="what-is-looky-icon">💡</span>
-          What is Looky MCP??
+          What is <span className="looky-brand-name">Looky</span> MCP??
           <span className="what-is-looky-chevron" aria-hidden="true">▲</span>
         </button>
       </div>

@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import systemPromptsGuideImg from "../assets/guide/system_prompts_guide.png";
+import visionProfilesGuideImg from "../assets/guide/vision_profiles_guide.png";
+import mcpAccessGuideImg from "../assets/guide/mcp_access_guide.png";
 
 interface LookyInfoModalProps {
   isOpen: boolean;
@@ -61,7 +64,7 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
                 <line x1="3.95" y1="6.06" x2="8.54" y2="14" />
                 <line x1="10.88" y1="21.94" x2="15.46" y2="14" />
               </svg>
-              <h2 id="looky-modal-title">Looky MCP</h2>
+              <h2 id="looky-modal-title"><span className="looky-brand-name">Looky</span> MCP</h2>
             </div>
             <span className="looky-modal-tagline">Giving Eyes to Smart Non-Vision Open-Source Models</span>
           </div>
@@ -154,7 +157,7 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
                   directly inspect screenshots of UI bugs, verify CSS layout differences, read error dialogs, or analyze architecture diagrams.
                 </p>
                 <p>
-                  <strong>Looky MCP</strong> bridges this gap. It acts as an intelligent visual bridge: your open-source coding agent uses Looky MCP&apos;s{" "}
+                  <strong><span className="looky-brand-name">Looky</span> MCP</strong> bridges this gap. It acts as an intelligent visual bridge: your open-source coding agent uses <span className="looky-brand-name">Looky</span> MCP&apos;s{" "}
                   <code>describe_image</code> and <code>ocr_image</code> tools to delegate visual perception to dedicated vision-capable LLMs (such as GPT-4o,
                   Claude via OpenRouter, or local vision models). The agent receives the extracted visual intelligence and runs on that information to complete your coding task.
                 </p>
@@ -166,7 +169,7 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
               </div>
 
               {/* Core Features Grid */}
-              <h4 className="looky-section-title">Why Looky MCP?</h4>
+              <h4 className="looky-section-title">Why <span className="looky-brand-name">Looky</span> MCP?</h4>
               <div className="looky-feature-grid">
                 <div className="looky-feature-card">
                   <div className="looky-feature-icon">🚀</div>
@@ -297,93 +300,172 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
                 </div>
               </div>
 
-              {/* Step by Step Guide */}
-              <h4 className="looky-section-title">Step-by-Step Setup Guide</h4>
-              <div className="looky-steps-container">
-                {/* Step 1 */}
-                <div className="looky-step-card">
-                  <div className="looky-step-num">1</div>
-                  <div className="looky-step-content">
-                    <h5>Account Provisioning &amp; Sign In</h5>
-                    <div className="looky-signup-alert">
-                      <span className="alert-icon">⚠️</span>
-                      <div className="alert-text">
-                        <strong>Important Note on the Signup Process:</strong> Looky MCP is a private, self-hosted system with <em>no public self-registration</em>. Accounts must be provisioned directly by the host admin on the server via the CLI:
-                        <div className="looky-code-preview" style={{ margin: "0.5rem 0" }}>
-                          <pre>
-                            <code>uv run python scripts/create_user.py --email you@example.com --password &apos;your-password&apos;</code>
-                          </pre>
+              {/* Part 1: Frontend Setup */}
+              <div className="looky-section-group">
+                <div className="looky-section-header">
+                  <span className="looky-section-badge">Part 1</span>
+                  <h4>Frontend Setup (Web Dashboard)</h4>
+                </div>
+                <p className="looky-section-desc">
+                  Configure your vision model endpoints, encrypted credentials, system instructions, and global directives from your browser.
+                </p>
+
+                <div className="looky-steps-container">
+                  {/* Step 1 */}
+                  <div className="looky-step-card">
+                    <div className="looky-step-num">1</div>
+                    <div className="looky-step-content">
+                      <h5>Account Provisioning &amp; Sign In</h5>
+                      <div className="looky-signup-alert">
+                        <span className="alert-icon">⚠️</span>
+                        <div className="alert-text">
+                          <strong>Important Note on the Signup Process:</strong> <span className="looky-brand-name">Looky</span> MCP is a private, self-hosted system with <em>no public self-registration</em>. Accounts must be provisioned directly by the host admin on the server via the CLI:
+                          <div className="looky-code-preview" style={{ margin: "0.5rem 0" }}>
+                            <div className="looky-code-header">CLI (Admin Provisioning)</div>
+                            <pre>
+                              <code>uv run python scripts/create_user.py --email you@example.com --password &apos;your-password&apos;</code>
+                            </pre>
+                          </div>
+                          Or for pre-authorized Google sign-in:
+                          <div className="looky-code-preview" style={{ margin: "0.5rem 0" }}>
+                            <div className="looky-code-header">Google OAuth Provisioning</div>
+                            <pre>
+                              <code>uv run python scripts/create_user.py --email you@example.com --google-sub &apos;sub_id&apos;</code>
+                            </pre>
+                          </div>
                         </div>
-                        Or for pre-authorized Google sign-in: <code>uv run python scripts/create_user.py --email you@example.com --google-sub &apos;sub_id&apos;</code>.
+                      </div>
+                      <p>
+                        Once provisioned, log into <span className="looky-brand-name">Looky</span> MCP with your email and password or Google account to access the dashboard.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className="looky-step-card">
+                    <div className="looky-step-num">2</div>
+                    <div className="looky-step-content">
+                      <h5>Configure System Prompts &amp; Universal Extra Instructions</h5>
+                      <p>
+                        Go to the <strong>System Prompts</strong> tab to define specialized instructions for how your vision model analyzes images (e.g. detailed UI component inspection, bug triage, or OCR text transcription). You can store up to 20 custom prompts with creation timestamps and live search.
+                      </p>
+                      <p>
+                        Expand <strong>Universal Extra Instructions</strong> at the top of the page to define global rules (such as <em>&ldquo;Always specify exact CSS pixel discrepancies and RGB colors&rdquo;</em>) that automatically append to every prompt across all vision models.
+                      </p>
+                      <div className="looky-step-image-box">
+                        <img
+                          src={systemPromptsGuideImg}
+                          alt="System Prompts and Universal Extra Instructions UI"
+                          className="looky-step-image"
+                          loading="lazy"
+                        />
+                        <div className="looky-step-image-caption">
+                          <span>📸</span>
+                          <span>System Prompts Dashboard — Search prompts, monitor limits, and expand Universal Extra Instructions.</span>
+                        </div>
                       </div>
                     </div>
-                    <p>
-                      Once provisioned, log into Looky MCP with your credentials. Go to <strong>System Prompts</strong> to craft instructions for how your
-                      vision model should extract UI, identify bugs, or read text. Expand{" "}
-                      <strong>Universal Extra Instructions</strong> to apply global directives across every prompt.
-                    </p>
                   </div>
-                </div>
 
-                {/* Step 2 */}
-                <div className="looky-step-card">
-                  <div className="looky-step-num">2</div>
-                  <div className="looky-step-content">
-                    <h5>Create &amp; Activate a Vision Profile</h5>
-                    <p>
-                      Navigate to <strong>Vision Profiles</strong> and click <em>New Vision Profile</em>. Enter:
-                    </p>
-                    <ul className="looky-step-list">
-                      <li><strong>Provider / Name</strong>: e.g. <code>GPT-4o Vision</code> or <code>Local Qwen2-VL</code></li>
-                      <li><strong>Base URL</strong>: <code>https://api.openai.com/v1</code> or <code>http://localhost:11434/v1</code></li>
-                      <li><strong>Model Name</strong>: e.g. <code>gpt-4o</code>, <code>claude-3-5-sonnet-20241022</code></li>
-                      <li><strong>API Key</strong>: Your encrypted API key (or dummy token for local endpoints)</li>
-                      <li><strong>Linked Prompt</strong>: Select your preferred system prompt preset</li>
-                    </ul>
-                    <p>Click <strong>Activate</strong> so Looky MCP knows which endpoint to route requests to.</p>
-                  </div>
-                </div>
-
-                {/* Step 3 */}
-                <div className="looky-step-card">
-                  <div className="looky-step-num">3</div>
-                  <div className="looky-step-content">
-                    <h5>Connect Claude Code or OpenCode via CLI</h5>
-                    <p>
-                      Switch to the <strong>MCP Access</strong> tab and copy your generated MCP command or configuration snippet.
-                    </p>
-                    <div className="looky-code-preview">
-                      <div className="looky-code-header">Terminal (Claude Code CLI)</div>
-                      <pre>
-                        <code>
-                          claude mcp add --transport http looky-mcp http://localhost:8000/mcp \<br />
-                          {"  "}--header &quot;Authorization: Bearer YOUR_MCP_KEY&quot;
-                        </code>
-                      </pre>
+                  {/* Step 3 */}
+                  <div className="looky-step-card">
+                    <div className="looky-step-num">3</div>
+                    <div className="looky-step-content">
+                      <h5>Create &amp; Activate a Vision Profile</h5>
+                      <p>
+                        Navigate to <strong>Vision Profiles</strong> to configure your vision model endpoints (supporting up to 30 profiles). Click <em>New Vision Profile</em> and provide:
+                      </p>
+                      <ul className="looky-step-list">
+                        <li><strong>Provider / Name</strong>: e.g. <code>GPT-4o Vision</code> or <code>Local Qwen2-VL</code></li>
+                        <li><strong>Base URL</strong>: <code>https://api.openai.com/v1</code> or <code>http://localhost:11434/v1</code></li>
+                        <li><strong>Model Name</strong>: e.g. <code>gpt-4o</code>, <code>claude-3-5-sonnet-20241022</code></li>
+                        <li><strong>API Key</strong>: Your encrypted API key (or dummy token for local endpoints)</li>
+                        <li><strong>Linked Prompt</strong>: Select your preferred default system prompt preset</li>
+                      </ul>
+                      <p>
+                        Click <strong>Activate</strong> on your desired profile. <span className="looky-brand-name">Looky</span> MCP will immediately route all incoming agent queries to this active profile.
+                      </p>
+                      <div className="looky-step-image-box">
+                        <img
+                          src={visionProfilesGuideImg}
+                          alt="Vision Profiles Management UI"
+                          className="looky-step-image"
+                          loading="lazy"
+                        />
+                        <div className="looky-step-image-caption">
+                          <span>📸</span>
+                          <span>Vision Profiles Manager — Manage endpoints, encrypted API keys, and instantly toggle active models.</span>
+                        </div>
+                      </div>
                     </div>
-                    <p className="looky-code-note">
-                      Or for OpenCode / Cursor, paste the JSON snippet provided in <em>MCP Access</em> directly into your project config.
-                    </p>
                   </div>
                 </div>
+              </div>
 
-                {/* Step 4 */}
-                <div className="looky-step-card">
-                  <div className="looky-step-num">4</div>
-                  <div className="looky-step-content">
-                    <h5>Supercharge Your Non-Vision Agent!</h5>
-                    <p>
-                      Now simply ask your coding agent to inspect an image or UI error. Even if your agent runs on a text-only
-                      open-source model (like <strong>DeepSeek Coder</strong>, <strong>Qwen</strong>, or <strong>Llama 3</strong>), it autonomously calls
-                      Looky MCP&apos;s <code>describe_image</code> tool:
-                    </p>
-                    <div className="looky-prompt-quote">
-                      &ldquo;Look at frontend/src/assets/bug-screenshot.png and fix the misalignment in the navbar.&rdquo;
+              {/* Part 2: CLI & Agent Integration */}
+              <div className="looky-section-group">
+                <div className="looky-section-header">
+                  <span className="looky-section-badge">Part 2</span>
+                  <h4>CLI &amp; Coding Agent Setup</h4>
+                </div>
+                <p className="looky-section-desc">
+                  Connect your text-only coding agent (DeepSeek Coder, Qwen Coder, Llama 3 via Claude Code CLI, OpenCode, or Cursor) to <span className="looky-brand-name">Looky</span> MCP.
+                </p>
+
+                <div className="looky-steps-container">
+                  {/* Step 4 */}
+                  <div className="looky-step-card">
+                    <div className="looky-step-num">4</div>
+                    <div className="looky-step-content">
+                      <h5>Connect Your Agent via MCP Protocol</h5>
+                      <p>
+                        Switch to the <strong>MCP Access</strong> tab in the web dashboard. <span className="looky-brand-name">Looky</span> MCP displays your persistent gateway URL, personal access token, and one-click copyable configuration snippets.
+                      </p>
+                      <div className="looky-step-image-box">
+                        <img
+                          src={mcpAccessGuideImg}
+                          alt="MCP Access Tab and CLI Commands"
+                          className="looky-step-image"
+                          loading="lazy"
+                        />
+                        <div className="looky-step-image-caption">
+                          <span>📸</span>
+                          <span>MCP Access Tab — Instant copyable CLI setup commands and authorization Bearer headers.</span>
+                        </div>
+                      </div>
+                      <div className="looky-code-preview">
+                        <div className="looky-code-header">Terminal (Claude Code CLI)</div>
+                        <pre>
+                          <code>
+                            claude mcp add --transport http looky-mcp http://localhost:8000/mcp \<br />
+                            {"  "}--header &quot;Authorization: Bearer YOUR_MCP_KEY&quot;
+                          </code>
+                        </pre>
+                      </div>
+                      <p className="looky-code-note">
+                        For OpenCode, Cursor, or Windsurf, paste the JSON snippet provided in <em>MCP Access</em> directly into your editor&apos;s MCP config file.
+                      </p>
                     </div>
-                    <p>
-                      Looky MCP forwards the image to your configured vision LLM, extracts the visual layout discrepancies,
-                      and feeds the insight straight back to your open-source model to write the fix!
-                    </p>
+                  </div>
+
+                  {/* Step 5 */}
+                  <div className="looky-step-card">
+                    <div className="looky-step-num">5</div>
+                    <div className="looky-step-content">
+                      <h5>Supercharge Your Non-Vision Agent!</h5>
+                      <p>
+                        Now ask your coding agent to inspect an image or UI error. Even if your agent runs on a text-only
+                        open-source model (like <strong>DeepSeek Coder</strong>, <strong>Qwen</strong>, or <strong>Llama 3</strong>), it autonomously calls
+                        <span className="looky-brand-name"> Looky</span> MCP&apos;s <code>describe_image</code> tool:
+                      </p>
+                      <div className="looky-prompt-quote">
+                        &ldquo;Look at frontend/src/assets/bug-screenshot.png and fix the misalignment in the navbar.&rdquo;
+                      </div>
+                      <p>
+                        <span className="looky-brand-name">Looky</span> MCP forwards the image to your configured vision LLM, extracts the visual layout discrepancies,
+                        and feeds the insight straight back to your open-source model to write the fix!
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -392,11 +474,11 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
               <h4 className="looky-section-title">Frequently Asked Questions (FAQs)</h4>
               <div className="looky-faqs-grid">
                 <div className="looky-faq-card looky-faq-highlight">
-                  <h6>Why use Looky MCP instead of directly using a multimodal LLM for all coding?</h6>
+                  <h6>Why use <span className="looky-brand-name">Looky</span> MCP instead of directly using a multimodal LLM for all coding?</h6>
                   <p>
                     Specialized open-source models (such as DeepSeek Coder or Qwen Coder) often surpass general multimodal LLMs
                     at deep code refactoring, complex logic, and repository reasoning, but are completely text-only. Meanwhile,
-                    multimodal models (like GPT-4o) are expensive and rate-limited. Looky MCP decouples coding intelligence from vision:
+                    multimodal models (like GPT-4o) are expensive and rate-limited. <span className="looky-brand-name">Looky</span> MCP decouples coding intelligence from vision:
                     you run 99% of your workflow on cheap, fast, or self-hosted open-source models and borrow vision capabilities
                     strictly when an image needs to be inspected.
                   </p>
@@ -405,7 +487,7 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
                 <div className="looky-faq-card looky-faq-highlight">
                   <h6>How does the signup / account creation process work?</h6>
                   <p>
-                    Because Looky MCP is a private, self-hosted system, there is no public self-registration form.
+                    Because <span className="looky-brand-name">Looky</span> MCP is a private, self-hosted system, there is no public self-registration form.
                     Accounts are provisioned directly on the server by running <code>uv run python scripts/create_user.py --email &lt;email&gt; --password &apos;&lt;pwd&gt;&apos;</code> or pre-linking via Google OAuth.
                   </p>
                 </div>
@@ -419,9 +501,9 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
                 </div>
 
                 <div className="looky-faq-card">
-                  <h6>What MCP tools does Looky MCP expose to coding agents?</h6>
+                  <h6>What MCP tools does <span className="looky-brand-name">Looky</span> MCP expose to coding agents?</h6>
                   <p>
-                    Looky MCP provides two standard tools: <code>describe_image</code> (for contextual visual questions,
+                    <span className="looky-brand-name">Looky</span> MCP provides two standard tools: <code>describe_image</code> (for contextual visual questions,
                     bug reproduction, diagram reasoning) and <code>ocr_image</code> (specifically optimized for high-fidelity text extraction).
                   </p>
                 </div>
@@ -437,7 +519,7 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
                 <div className="looky-faq-card">
                   <h6>Can I switch models without restarting my coding agent?</h6>
                   <p>
-                    Yes! That is one of Looky MCP&apos;s primary superpowers. Your coding agent always connects to the same
+                    Yes! That is one of <span className="looky-brand-name">Looky</span> MCP&apos;s primary superpowers. Your coding agent always connects to the same
                     MCP gateway URL. When you activate a different Vision Profile in the web dashboard, the very next image
                     query routes to your new model seamlessly.
                   </p>

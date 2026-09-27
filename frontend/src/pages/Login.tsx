@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useAuth } from "../auth/AuthContext";
+import GitHubCard from "./GitHubCard";
 
 export default function Login() {
   const { login } = useAuth();
@@ -68,6 +69,9 @@ export default function Login() {
           Sign in with Google
         </a>
       </form>
+      <div className="login-footer-left">
+        <GitHubCard className="github-card-login" />
+      </div>
     </div>
   );
 }

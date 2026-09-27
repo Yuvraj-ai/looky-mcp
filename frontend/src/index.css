@@ -19,6 +19,12 @@ body {
 }
 
 /* layout */
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .layout header {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -132,6 +138,11 @@ main {
   max-width: 960px;
   margin: 2rem auto;
   padding: 0 1.5rem;
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 /* forms & controls */
@@ -869,6 +880,117 @@ button.extra-instructions-toggle:active:not(:disabled) {
   font-size: 0.88rem;
 }
 
+/* Layout footer & GitHub profile card */
+.layout-footer {
+  margin-top: auto;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.github-profile-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.45rem 0.85rem;
+  background: #ffffff;
+  border: 1px solid #e2e2e8;
+  border-radius: 9px;
+  color: #1d1d1f;
+  text-decoration: none;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.github-profile-card:hover {
+  background: #fbfbfd;
+  border-color: #c8c8d0;
+  color: #000000;
+  transform: translateY(-1px);
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.08),
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.github-profile-card:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.github-icon {
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+.github-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.github-card-title {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: #86868b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.github-card-name {
+  font-weight: 600;
+  font-size: 0.84rem;
+  color: inherit;
+}
+
+.github-card-arrow {
+  color: #86868b;
+  margin-left: 0.15rem;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.github-profile-card:hover .github-card-arrow {
+  color: currentColor;
+  transform: translate(1px, -1px);
+}
+
+.login-footer-left {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 10;
+}
+
+.github-card-login {
+  background: rgba(22, 22, 26, 0.72);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #f5f5f7;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.github-card-login:hover {
+  background: rgba(28, 28, 34, 0.85);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
 .notice {
   color: #515154;
   font-size: 0.85rem;
@@ -887,7 +1009,9 @@ button.extra-instructions-toggle:active:not(:disabled) {
 
   button,
   .copy-button,
-  .chevron-icon {
+  .chevron-icon,
+  .github-profile-card,
+  .github-card-arrow {
     transition: none;
   }
 
@@ -897,7 +1021,10 @@ button.extra-instructions-toggle:active:not(:disabled) {
   .copy-button:active,
   .google-link:hover,
   .google-link:active,
-  .tab-btn.active {
+  .tab-btn.active,
+  .github-profile-card:hover,
+  .github-profile-card:active,
+  .github-profile-card:hover .github-card-arrow {
     transform: none;
   }
 }
@@ -1231,5 +1358,31 @@ button.extra-instructions-toggle:active:not(:disabled) {
 
   .card-timestamp {
     color: #9898a0;
+  }
+
+  .github-profile-card {
+    background: #1f1f23;
+    border-color: #34343a;
+    color: #f5f5f7;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .github-profile-card:hover {
+    background: #27272e;
+    border-color: #484852;
+    color: #ffffff;
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .github-card-title {
+    color: #8e8e93;
+  }
+
+  .github-card-arrow {
+    color: #8e8e93;
   }
 }

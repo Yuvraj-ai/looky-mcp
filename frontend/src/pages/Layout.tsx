@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import GitHubCard from "./GitHubCard";
 
 export default function Layout() {
   const { user, logout } = useAuth();
@@ -21,6 +22,9 @@ export default function Layout() {
       </header>
       <main>
         <Outlet />
+        <footer className="layout-footer">
+          <GitHubCard />
+        </footer>
       </main>
     </div>
   );

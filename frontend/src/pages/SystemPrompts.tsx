@@ -91,6 +91,8 @@ export default function SystemPrompts() {
       <h1>System Prompts</h1>
       {error && <p className="error">{error}</p>}
 
+      <ExtraInstructionsCard />
+
       {mode.kind === "closed" && (
         <div className="section-toolbar">
           <button className="btn-primary" onClick={() => setMode({ kind: "create" })}>
@@ -176,10 +178,6 @@ export default function SystemPrompts() {
             </div>
           );
         })}
-      </div>
-
-      <div className="card-list" style={{ marginTop: "2rem" }}>
-        <ExtraInstructionsCard />
       </div>
     </section>
   );

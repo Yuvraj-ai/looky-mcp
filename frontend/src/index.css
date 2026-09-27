@@ -722,6 +722,110 @@ main {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
+/* Universal Extra Instructions expandable tab */
+.extra-instructions-tab {
+  padding: 0;
+  margin-bottom: 1.25rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e5e5ea;
+  background: #ffffff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.extra-instructions-tab:hover {
+  border-color: #d2d2d7;
+}
+
+button.extra-instructions-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.15rem;
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  box-shadow: none;
+  transform: none;
+  color: #1d1d1f;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+button.extra-instructions-toggle:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.025);
+  border: none;
+  box-shadow: none;
+  transform: none;
+}
+
+button.extra-instructions-toggle:active:not(:disabled) {
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  box-shadow: none;
+  transform: none;
+}
+
+.extra-instructions-header-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.extra-instructions-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #1d1d1f;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 0.15rem 0.55rem;
+  border-radius: 9999px;
+  line-height: 1.2;
+}
+
+.status-pill-active {
+  background: #ecfdf5;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.status-pill-muted {
+  background: #f4f4f5;
+  color: #71717a;
+  border: 1px solid #e4e4e7;
+}
+
+.extra-instructions-header-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #636366;
+}
+
+.chevron-icon {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.chevron-icon.open {
+  transform: rotate(180deg);
+}
+
+.extra-instructions-content {
+  padding: 0.25rem 1.15rem 1.15rem 1.15rem;
+  border-top: 1px solid #f0f0f3;
+  animation: fade-in 0.2s ease-out;
+}
+
 .notice {
   color: #515154;
   font-size: 0.85rem;
@@ -733,12 +837,14 @@ main {
   main,
   .card,
   .layout header,
-  .notice {
+  .notice,
+  .extra-instructions-content {
     animation: none;
   }
 
   button,
-  .copy-button {
+  .copy-button,
+  .chevron-icon {
     transition: none;
   }
 
@@ -767,6 +873,10 @@ main {
   .card {
     background: #1f1f22;
     border-color: #333338;
+  }
+
+  .notice {
+    color: #9898a0;
   }
 
   .login-card {
@@ -1008,5 +1118,59 @@ main {
 
   .prompt-content::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.18);
+  }
+
+  .extra-instructions-tab {
+    background: #1f1f22;
+    border-color: #333338;
+  }
+
+  .extra-instructions-tab:hover {
+    border-color: #484852;
+  }
+
+  button.extra-instructions-toggle {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: #f5f5f7;
+  }
+
+  button.extra-instructions-toggle:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    box-shadow: none;
+    transform: none;
+  }
+
+  button.extra-instructions-toggle:active:not(:disabled) {
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .extra-instructions-title {
+    color: #f5f5f7;
+  }
+
+  .status-pill-active {
+    background: #143322;
+    color: #4ade80;
+    border-color: #1e4a30;
+  }
+
+  .status-pill-muted {
+    background: #27272a;
+    color: #a1a1aa;
+    border-color: #3f3f46;
+  }
+
+  .extra-instructions-header-right {
+    color: #a1a1aa;
+  }
+
+  .extra-instructions-content {
+    border-top-color: #2e2e34;
   }
 }

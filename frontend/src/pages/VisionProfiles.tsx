@@ -23,6 +23,7 @@ export default function VisionProfiles() {
   const [mode, setMode] = useState<Mode>({ kind: "closed" });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const refresh = useCallback(async () => {
     try {
@@ -87,6 +88,18 @@ export default function VisionProfiles() {
     await refresh();
   }
 
+  const filteredProfiles = profiles.filter((p) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    const pTitle = promptTitle(p.system_prompt_id).toLowerCase();
+    return (
+      p.name.toLowerCase().includes(q) ||
+      p.model.toLowerCase().includes(q) ||
+      p.endpoint.toLowerCase().includes(q) ||
+      pTitle.includes(q)
+    );
+  });
+
   if (loading) return <div className="loading">Loading...</div>;
 
   return (
@@ -95,16 +108,27 @@ export default function VisionProfiles() {
       {error && <p className="error">{error}</p>}
 
       {mode.kind === "closed" && (
-        <button
-          className="btn-primary"
-          onClick={() => setMode({ kind: "create" })}
-          disabled={prompts.length === 0}
-        >
-          New Vision Profile
-        </button>
-      )}
-      {mode.kind === "closed" && prompts.length === 0 && (
-        <p className="notice">Create a System Prompt first.</p>
+        <div className="section-toolbar">
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            <button
+              className="btn-primary"
+              onClick={() => setMode({ kind: "create" })}
+              disabled={prompts.length === 0}
+            >
+              New Vision Profile
+            </button>
+            {prompts.length === 0 && (
+              <span className="notice">Create a System Prompt first.</span>
+            )}
+          </div>
+          <input
+            type="search"
+            className="search-input"
+            placeholder="Search vision profiles..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
       )}
 
       {mode.kind === "create" && (
@@ -136,7 +160,10 @@ export default function VisionProfiles() {
         {profiles.length === 0 && mode.kind === "closed" && (
           <p className="notice">No vision profiles yet.</p>
         )}
-        {profiles.map((p) => (
+        {profiles.length > 0 && filteredProfiles.length === 0 && (
+          <p className="notice">No vision profiles matching "{searchQuery}".</p>
+        )}
+        {filteredProfiles.map((p) => (
           <div className="card" key={p.id}>
             <div
               style={{

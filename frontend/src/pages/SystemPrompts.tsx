@@ -19,6 +19,20 @@ export default function SystemPrompts() {
   const [mode, setMode] = useState<Mode>({ kind: "closed" });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+
+  const toggleExpand = (id: string) => {
+    setExpandedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
 
   const refresh = useCallback(async () => {
     try {
@@ -52,6 +66,15 @@ export default function SystemPrompts() {
     }
   }
 
+  const filteredPrompts = prompts.filter((p) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      p.title.toLowerCase().includes(q) ||
+      p.content.toLowerCase().includes(q)
+    );
+  });
+
   if (loading) return <div className="loading">Loading...</div>;
 
   return (
@@ -60,9 +83,18 @@ export default function SystemPrompts() {
       {error && <p className="error">{error}</p>}
 
       {mode.kind === "closed" && (
-        <button className="btn-primary" onClick={() => setMode({ kind: "create" })}>
-          New System Prompt
-        </button>
+        <div className="section-toolbar">
+          <button className="btn-primary" onClick={() => setMode({ kind: "create" })}>
+            New System Prompt
+          </button>
+          <input
+            type="search"
+            className="search-input"
+            placeholder="Search system prompts..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
       )}
 
       {mode.kind === "create" && (
@@ -102,25 +134,39 @@ export default function SystemPrompts() {
             No system prompts yet. Create one to use in a Vision Profile.
           </p>
         )}
-        {prompts.map((p) => (
-          <div className="card" key={p.id}>
-            <h2>{p.title}</h2>
-            <p className="meta" style={{ whiteSpace: "pre-wrap" }}>
-              {p.content}
-            </p>
-            <div className="actions">
-              <button onClick={() => setMode({ kind: "edit", prompt: p })}>
-                Edit
-              </button>
-              <button
-                className="btn-danger"
-                onClick={() => void handleDelete(p)}
-              >
-                Delete
-              </button>
+        {prompts.length > 0 && filteredPrompts.length === 0 && (
+          <p className="notice">
+            No system prompts matching "{searchQuery}".
+          </p>
+        )}
+        {filteredPrompts.map((p) => {
+          const isExpanded = expandedIds.has(p.id);
+          const isLong = p.content.length > 240;
+          return (
+            <div className="card prompt-card" key={p.id}>
+              <h2>{p.title}</h2>
+              <div className={`prompt-content ${isExpanded ? "expanded" : ""}`}>
+                {p.content}
+              </div>
+              <div className="actions">
+                <button onClick={() => setMode({ kind: "edit", prompt: p })}>
+                  Edit
+                </button>
+                {isLong && (
+                  <button onClick={() => toggleExpand(p.id)}>
+                    {isExpanded ? "Collapse" : "Expand"}
+                  </button>
+                )}
+                <button
+                  className="btn-danger"
+                  onClick={() => void handleDelete(p)}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="card-list" style={{ marginTop: "2rem" }}>

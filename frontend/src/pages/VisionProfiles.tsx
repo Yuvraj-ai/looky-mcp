@@ -200,7 +200,9 @@ export default function VisionProfiles() {
             </div>
             <div className="actions">
               {p.is_active ? (
-                <button disabled>Active</button>
+                <button className="btn-active" disabled>
+                  Active
+                </button>
               ) : (
                 <button
                   className="btn-primary"

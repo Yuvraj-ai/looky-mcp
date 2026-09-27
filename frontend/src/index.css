@@ -141,18 +141,105 @@ button {
   cursor: pointer;
   border: 1px solid #d2d2d7;
   background: #ffffff;
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 0.45rem 0.9rem;
   font-size: 0.95rem;
+  font-weight: 500;
+  color: #1d1d1f;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    0 1px 1px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
 }
 
 button:hover:not(:disabled) {
-  background: #f0f0f3;
+  background: #f7f7fa;
+  border-color: #c2c2c8;
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+/* press-in: the button sinks like a physical key */
+button:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.14),
+    inset 0 1px 1px rgba(0, 0, 0, 0.08);
+  background: #ececf0;
+}
+
+button:focus-visible {
+  outline: 2px solid #0a84ff;
+  outline-offset: 2px;
 }
 
 button:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* destructive: faded red at rest, heavy red on hover */
+.btn-danger {
+  color: #c1272d;
+  background: #fdf3f3;
+  border-color: #f2d4d5;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #c1272d;
+  color: #ffffff;
+  border-color: #c1272d;
+  box-shadow:
+    0 4px 12px rgba(193, 39, 45, 0.35),
+    0 1px 2px rgba(193, 39, 45, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.btn-danger:active:not(:disabled) {
+  background: #a02025;
+  border-color: #a02025;
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* primary action */
+.btn-primary {
+  background: #1d1d1f;
+  color: #ffffff;
+  border-color: #1d1d1f;
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.22),
+    0 1px 2px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #2c2c30;
+  border-color: #2c2c30;
+  box-shadow:
+    0 5px 14px rgba(0, 0, 0, 0.28),
+    0 1px 3px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.btn-primary:active:not(:disabled) {
+  background: #0f0f10;
+  transform: translateY(1px) scale(0.98);
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 input,
@@ -182,37 +269,194 @@ label {
 
 /* login */
 .login-wrap {
+  position: relative;
   display: grid;
   place-items: center;
   min-height: 100vh;
+  overflow: hidden;
+  background: #0a0a0c;
+}
+
+.login-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* dark veil so the card reads over the moving video */
+.login-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, 0.25) 0%,
+      rgba(0, 0, 0, 0.55) 100%
+    );
+  z-index: 1;
 }
 
 .login-card {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   width: 340px;
   padding: 2rem;
-  background: #ffffff;
-  border: 1px solid #e5e5ea;
-  border-radius: 12px;
+  background: rgba(20, 20, 24, 0.80);
+  color: #f5f5f7;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.55),
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  animation: fade-rise 0.5s ease-out both;
 }
 
 .login-card h1 {
   margin: 0 0 0.5rem;
   font-size: 1.3rem;
   text-align: center;
+  color: #f5f5f7;
+}
+
+.login-card label {
+  color: #9898a0;
+}
+
+.login-card input {
+  background: rgba(12, 12, 16, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #f5f5f7;
+}
+
+.login-card input:focus {
+  background: rgba(16, 16, 22, 0.9);
+  border-color: #0a84ff;
+}
+
+.login-card .btn-primary {
+  background: #f5f5f7;
+  color: #1d1d1f;
+  border-color: #f5f5f7;
+}
+
+.login-card .btn-primary:hover:not(:disabled) {
+  background: #ffffff;
+  border-color: #ffffff;
 }
 
 .google-link {
   display: block;
   text-align: center;
   text-decoration: none;
-  color: inherit;
+  color: #ffffff;
   font-size: 0.9rem;
+  font-weight: 600;
   padding: 0.4rem;
   border-radius: 6px;
-  border: 1px dashed #d2d2d7;
+  border: 1px solid #e01e24;
+  background: #e01e24;
+  box-shadow:
+    0 2px 4px rgba(224, 30, 36, 0.3),
+    0 1px 1px rgba(224, 30, 36, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    background 0.15s ease;
+}
+
+.google-link:hover {
+  background: #c9181e;
+  border-color: #c9181e;
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 10px rgba(224, 30, 36, 0.4),
+    0 1px 2px rgba(224, 30, 36, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.google-link:active {
+  background: #a91419;
+  border-color: #a91419;
+  transform: translateY(1px) scale(0.98);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(0, 0, 0, 0.15);
+}
+
+/* ---- subtle animations ---- */
+
+@keyframes fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes card-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+main {
+  animation: fade-in 0.25s ease-out;
+}
+
+.card {
+  animation: card-appear 0.3s ease-out both;
+}
+
+/* stagger consecutive cards slightly */
+.card:nth-child(2) {
+  animation-delay: 0.04s;
+}
+.card:nth-child(3) {
+  animation-delay: 0.08s;
+}
+.card:nth-child(n + 4) {
+  animation-delay: 0.12s;
+}
+
+/* sticky header settles in */
+.layout header {
+  animation: fade-in 0.35s ease-out;
 }
 
 /* cards list */
@@ -287,24 +531,53 @@ label {
 
 .tab-group {
   display: flex;
-  gap: 0.4rem;
+  gap: 0.3rem;
   margin: 0.75rem 0;
   flex-wrap: wrap;
+  background: #f0f0f4;
+  border: 1px solid #dcdce2;
+  border-radius: 9px;
+  padding: 4px 6px;
+  width: fit-content;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.06),
+    0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .tab-btn {
   padding: 0.35rem 0.75rem;
   font-size: 0.85rem;
+  font-weight: 500;
   border-radius: 6px;
-  border: 1px solid #d2d2d7;
-  background: #ffffff;
-  cursor: pointer;
+  border: 1px solid transparent;
+  background: transparent;
+  box-shadow: none;
+  color: #636366;
+}
+
+.tab-btn:hover:not(:disabled):not(.active) {
+  color: #1d1d1f;
+  background: #dedee4;
+  transform: none;
+  box-shadow: none;
+}
+
+.tab-btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+  background: transparent;
 }
 
 .tab-btn.active {
-  background: #1d1d1f;
-  color: #ffffff;
-  border-color: #1d1d1f;
+  background: #ffffff;
+  color: #1d1d1f;
+  font-weight: 600;
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.14),
+    0 1px 2px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  transform: translateY(-1px);
 }
 
 .code-container {
@@ -317,20 +590,59 @@ label {
   top: 0.5rem;
   right: 0.5rem;
   font-size: 0.75rem;
-  padding: 0.25rem 0.6rem;
+  font-weight: 500;
+  padding: 0.3rem 0.65rem;
   background: #ffffff;
   border: 1px solid #d2d2d7;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .copy-button:hover {
-  background: #f0f0f3;
+  background: #f7f7fa;
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.copy-button:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.14);
 }
 
 .notice {
   color: #515154;
   font-size: 0.85rem;
+  animation: soft-pulse 1.6s ease-in-out 2;
+}
+
+/* reduced motion: static UI for users who opt out of animation */
+@media (prefers-reduced-motion: reduce) {
+  main,
+  .card,
+  .layout header,
+  .notice {
+    animation: none;
+  }
+
+  button,
+  .copy-button {
+    transition: none;
+  }
+
+  button:hover:not(:disabled),
+  button:active:not(:disabled),
+  .copy-button:hover,
+  .copy-button:active,
+  .google-link:hover,
+  .google-link:active,
+  .tab-btn.active {
+    transform: none;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -344,19 +656,81 @@ label {
     border-color: #333338;
   }
 
-  .login-card,
   .card {
     background: #1f1f22;
     border-color: #333338;
   }
 
+  .login-card {
+    background: rgba(26, 26, 30, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px) saturate(1.3);
+    -webkit-backdrop-filter: blur(16px) saturate(1.3);
+    box-shadow:
+      0 24px 60px rgba(0, 0, 0, 0.55),
+      0 4px 16px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
   button {
     background: #1f1f22;
     border-color: #3a3a40;
+    color: #f5f5f7;
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
   button:hover:not(:disabled) {
     background: #2a2a2e;
+    box-shadow:
+      0 4px 10px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  button:active:not(:disabled) {
+    background: #17171a;
+    box-shadow:
+      inset 0 2px 4px rgba(0, 0, 0, 0.55),
+      inset 0 1px 1px rgba(0, 0, 0, 0.4);
+  }
+
+  .btn-danger {
+    color: #ff6b6e;
+    background: #2a1517;
+    border-color: #4a2226;
+  }
+
+  .btn-danger:hover:not(:disabled) {
+    background: #c1272d;
+    color: #ffffff;
+    border-color: #c1272d;
+    box-shadow:
+      0 4px 12px rgba(193, 39, 45, 0.45),
+      0 1px 2px rgba(193, 39, 45, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-danger:active:not(:disabled) {
+    background: #8f191d;
+    border-color: #8f191d;
+    box-shadow:
+      inset 0 2px 4px rgba(0, 0, 0, 0.45),
+      inset 0 1px 1px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-primary {
+    background: #f5f5f7;
+    color: #1d1d1f;
+    border-color: #f5f5f7;
+    box-shadow:
+      0 3px 8px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background: #e8e8ec;
+    border-color: #e8e8ec;
   }
 
   input,
@@ -426,16 +800,34 @@ label {
     border-color: #2e7d32;
   }
 
+  .tab-group {
+    background: #141417;
+    border-color: #27272c;
+    box-shadow:
+      inset 0 1px 2px rgba(0, 0, 0, 0.5),
+      0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
   .tab-btn {
-    background: #1f1f22;
-    border-color: #3a3a40;
+    background: transparent;
+    border-color: transparent;
+    color: #9898a0;
+    box-shadow: none;
+  }
+
+  .tab-btn:hover:not(:disabled):not(.active) {
     color: #f5f5f7;
+    background: #101014;
   }
 
   .tab-btn.active {
-    background: #f5f5f7;
-    color: #1d1d1f;
-    border-color: #f5f5f7;
+    background: linear-gradient(180deg, #323238 0%, #232328 100%);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.22);
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.6),
+      0 1px 3px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28);
   }
 
   .copy-button {

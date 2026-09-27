@@ -23,6 +23,21 @@ export default function Login() {
 
   return (
     <div className="login-wrap">
+      <video
+        className="login-video"
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260808_064556_051587f1-74a1-4336-8c05-4dde3594ed05.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        aria-hidden="true"
+      >
+        <source
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260808_064556_051587f1-74a1-4336-8c05-4dde3594ed05.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div className="login-video-overlay" aria-hidden="true" />
       <form className="login-card" onSubmit={onSubmit}>
         <h1>Vision MCP</h1>
         <label>
@@ -46,7 +61,7 @@ export default function Login() {
           />
         </label>
         {error && <p className="error">{error}</p>}
-        <button type="submit" disabled={busy}>
+        <button className="btn-primary" type="submit" disabled={busy}>
           {busy ? "Signing in..." : "Sign in"}
         </button>
         <a className="google-link" href="/api/auth/google/start">

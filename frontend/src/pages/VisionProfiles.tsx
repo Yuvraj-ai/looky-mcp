@@ -96,6 +96,7 @@ export default function VisionProfiles() {
 
       {mode.kind === "closed" && (
         <button
+          className="btn-primary"
           onClick={() => setMode({ kind: "create" })}
           disabled={prompts.length === 0}
         >
@@ -158,14 +159,22 @@ export default function VisionProfiles() {
               {p.is_active ? (
                 <button disabled>Active</button>
               ) : (
-                <button onClick={() => void handleActivate(p)}>
+                <button
+                  className="btn-primary"
+                  onClick={() => void handleActivate(p)}
+                >
                   Set Active
                 </button>
               )}
               <button onClick={() => setMode({ kind: "edit", profile: p })}>
                 Edit
               </button>
-              <button onClick={() => void handleDelete(p)}>Delete</button>
+              <button
+                className="btn-danger"
+                onClick={() => void handleDelete(p)}
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))}

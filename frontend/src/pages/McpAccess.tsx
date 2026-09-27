@@ -154,11 +154,19 @@ export default function McpAccess() {
         )}
 
         <div className="actions">
-          <button onClick={() => void handleGenerate()} disabled={busy}>
+          <button
+            className="btn-primary"
+            onClick={() => void handleGenerate()}
+            disabled={busy}
+          >
             {status.configured ? "Regenerate MCP Key" : "Generate MCP Key"}
           </button>
           {status.configured && (
-            <button onClick={() => void handleRevoke()} disabled={busy}>
+            <button
+              className="btn-danger"
+              onClick={() => void handleRevoke()}
+              disabled={busy}
+            >
               Revoke MCP Access
             </button>
           )}

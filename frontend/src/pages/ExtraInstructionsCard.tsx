@@ -47,7 +47,7 @@ export default function ExtraInstructionsCard() {
       />
       {error && <p className="error">{error}</p>}
       <div className="actions" style={{ marginTop: "0.5rem" }}>
-        <button onClick={() => void handleSave()} disabled={busy}>
+        <button className="btn-primary" onClick={() => void handleSave()} disabled={busy}>
           Save
         </button>
         {saved && <span className="notice">{saved}</span>}

@@ -60,7 +60,7 @@ export default function SystemPrompts() {
       {error && <p className="error">{error}</p>}
 
       {mode.kind === "closed" && (
-        <button onClick={() => setMode({ kind: "create" })}>
+        <button className="btn-primary" onClick={() => setMode({ kind: "create" })}>
           New System Prompt
         </button>
       )}
@@ -112,7 +112,12 @@ export default function SystemPrompts() {
               <button onClick={() => setMode({ kind: "edit", prompt: p })}>
                 Edit
               </button>
-              <button onClick={() => void handleDelete(p)}>Delete</button>
+              <button
+                className="btn-danger"
+                onClick={() => void handleDelete(p)}
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))}

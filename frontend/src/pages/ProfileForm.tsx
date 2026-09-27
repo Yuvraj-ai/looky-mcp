@@ -105,7 +105,7 @@ export default function ProfileForm({
       </div>
       {error && <p className="error">{error}</p>}
       <div className="actions">
-        <button type="submit" disabled={busy}>
+        <button className="btn-primary" type="submit" disabled={busy}>
           {submitLabel}
         </button>
         <button type="button" onClick={onCancel}>

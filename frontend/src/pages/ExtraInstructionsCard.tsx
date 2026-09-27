@@ -64,8 +64,8 @@ export default function ExtraInstructionsCard() {
           </span>
           <svg
             className={`chevron-icon ${isExpanded ? "open" : ""}`}
-            width="14"
-            height="14"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -80,12 +80,12 @@ export default function ExtraInstructionsCard() {
 
       {isExpanded && (
         <div className="extra-instructions-content">
-          <p className="notice" style={{ margin: "0.5rem 0 0.75rem" }}>
+          <p className="notice" style={{ margin: "0.5rem 0 0.85rem" }}>
             One global prompt appended to every image-description request (never
             used for OCR). Leave empty to disable.
           </p>
           <textarea
-            rows={4}
+            rows={6}
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="e.g. Always answer concisely and factually."

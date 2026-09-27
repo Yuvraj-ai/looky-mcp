@@ -725,8 +725,8 @@ main {
 /* Universal Extra Instructions expandable tab */
 .extra-instructions-tab {
   padding: 0;
-  margin-bottom: 1.25rem;
-  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
   overflow: hidden;
   border: 1px solid #e5e5ea;
   background: #ffffff;
@@ -742,10 +742,10 @@ button.extra-instructions-toggle {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 1.15rem;
+  padding: 0.95rem 1.35rem;
   background: transparent;
   border: none;
-  border-radius: 9px;
+  border-radius: 11px;
   box-shadow: none;
   transform: none;
   color: #1d1d1f;
@@ -771,21 +771,21 @@ button.extra-instructions-toggle:active:not(:disabled) {
 .extra-instructions-header-left {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.85rem;
 }
 
 .extra-instructions-title {
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 1.08rem;
   color: #1d1d1f;
 }
 
 .status-pill {
   display: inline-flex;
   align-items: center;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 500;
-  padding: 0.15rem 0.55rem;
+  padding: 0.2rem 0.65rem;
   border-radius: 9999px;
   line-height: 1.2;
 }
@@ -805,8 +805,8 @@ button.extra-instructions-toggle:active:not(:disabled) {
 .extra-instructions-header-right {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.82rem;
+  gap: 0.45rem;
+  font-size: 0.88rem;
   font-weight: 500;
   color: #636366;
 }
@@ -821,9 +821,22 @@ button.extra-instructions-toggle:active:not(:disabled) {
 }
 
 .extra-instructions-content {
-  padding: 0.25rem 1.15rem 1.15rem 1.15rem;
+  padding: 0.6rem 1.35rem 1.35rem 1.35rem;
   border-top: 1px solid #f0f0f3;
   animation: fade-in 0.2s ease-out;
+}
+
+.extra-instructions-content textarea {
+  min-height: 140px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  padding: 0.75rem 0.95rem;
+  border-radius: 8px;
+}
+
+.extra-instructions-content .actions button {
+  padding: 0.45rem 1rem;
+  font-size: 0.88rem;
 }
 
 .notice {

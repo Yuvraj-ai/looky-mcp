@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import Fuse from "fuse.js";
 import {
   createSystemPrompt,
   deleteSystemPrompt,
@@ -66,14 +67,22 @@ export default function SystemPrompts() {
     }
   }
 
-  const filteredPrompts = prompts.filter((p) => {
-    if (!searchQuery.trim()) return true;
-    const q = searchQuery.toLowerCase();
-    return (
-      p.title.toLowerCase().includes(q) ||
-      p.content.toLowerCase().includes(q)
-    );
-  });
+  const fuse = useMemo(() => {
+    return new Fuse(prompts, {
+      keys: [
+        { name: "title", weight: 0.7 },
+        { name: "content", weight: 0.3 },
+      ],
+      threshold: 0.35,
+      ignoreLocation: true,
+      minMatchCharLength: 2,
+    });
+  }, [prompts]);
+
+  const filteredPrompts = useMemo(() => {
+    if (!searchQuery.trim()) return prompts;
+    return fuse.search(searchQuery.trim()).map((res) => res.item);
+  }, [fuse, prompts, searchQuery]);
 
   if (loading) return <div className="loading">Loading...</div>;
 

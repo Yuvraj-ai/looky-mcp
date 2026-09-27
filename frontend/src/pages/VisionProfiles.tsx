@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import Fuse from "fuse.js";
 import type { SystemPrompt } from "../api/systemPrompts";
 import {
   activateVisionProfile,
@@ -88,17 +89,32 @@ export default function VisionProfiles() {
     await refresh();
   }
 
-  const filteredProfiles = profiles.filter((p) => {
-    if (!searchQuery.trim()) return true;
-    const q = searchQuery.toLowerCase();
-    const pTitle = promptTitle(p.system_prompt_id).toLowerCase();
-    return (
-      p.name.toLowerCase().includes(q) ||
-      p.model.toLowerCase().includes(q) ||
-      p.endpoint.toLowerCase().includes(q) ||
-      pTitle.includes(q)
-    );
-  });
+  const searchableProfiles = useMemo(() => {
+    const promptMap = new Map(prompts.map((p) => [p.id, p.title]));
+    return profiles.map((p) => ({
+      ...p,
+      promptTitle: p.system_prompt_id ? (promptMap.get(p.system_prompt_id) ?? "—") : "—",
+    }));
+  }, [profiles, prompts]);
+
+  const fuse = useMemo(() => {
+    return new Fuse(searchableProfiles, {
+      keys: [
+        { name: "name", weight: 0.4 },
+        { name: "model", weight: 0.3 },
+        { name: "promptTitle", weight: 0.2 },
+        { name: "endpoint", weight: 0.1 },
+      ],
+      threshold: 0.35,
+      ignoreLocation: true,
+      minMatchCharLength: 2,
+    });
+  }, [searchableProfiles]);
+
+  const filteredProfiles = useMemo(() => {
+    if (!searchQuery.trim()) return profiles;
+    return fuse.search(searchQuery.trim()).map((res) => res.item);
+  }, [fuse, profiles, searchQuery]);
 
   if (loading) return <div className="loading">Loading...</div>;
 

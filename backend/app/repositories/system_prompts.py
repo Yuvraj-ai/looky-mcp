@@ -2,16 +2,31 @@
 
 import uuid
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import models
 
+MAX_SYSTEM_PROMPTS_PER_USER = 20
+
+
+class SystemPromptLimitExceededError(Exception):
+    """User has reached maximum allowed system prompts."""
+    pass
+
 
 class SystemPromptRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
+
+    async def count_for_user(self, user_id: uuid.UUID) -> int:
+        result = await self.session.execute(
+            select(func.count())
+            .select_from(models.SystemPrompt)
+            .where(models.SystemPrompt.user_id == user_id)
+        )
+        return result.scalar_one()
 
     async def list_for_user(self, user_id: uuid.UUID) -> list[models.SystemPrompt]:
         result = await self.session.execute(
@@ -33,6 +48,11 @@ class SystemPromptRepository:
         return result.scalar_one_or_none()
 
     async def create(self, user_id: uuid.UUID, title: str, content: str) -> models.SystemPrompt:
+        count = await self.count_for_user(user_id)
+        if count >= MAX_SYSTEM_PROMPTS_PER_USER:
+            raise SystemPromptLimitExceededError(
+                f"Maximum limit of {MAX_SYSTEM_PROMPTS_PER_USER} system prompts reached"
+            )
         prompt = models.SystemPrompt(user_id=user_id, title=title, content=content)
         self.session.add(prompt)
         await self.session.commit()

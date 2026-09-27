@@ -1,6 +1,7 @@
 """System Prompt routes (Architecture §11). Ownership-scoped; 404 for foreign ids,
 409 (with clear message) when deleting a prompt referenced by a Vision Profile."""
 
+from datetime import datetime
 import uuid
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -9,7 +10,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.auth.session import get_current_user_id
 from app.db.session import get_db
-from app.repositories.system_prompts import PromptInUseError, SystemPromptRepository
+from app.repositories.system_prompts import (
+    PromptInUseError,
+    SystemPromptLimitExceededError,
+    SystemPromptRepository,
+)
 
 router = APIRouter(prefix="/api/system-prompts", tags=["system-prompts"])
 
@@ -23,6 +28,7 @@ class SystemPromptResponse(BaseModel):
     id: uuid.UUID
     title: str
     content: str
+    created_at: datetime
 
     model_config = {"from_attributes": True}
 
@@ -46,7 +52,10 @@ async def create_prompt(
     user_id: uuid.UUID = Depends(get_current_user_id),
     repo: SystemPromptRepository = Depends(_repo),
 ) -> SystemPromptResponse:
-    prompt = await repo.create(user_id, body.title, body.content)
+    try:
+        prompt = await repo.create(user_id, body.title, body.content)
+    except SystemPromptLimitExceededError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
     return SystemPromptResponse.model_validate(prompt)
 
 

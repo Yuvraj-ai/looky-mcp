@@ -76,17 +76,31 @@ export default function VisionProfiles() {
     }
   }
 
+  const MAX_VISION_PROFILES = 30;
+  const isAtLimit = profiles.length >= MAX_VISION_PROFILES;
+
   async function handleSubmit(
     data: VisionProfileInput,
     editing: VisionProfile | null,
   ) {
-    if (editing) {
-      await updateVisionProfile(editing.id, data);
-    } else {
-      await createVisionProfile(data);
+    setError(null);
+    try {
+      if (editing) {
+        await updateVisionProfile(editing.id, data);
+      } else {
+        if (profiles.length >= MAX_VISION_PROFILES) {
+          setError(
+            `Maximum limit of ${MAX_VISION_PROFILES} vision profiles reached.`,
+          );
+          return;
+        }
+        await createVisionProfile(data);
+      }
+      setMode({ kind: "closed" });
+      await refresh();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Save failed");
     }
-    setMode({ kind: "closed" });
-    await refresh();
   }
 
   const searchableProfiles = useMemo(() => {
@@ -125,16 +139,36 @@ export default function VisionProfiles() {
 
       {mode.kind === "closed" && (
         <div className="section-toolbar">
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <div className="toolbar-left">
             <button
               className="btn-primary"
               onClick={() => setMode({ kind: "create" })}
-              disabled={prompts.length === 0}
+              disabled={prompts.length === 0 || isAtLimit}
+              title={
+                prompts.length === 0
+                  ? "Create a system prompt first"
+                  : isAtLimit
+                    ? `Maximum limit of ${MAX_VISION_PROFILES} vision profiles reached`
+                    : undefined
+              }
             >
               New Vision Profile
             </button>
-            {prompts.length === 0 && (
+            {prompts.length === 0 ? (
               <span className="notice">Create a System Prompt first.</span>
+            ) : (
+              <span
+                className={`limit-badge ${isAtLimit ? "limit-reached" : ""}`}
+                title={
+                  isAtLimit
+                    ? `Limit reached (${profiles.length}/${MAX_VISION_PROFILES})`
+                    : `${profiles.length} of ${MAX_VISION_PROFILES} profiles used`
+                }
+              >
+                {isAtLimit
+                  ? `Limit reached (${profiles.length}/${MAX_VISION_PROFILES})`
+                  : `${profiles.length}/${MAX_VISION_PROFILES}`}
+              </span>
             )}
           </div>
           <input
@@ -197,6 +231,9 @@ export default function VisionProfiles() {
               <span>Endpoint: {p.endpoint}</span>
               <span>System Prompt: {promptTitle(p.system_prompt_id)}</span>
               <span>API Key: {p.has_api_key ? "✓ Configured" : "Not set"}</span>
+              {p.created_at && (
+                <span>Created: {new Date(p.created_at).toLocaleString()}</span>
+              )}
             </div>
             <div className="actions">
               {p.is_active ? (

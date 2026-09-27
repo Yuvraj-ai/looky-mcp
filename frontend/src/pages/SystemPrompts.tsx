@@ -79,6 +79,9 @@ export default function SystemPrompts() {
     });
   }, [prompts]);
 
+  const MAX_SYSTEM_PROMPTS = 20;
+  const isAtLimit = prompts.length >= MAX_SYSTEM_PROMPTS;
+
   const filteredPrompts = useMemo(() => {
     if (!searchQuery.trim()) return prompts;
     return fuse.search(searchQuery.trim()).map((res) => res.item);
@@ -95,9 +98,32 @@ export default function SystemPrompts() {
 
       {mode.kind === "closed" && (
         <div className="section-toolbar">
-          <button className="btn-primary" onClick={() => setMode({ kind: "create" })}>
-            New System Prompt
-          </button>
+          <div className="toolbar-left">
+            <button
+              className="btn-primary"
+              onClick={() => setMode({ kind: "create" })}
+              disabled={isAtLimit}
+              title={
+                isAtLimit
+                  ? `Maximum limit of ${MAX_SYSTEM_PROMPTS} system prompts reached`
+                  : undefined
+              }
+            >
+              New System Prompt
+            </button>
+            <span
+              className={`limit-badge ${isAtLimit ? "limit-reached" : ""}`}
+              title={
+                isAtLimit
+                  ? `Limit reached (${prompts.length}/${MAX_SYSTEM_PROMPTS})`
+                  : `${prompts.length} of ${MAX_SYSTEM_PROMPTS} prompts used`
+              }
+            >
+              {isAtLimit
+                ? `Limit reached (${prompts.length}/${MAX_SYSTEM_PROMPTS})`
+                : `${prompts.length}/${MAX_SYSTEM_PROMPTS}`}
+            </span>
+          </div>
           <input
             type="search"
             className="search-input"
@@ -114,9 +140,21 @@ export default function SystemPrompts() {
           <PromptForm
             submitLabel="Create"
             onSubmit={async (data) => {
-              await createSystemPrompt(data);
-              setMode({ kind: "closed" });
-              await refresh();
+              if (prompts.length >= MAX_SYSTEM_PROMPTS) {
+                setError(
+                  `Maximum limit of ${MAX_SYSTEM_PROMPTS} system prompts reached.`,
+                );
+                return;
+              }
+              try {
+                await createSystemPrompt(data);
+                setMode({ kind: "closed" });
+                await refresh();
+              } catch (err) {
+                setError(
+                  err instanceof Error ? err.message : "Failed to create prompt",
+                );
+              }
             }}
             onCancel={() => setMode({ kind: "closed" })}
           />
@@ -155,7 +193,23 @@ export default function SystemPrompts() {
           const isLong = p.content.length > 240;
           return (
             <div className="card prompt-card" key={p.id}>
-              <h2>{p.title}</h2>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "baseline",
+                  gap: "0.5rem",
+                  marginBottom: "0.35rem",
+                  flexWrap: "wrap",
+                }}
+              >
+                <h2 style={{ margin: 0 }}>{p.title}</h2>
+                {p.created_at && (
+                  <span className="card-timestamp">
+                    Created: {new Date(p.created_at).toLocaleString()}
+                  </span>
+                )}
+              </div>
               <div className={`prompt-content ${isExpanded ? "expanded" : ""}`}>
                 {p.content}
               </div>

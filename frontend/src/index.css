@@ -543,6 +543,36 @@ main {
   border-radius: 6px;
 }
 
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.limit-badge {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #636366;
+  background: #f0f0f4;
+  border: 1px solid #e0e0e6;
+  padding: 0.22rem 0.65rem;
+  border-radius: 9999px;
+  line-height: 1.2;
+}
+
+.limit-badge.limit-reached {
+  color: #e11d48;
+  background: #fff1f2;
+  border-color: #fecdd3;
+  font-weight: 600;
+}
+
+.card-timestamp {
+  font-size: 0.82rem;
+  color: #636366;
+}
+
 @media (max-width: 600px) {
   .section-toolbar {
     flex-direction: column;
@@ -1185,5 +1215,21 @@ button.extra-instructions-toggle:active:not(:disabled) {
 
   .extra-instructions-content {
     border-top-color: #2e2e34;
+  }
+
+  .limit-badge {
+    color: #a1a1aa;
+    background: #232328;
+    border-color: #383840;
+  }
+
+  .limit-badge.limit-reached {
+    color: #fb7185;
+    background: #36141c;
+    border-color: #5c1d27;
+  }
+
+  .card-timestamp {
+    color: #9898a0;
   }
 }

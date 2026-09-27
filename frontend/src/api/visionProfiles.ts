@@ -9,6 +9,7 @@ export interface VisionProfile {
   system_prompt_id: string;
   has_api_key: boolean;
   is_active: boolean;
+  created_at?: string;
 }
 
 export interface VisionProfileInput {

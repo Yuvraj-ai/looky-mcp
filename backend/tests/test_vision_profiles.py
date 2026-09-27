@@ -278,3 +278,41 @@ class TestActivation:
             f"/api/vision-profiles/{created['id']}/activate", headers=headers_b
         )
         assert resp.status_code == 404
+
+
+class TestVisionProfileLimitsAndMetadata:
+    async def test_created_at_in_response(self, client, user_factory, prompt_factory):
+        user_id, headers = await user_factory()
+        prompt = await prompt_factory(user_id)
+        resp = await client.post(
+            "/api/vision-profiles", json=profile_payload(prompt.id), headers=headers
+        )
+        assert resp.status_code == 201
+        data = resp.json()
+        assert "created_at" in data
+        assert data["created_at"] is not None
+
+        list_resp = await client.get("/api/vision-profiles", headers=headers)
+        assert list_resp.status_code == 200
+        assert "created_at" in list_resp.json()[0]
+
+    async def test_max_30_profiles_limit(self, client, user_factory, prompt_factory):
+        user_id, headers = await user_factory()
+        prompt = await prompt_factory(user_id)
+        for i in range(30):
+            payload = profile_payload(prompt.id)
+            payload["name"] = f"Profile {i}"
+            resp = await client.post(
+                "/api/vision-profiles", json=payload, headers=headers
+            )
+            assert resp.status_code == 201
+
+        # 31st profile should fail
+        payload31 = profile_payload(prompt.id)
+        payload31["name"] = "Profile 31"
+        resp31 = await client.post(
+            "/api/vision-profiles", json=payload31, headers=headers
+        )
+        assert resp31.status_code == 400
+        assert "limit of 30" in resp31.json()["detail"]
+

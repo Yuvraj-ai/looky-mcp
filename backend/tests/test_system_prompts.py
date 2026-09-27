@@ -216,3 +216,41 @@ class TestDeleteReferenced:
         assert resp.status_code == 409
         detail = resp.json()["detail"]
         assert "My Vision Profile" in detail
+
+
+class TestPromptLimitsAndMetadata:
+    async def test_created_at_in_response(self, client, auth_headers_for):
+        _, headers = await auth_headers_for()
+        resp = await client.post(
+            "/api/system-prompts",
+            json={"title": "With Timestamp", "content": "Content here"},
+            headers=headers,
+        )
+        assert resp.status_code == 201
+        data = resp.json()
+        assert "created_at" in data
+        assert data["created_at"] is not None
+
+        list_resp = await client.get("/api/system-prompts", headers=headers)
+        assert list_resp.status_code == 200
+        assert "created_at" in list_resp.json()[0]
+
+    async def test_max_20_prompts_limit(self, client, auth_headers_for):
+        _, headers = await auth_headers_for()
+        for i in range(20):
+            resp = await client.post(
+                "/api/system-prompts",
+                json={"title": f"Prompt {i}", "content": f"Content {i}"},
+                headers=headers,
+            )
+            assert resp.status_code == 201
+
+        # 21st prompt should fail
+        resp21 = await client.post(
+            "/api/system-prompts",
+            json={"title": "Prompt 21", "content": "Overflow content"},
+            headers=headers,
+        )
+        assert resp21.status_code == 400
+        assert "limit of 20" in resp21.json()["detail"]
+

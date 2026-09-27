@@ -1,6 +1,7 @@
 """Vision Profile routes (Architecture §11). Key never returned; blank key on
 update = unchanged; activation is transactional."""
 
+from datetime import datetime
 import uuid
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -11,7 +12,10 @@ from app.auth.session import get_current_user_id
 from app.crypto import encrypt_api_key
 from app.db.session import get_db
 from app.repositories.system_prompts import SystemPromptRepository
-from app.repositories.vision_profiles import VisionProfileRepository
+from app.repositories.vision_profiles import (
+    VisionProfileLimitExceededError,
+    VisionProfileRepository,
+)
 
 router = APIRouter(prefix="/api/vision-profiles", tags=["vision-profiles"])
 
@@ -42,6 +46,7 @@ class VisionProfileResponse(BaseModel):
     system_prompt_id: uuid.UUID
     has_api_key: bool
     is_active: bool
+    created_at: datetime
 
     model_config = {"from_attributes": True}
 
@@ -55,6 +60,7 @@ class VisionProfileResponse(BaseModel):
             system_prompt_id=profile.system_prompt_id,
             has_api_key=True,  # encrypted_api_key is NOT NULL in schema
             is_active=profile.is_active,
+            created_at=profile.created_at,
         )
 
 
@@ -88,14 +94,17 @@ async def create_profile(
 ) -> VisionProfileResponse:
     vrepo, srepo = repos
     await _validate_system_prompt_owned(body.system_prompt_id, user_id, srepo)
-    profile = await vrepo.create(
-        user_id=user_id,
-        name=body.name,
-        endpoint=body.endpoint,
-        model=body.model,
-        system_prompt_id=body.system_prompt_id,
-        encrypted_api_key=encrypt_api_key(body.api_key),
-    )
+    try:
+        profile = await vrepo.create(
+            user_id=user_id,
+            name=body.name,
+            endpoint=body.endpoint,
+            model=body.model,
+            system_prompt_id=body.system_prompt_id,
+            encrypted_api_key=encrypt_api_key(body.api_key),
+        )
+    except VisionProfileLimitExceededError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
     return VisionProfileResponse.from_profile(profile)
 
 

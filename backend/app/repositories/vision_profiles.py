@@ -2,15 +2,30 @@
 
 import uuid
 
-from sqlalchemy import select, update
+from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import models
+
+MAX_VISION_PROFILES_PER_USER = 30
+
+
+class VisionProfileLimitExceededError(Exception):
+    """User has reached maximum allowed vision profiles."""
+    pass
 
 
 class VisionProfileRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
+
+    async def count_for_user(self, user_id: uuid.UUID) -> int:
+        result = await self.session.execute(
+            select(func.count())
+            .select_from(models.VisionProfile)
+            .where(models.VisionProfile.user_id == user_id)
+        )
+        return result.scalar_one()
 
     async def list_for_user(self, user_id: uuid.UUID) -> list[models.VisionProfile]:
         result = await self.session.execute(
@@ -49,6 +64,11 @@ class VisionProfileRepository:
         system_prompt_id: uuid.UUID,
         encrypted_api_key: bytes,
     ) -> models.VisionProfile:
+        count = await self.count_for_user(user_id)
+        if count >= MAX_VISION_PROFILES_PER_USER:
+            raise VisionProfileLimitExceededError(
+                f"Maximum limit of {MAX_VISION_PROFILES_PER_USER} vision profiles reached"
+            )
         profile = models.VisionProfile(
             user_id=user_id,
             name=name,

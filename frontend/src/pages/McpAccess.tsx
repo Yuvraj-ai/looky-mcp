@@ -106,7 +106,7 @@ export default function McpAccess() {
     } else if (activeTab === "claude_cli") {
       currentSnippet = snippets.claude_code_cli;
       snippetDescription =
-        "Run this command in your terminal to connect Claude Code to Vision MCP.";
+        "Run this command in your terminal to connect Claude Code to Looky MCP.";
     } else if (activeTab === "claude_json") {
       currentSnippet = snippets.claude_code_json;
       snippetDescription =

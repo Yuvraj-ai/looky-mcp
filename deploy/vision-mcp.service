@@ -2,7 +2,7 @@
 # Install: cp vision-mcp.service /etc/systemd/system/ && systemctl enable --now vision-mcp
 
 [Unit]
-Description=Vision MCP backend (FastAPI + MCP, single worker)
+Description=Looky MCP backend (FastAPI + MCP, single worker)
 After=network.target postgresql.service
 
 [Service]

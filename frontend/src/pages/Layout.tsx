@@ -8,7 +8,7 @@ export default function Layout() {
   return (
     <div className="layout">
       <header>
-        <span className="brand">Vision MCP</span>
+        <span className="brand">Looky MCP</span>
         <nav>
           <NavLink to="/system-prompts">System Prompts</NavLink>
           <span className="nav-divider" aria-hidden="true">|</span>

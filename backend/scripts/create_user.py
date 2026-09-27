@@ -28,7 +28,7 @@ def _to_async_url(url: str) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Provision a Vision MCP user")
+    parser = argparse.ArgumentParser(description="Provision a Looky MCP user")
     parser.add_argument("--email", required=True)
     parser.add_argument("--password", help="initial password (email/password login)")
     parser.add_argument("--google-sub", help="pre-linked Google account subject")

@@ -1,7 +1,7 @@
 [project]
 name = "vision-mcp-backend"
 version = "0.1.0"
-description = "Vision MCP backend: REST API + MCP server (FastAPI, single process)"
+description = "Looky MCP backend: REST API + MCP server (FastAPI, single process)"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.115",

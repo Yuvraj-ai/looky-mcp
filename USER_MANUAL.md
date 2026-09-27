@@ -1,6 +1,6 @@
-# Vision MCP — User Manual
+# Looky MCP — User Manual
 
-Vision MCP is a self-hosted **Model Context Protocol (MCP) server for image understanding**. You configure vision model profiles (any OpenAI-compatible endpoint), write system prompts, and then connect coding agents like **OpenCode** to it. When the agent needs to "see" an image — a screenshot, a diagram, an error dialog — it calls one of the MCP tools here, which forwards the image to your configured vision model with your chosen system prompt.
+Looky MCP is a self-hosted **Model Context Protocol (MCP) server for image understanding**. You configure vision model profiles (any OpenAI-compatible endpoint), write system prompts, and then connect coding agents like **OpenCode** to it. When the agent needs to "see" an image — a screenshot, a diagram, an error dialog — it calls one of the MCP tools here, which forwards the image to your configured vision model with your chosen system prompt.
 
 ---
 

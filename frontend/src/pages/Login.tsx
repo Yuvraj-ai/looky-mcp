@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { useAuth } from "../auth/AuthContext";
 import GitHubCard from "./GitHubCard";
+import LookyInfoModal from "./LookyInfoModal";
 
 export default function Login() {
   const { login } = useAuth();
@@ -8,6 +9,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -40,7 +42,7 @@ export default function Login() {
       </video>
       <div className="login-video-overlay" aria-hidden="true" />
       <form className="login-card" onSubmit={onSubmit}>
-        <h1>Vision MCP</h1>
+        <h1>Looky MCP</h1>
         <label>
           Email
           <input
@@ -72,6 +74,21 @@ export default function Login() {
       <div className="login-footer-left">
         <GitHubCard className="github-card-login" />
       </div>
+      <div className="login-bottom-center">
+        <button
+          type="button"
+          className="what-is-looky-btn"
+          onClick={() => setShowInfo(true)}
+          aria-haspopup="dialog"
+          title="Learn more about Looky MCP"
+        >
+          <span className="what-is-looky-icon">💡</span>
+          What is Looky MCP??
+          <span className="what-is-looky-chevron" aria-hidden="true">▲</span>
+        </button>
+      </div>
+
+      <LookyInfoModal isOpen={showInfo} onClose={() => setShowInfo(false)} />
     </div>
   );
 }

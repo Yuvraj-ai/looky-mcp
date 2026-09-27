@@ -480,6 +480,26 @@ label {
   }
 }
 
+@keyframes slide-up-sheet {
+  from {
+    transform: translateY(100%);
+    opacity: 0.9;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-backdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 main {
   animation: fade-in 0.25s ease-out;
 }
@@ -991,6 +1011,496 @@ button.extra-instructions-toggle:active:not(:disabled) {
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
+/* What is Looky MCP trigger tab */
+.login-bottom-center {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.what-is-looky-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.52rem 1.15rem;
+  background: rgba(22, 22, 26, 0.76);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+  color: #f5f5f7;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    color 0.15s ease;
+}
+
+.what-is-looky-btn:hover {
+  background: rgba(28, 28, 34, 0.9);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.what-is-looky-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.what-is-looky-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.what-is-looky-chevron {
+  font-size: 0.68rem;
+  color: #a1a1aa;
+  transition: transform 0.15s ease;
+}
+
+.what-is-looky-btn:hover .what-is-looky-chevron {
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Looky MCP Info Modal Sheet */
+.looky-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  animation: fade-in-backdrop 0.2s ease-out;
+}
+
+.looky-modal-sheet {
+  width: calc(100% - 2.5rem);
+  max-width: 820px;
+  max-height: 85vh;
+  background: #ffffff;
+  border: 1px solid #e2e2e8;
+  border-bottom: none;
+  border-radius: 18px 18px 0 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow:
+    0 -12px 48px rgba(0, 0, 0, 0.35),
+    0 -2px 10px rgba(0, 0, 0, 0.12);
+  animation: slide-up-sheet 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #1d1d1f;
+}
+
+.looky-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #eef0f3;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  gap: 1rem;
+}
+
+.looky-modal-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.looky-brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #1d1d1f;
+}
+
+.looky-brand-badge svg {
+  color: #2563eb;
+}
+
+.looky-brand-badge h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.looky-modal-tagline {
+  font-size: 0.78rem;
+  color: #636366;
+  font-weight: 500;
+}
+
+.looky-modal-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.looky-tabs {
+  display: inline-flex;
+  background: #f2f2f7;
+  padding: 3px;
+  border-radius: 9px;
+  border: 1px solid #e5e5ea;
+  gap: 2px;
+}
+
+.looky-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #636366;
+  cursor: pointer;
+  box-shadow: none;
+  transform: none;
+  transition: all 0.15s ease;
+}
+
+.looky-tab-btn:hover:not(.active) {
+  color: #1d1d1f;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.looky-tab-btn.active {
+  background: #ffffff;
+  color: #1d1d1f;
+  font-weight: 600;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.looky-modal-close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f2f2f7;
+  border: 1px solid #e5e5ea;
+  color: #636366;
+  padding: 0;
+  box-shadow: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.looky-modal-close-btn:hover {
+  background: #e5e5ea;
+  color: #1d1d1f;
+  transform: scale(1.05);
+}
+
+.looky-modal-close-btn:active {
+  transform: scale(0.95);
+}
+
+.looky-modal-body {
+  padding: 1.5rem 1.75rem 2.5rem 1.75rem;
+  overflow-y: auto;
+  max-height: calc(85vh - 70px);
+  -webkit-overflow-scrolling: touch;
+}
+
+.looky-tab-content {
+  animation: fade-in 0.2s ease-out;
+}
+
+/* About tab styles */
+.looky-hero-box {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.06) 0%, rgba(139, 92, 246, 0.06) 100%);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  border-radius: 12px;
+  padding: 1.25rem 1.4rem;
+  margin-bottom: 1.75rem;
+}
+
+.looky-hero-box h3 {
+  margin: 0 0 0.65rem 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1d1d1f;
+  letter-spacing: -0.01em;
+}
+
+.looky-hero-box p {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #48484a;
+}
+
+.looky-hero-box p:last-child {
+  margin-bottom: 0;
+}
+
+.looky-hero-box code {
+  background: rgba(37, 99, 235, 0.1);
+  color: #1d4ed8;
+  padding: 0.12rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.looky-section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 1.5rem 0 1rem 0;
+  color: #1d1d1f;
+  letter-spacing: -0.01em;
+}
+
+.looky-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.looky-feature-card {
+  background: #fbfbfd;
+  border: 1px solid #e5e5ea;
+  border-radius: 11px;
+  padding: 1.1rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.looky-feature-card:hover {
+  transform: translateY(-2px);
+  border-color: #d1d1d6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.looky-feature-icon {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.looky-feature-card h5 {
+  margin: 0 0 0.4rem 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+.looky-feature-card p {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: #636366;
+}
+
+/* How to use tab styles */
+.looky-architecture-card {
+  background: #fbfbfd;
+  border: 1px solid #e5e5ea;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.looky-diagram-title {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+.looky-diagram-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.looky-diagram-svg {
+  width: 100%;
+  height: auto;
+  min-width: 580px;
+  display: block;
+}
+
+.looky-steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.looky-step-card {
+  display: flex;
+  gap: 1rem;
+  background: #fbfbfd;
+  border: 1px solid #e5e5ea;
+  border-radius: 11px;
+  padding: 1.15rem;
+}
+
+.looky-step-num {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.looky-step-content {
+  flex: 1;
+}
+
+.looky-step-content h5 {
+  margin: 0 0 0.45rem 0;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+.looky-step-content p {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #48484a;
+}
+
+.looky-step-content p:last-child {
+  margin-bottom: 0;
+}
+
+.looky-step-list {
+  margin: 0.4rem 0 0.75rem 1.25rem;
+  padding: 0;
+  font-size: 0.85rem;
+  color: #48484a;
+  line-height: 1.6;
+}
+
+.looky-step-list code,
+.looky-step-content code {
+  background: #f0f0f3;
+  padding: 0.12rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  color: #1d1d1f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.looky-code-preview {
+  margin: 0.75rem 0;
+  background: #18181b;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #27272a;
+}
+
+.looky-code-header {
+  padding: 0.35rem 0.75rem;
+  background: #202024;
+  color: #a1a1aa;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #27272a;
+}
+
+.looky-code-preview pre {
+  margin: 0;
+  padding: 0.75rem;
+  color: #38bdf8;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.looky-code-note {
+  font-size: 0.82rem;
+  color: #636366;
+  font-style: italic;
+}
+
+.looky-prompt-quote {
+  background: #eef2ff;
+  border-left: 3px solid #6366f1;
+  padding: 0.65rem 0.95rem;
+  border-radius: 0 6px 6px 0;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: #3730a3;
+  margin: 0.5rem 0;
+}
+
+/* FAQs */
+.looky-faqs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+.looky-faq-card {
+  background: #fbfbfd;
+  border: 1px solid #e5e5ea;
+  border-radius: 10px;
+  padding: 1.05rem;
+}
+
+.looky-faq-card h6 {
+  margin: 0 0 0.4rem 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  line-height: 1.35;
+}
+
+.looky-faq-card p {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #636366;
+}
+
+.looky-faq-card code {
+  background: #f0f0f3;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  font-size: 0.78rem;
+  color: #1d1d1f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
 .notice {
   color: #515154;
   font-size: 0.85rem;
@@ -1003,7 +1513,10 @@ button.extra-instructions-toggle:active:not(:disabled) {
   .card,
   .layout header,
   .notice,
-  .extra-instructions-content {
+  .extra-instructions-content,
+  .looky-modal-backdrop,
+  .looky-modal-sheet,
+  .looky-tab-content {
     animation: none;
   }
 
@@ -1011,7 +1524,11 @@ button.extra-instructions-toggle:active:not(:disabled) {
   .copy-button,
   .chevron-icon,
   .github-profile-card,
-  .github-card-arrow {
+  .github-card-arrow,
+  .what-is-looky-btn,
+  .looky-tab-btn,
+  .looky-modal-close-btn,
+  .looky-feature-card {
     transition: none;
   }
 
@@ -1024,7 +1541,12 @@ button.extra-instructions-toggle:active:not(:disabled) {
   .tab-btn.active,
   .github-profile-card:hover,
   .github-profile-card:active,
-  .github-profile-card:hover .github-card-arrow {
+  .github-profile-card:hover .github-card-arrow,
+  .what-is-looky-btn:hover,
+  .what-is-looky-btn:active,
+  .looky-modal-close-btn:hover,
+  .looky-modal-close-btn:active,
+  .looky-feature-card:hover {
     transform: none;
   }
 }
@@ -1384,5 +1906,128 @@ button.extra-instructions-toggle:active:not(:disabled) {
 
   .github-card-arrow {
     color: #8e8e93;
+  }
+
+  /* Looky Modal in Dark Mode */
+  .looky-modal-sheet {
+    background: #1c1c20;
+    border-color: #33333a;
+    color: #f5f5f7;
+    box-shadow:
+      0 -16px 50px rgba(0, 0, 0, 0.75),
+      0 -2px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  .looky-modal-header {
+    background: rgba(28, 28, 32, 0.94);
+    border-bottom-color: #2e2e36;
+  }
+
+  .looky-brand-badge {
+    color: #f5f5f7;
+  }
+
+  .looky-brand-badge svg {
+    color: #60a5fa;
+  }
+
+  .looky-modal-tagline {
+    color: #9898a0;
+  }
+
+  .looky-tabs {
+    background: #141417;
+    border-color: #27272c;
+  }
+
+  .looky-tab-btn {
+    color: #a1a1aa;
+  }
+
+  .looky-tab-btn:hover:not(.active) {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .looky-tab-btn.active {
+    background: #2a2a30;
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .looky-modal-close-btn {
+    background: #24242a;
+    border-color: #383842;
+    color: #a1a1aa;
+  }
+
+  .looky-modal-close-btn:hover {
+    background: #32323a;
+    color: #ffffff;
+  }
+
+  .looky-hero-box {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+
+  .looky-hero-box h3 {
+    color: #ffffff;
+  }
+
+  .looky-hero-box p {
+    color: #d1d1d6;
+  }
+
+  .looky-hero-box code {
+    background: rgba(59, 130, 246, 0.25);
+    color: #93c5fd;
+  }
+
+  .looky-section-title {
+    color: #ffffff;
+  }
+
+  .looky-feature-card,
+  .looky-architecture-card,
+  .looky-step-card,
+  .looky-faq-card {
+    background: #222228;
+    border-color: #32323a;
+  }
+
+  .looky-feature-card:hover {
+    border-color: #444450;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .looky-feature-card h5,
+  .looky-diagram-title,
+  .looky-step-content h5,
+  .looky-faq-card h6 {
+    color: #f5f5f7;
+  }
+
+  .looky-feature-card p,
+  .looky-step-content p,
+  .looky-step-list,
+  .looky-faq-card p {
+    color: #a1a1aa;
+  }
+
+  .looky-step-list code,
+  .looky-step-content code,
+  .looky-faq-card code {
+    background: #18181c;
+    color: #e4e4e7;
+  }
+
+  .looky-prompt-quote {
+    background: rgba(99, 102, 241, 0.15);
+    border-left-color: #818cf8;
+    color: #c7d2fe;
   }
 }

@@ -53,7 +53,7 @@ def create_app(mcp_session_factory_fn=None) -> FastAPI:
         async with mcp.session_manager.run():
             yield
 
-    app = FastAPI(title="Vision MCP", lifespan=lifespan)
+    app = FastAPI(title="Looky MCP", lifespan=lifespan)
 
     app.add_middleware(
         CORSMiddleware,

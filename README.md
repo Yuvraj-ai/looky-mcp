@@ -1,9 +1,9 @@
 <!-- prettier-ignore -->
 <div align="center">
 
-<img src="./frontend/public/favicon.svg" alt="Vision MCP logo" align="center" height="64" />
+<img src="./frontend/public/favicon.svg" alt="Looky MCP logo" align="center" height="64" />
 
-# Vision MCP
+# Looky MCP
 
 Self-hosted vision for your coding agent
 
@@ -19,7 +19,7 @@ Self-hosted vision for your coding agent
 
 ## Overview
 
-Coding agents can't see. Vision MCP gives them eyes: an MCP server that exposes `describe_image` and `ocr_image` tools, backed by **your own vision model** (OpenAI, OpenRouter, a local vLLM endpoint — anything OpenAI-compatible).
+Coding agents can't see. Looky MCP gives them eyes: an MCP server that exposes `describe_image` and `ocr_image` tools, backed by **your own vision model** (OpenAI, OpenRouter, a local vLLM endpoint — anything OpenAI-compatible).
 
 You configure everything through a small web app: system prompts, vision model profiles (endpoint, model, API key — encrypted at rest), and a personal MCP key. The agent authenticates with that key, and every tool call routes through your **active profile** — you switch models without touching the agent's config.
 

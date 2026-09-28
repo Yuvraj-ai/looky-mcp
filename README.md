@@ -75,6 +75,19 @@ One process, one deployable unit: REST API and MCP endpoint share the database p
 
 ### 1. Backend
 
+Create `backend/.env` from the template and fill in the required secrets:
+
+```bash
+cp backend/.env.example backend/.env
+python -c "import secrets; print(secrets.token_urlsafe(48))"                                   # -> APP_SECRET_KEY
+python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"      # -> VISION_ENCRYPTION_KEY
+```
+
+Paste the generated values into `backend/.env` as `APP_SECRET_KEY` and `VISION_ENCRYPTION_KEY`. Both are required — the app will not start without them, even for the bundled-Postgres dev setup below.
+
+> [!TIP]
+> You can leave `DATABASE_URL` at its `.env.example` placeholder value for the default dev setup — the bundled Postgres in step 2 doesn't use it. It's only read if you point at an existing Postgres instead (see the tip below).
+
 From the repo root:
 
 ```bash

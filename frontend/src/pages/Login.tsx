@@ -1,15 +1,20 @@
 import { useState, type FormEvent } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import GitHubCard from "./GitHubCard";
 import LookyInfoModal from "./LookyInfoModal";
 
 export default function Login() {
   const { login } = useAuth();
+  const [searchParams] = useSearchParams();
+  const oauthError = searchParams.get("error");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+
+  const displayError = error || oauthError;
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -63,17 +68,17 @@ export default function Login() {
             required
           />
         </label>
-        {error && <p className="error">{error}</p>}
+        {displayError && <p className="error">{displayError}</p>}
         <button className="btn-primary" type="submit" disabled={busy}>
           {busy ? "Signing in..." : "Sign in"}
         </button>
         <a className="google-link" href="/api/auth/google/start">
-          Sign in with Google
+          Sign in / Sign up with Google
         </a>
         <div className="login-signup-note">
           <span className="signup-note-badge">Note</span>
           <span>
-            No public signup. Accounts are provisioned via admin on the server or pre-authorized Google accounts.
+            Anyone can sign in or sign up with Google. Email/password login is gated (admin provisioned).
           </span>
         </div>
       </form>

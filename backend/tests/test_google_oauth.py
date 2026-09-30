@@ -137,7 +137,7 @@ class TestGoogleFlow:
             "/api/auth/google/callback",
             params={"code": "authcode-1", "state": "somestate"},
         )
-        assert resp.status_code in (200, 307), resp.text
+        assert resp.status_code in (200, 303, 307), resp.text
         # session cookie present
         assert "session=" in resp.headers.get("set-cookie", "")
 
@@ -156,7 +156,7 @@ class TestGoogleFlow:
         resp = await client.get(
             "/api/auth/google/callback", params={"code": "authcode-2", "state": "s"}
         )
-        assert resp.status_code in (200, 307)
+        assert resp.status_code in (200, 303, 307)
 
         await db_session.refresh(user)
         assert user.google_sub == "google-sub-456"
@@ -194,11 +194,21 @@ class TestGoogleFlow:
         )
         assert resp.status_code in (401, 403)
 
-    async def test_callback_rejects_unknown_user_no_signup(self, client, fake_google):
-        """No public signup: unknown email must NOT create a user."""
-        id_token = fake_google.make_id_token("sub-x", "nobody@example.com")
+    async def test_callback_auto_signs_up_new_google_user(self, client, db_session, fake_google):
+        """Verified Google account auto-creates account (Google signup enabled)."""
+        from sqlalchemy import select
+
+        id_token = fake_google.make_id_token("sub-new-123", "newbie@example.com")
         fake_google.tokens["authcode-6"] = id_token
         resp = await client.get(
             "/api/auth/google/callback", params={"code": "authcode-6", "state": "s"}
         )
-        assert resp.status_code in (401, 403)
+        assert resp.status_code in (200, 303, 307)
+        assert "session=" in resp.headers.get("set-cookie", "")
+
+        res = await db_session.execute(
+            select(models.User).where(models.User.email == "newbie@example.com")
+        )
+        user = res.scalar_one_or_none()
+        assert user is not None
+        assert user.google_sub == "sub-new-123"

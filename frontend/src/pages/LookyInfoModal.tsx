@@ -317,26 +317,19 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
                     <div className="looky-step-content">
                       <h5>Account Provisioning &amp; Sign In</h5>
                       <div className="looky-signup-alert">
-                        <span className="alert-icon">⚠️</span>
+                        <span className="alert-icon">💡</span>
                         <div className="alert-text">
-                          <strong>Important Note on the Signup Process:</strong> <span className="looky-brand-name">Looky</span> MCP is a private, self-hosted system with <em>no public self-registration</em>. Accounts must be provisioned directly by the host admin on the server via the CLI:
+                          <strong>Signup &amp; Access:</strong> Anyone can instantly sign in or sign up using <strong>Google OAuth</strong>. Email/password login remains gated and must be provisioned directly by the host admin on the server via CLI:
                           <div className="looky-code-preview" style={{ margin: "0.5rem 0" }}>
-                            <div className="looky-code-header">CLI (Admin Provisioning)</div>
+                            <div className="looky-code-header">CLI (Admin Provisioning for Email/Password)</div>
                             <pre>
                               <code>uv run python scripts/create_user.py --email you@example.com --password &apos;your-password&apos;</code>
-                            </pre>
-                          </div>
-                          Or for pre-authorized Google sign-in:
-                          <div className="looky-code-preview" style={{ margin: "0.5rem 0" }}>
-                            <div className="looky-code-header">Google OAuth Provisioning</div>
-                            <pre>
-                              <code>uv run python scripts/create_user.py --email you@example.com --google-sub &apos;sub_id&apos;</code>
                             </pre>
                           </div>
                         </div>
                       </div>
                       <p>
-                        Once provisioned, log into <span className="looky-brand-name">Looky</span> MCP with your email and password or Google account to access the dashboard.
+                        Once signed in via Google or provisioned by your admin, you can access the dashboard immediately.
                       </p>
                     </div>
                   </div>
@@ -487,8 +480,8 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
                 <div className="looky-faq-card looky-faq-highlight">
                   <h6>How does the signup / account creation process work?</h6>
                   <p>
-                    Because <span className="looky-brand-name">Looky</span> MCP is a private, self-hosted system, there is no public self-registration form.
-                    Accounts are provisioned directly on the server by running <code>uv run python scripts/create_user.py --email &lt;email&gt; --password &apos;&lt;pwd&gt;&apos;</code> or pre-linking via Google OAuth.
+                    Anyone can sign in or create an account instantly using <strong>Google OAuth</strong>.
+                    For email and password access, accounts remain gated and are provisioned directly on the server by running <code>uv run python scripts/create_user.py --email &lt;email&gt; --password &apos;&lt;pwd&gt;&apos;</code>.
                   </p>
                 </div>
 

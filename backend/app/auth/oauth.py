@@ -18,6 +18,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.auth.session import set_session_cookie
 from app.config import settings
+from app.db import models
 from app.db.session import get_db
 from app.repositories.users import UserRepository
 
@@ -109,7 +110,16 @@ async def start() -> Response:
 
 
 @router.get("/callback")
-async def callback(code: str = "", state: str = "", db: AsyncSession = Depends(get_db)) -> Response:
+async def callback(
+    code: str = "",
+    state: str = "",
+    error: str = "",
+    db: AsyncSession = Depends(get_db),
+) -> Response:
+    if error:
+        return RedirectResponse(
+            f"/login?error={httpx.QueryParams({'error': error}).get('error')}", status_code=303
+        )
     if not code:
         raise HTTPException(status_code=401, detail="Google login failed")
 
@@ -132,18 +142,22 @@ async def callback(code: str = "", state: str = "", db: AsyncSession = Depends(g
     repo = UserRepository(db)
     user = await repo.get_by_email(claims["email"])
 
-    if user is not None and user.google_sub is None:
-        # auto-link by verified email (Architecture §28.2 option (a))
-        user.google_sub = claims["sub"]
-        await db.commit()
-    elif user is None:
-        # no public signup (Architecture §9)
-        raise HTTPException(
-            status_code=403,
-            detail="No account exists for this email. Ask an administrator to provision it.",
+    if user is not None:
+        if user.google_sub is None:
+            # auto-link by verified email (Architecture §28.2 option (a))
+            user.google_sub = claims["sub"]
+            await db.commit()
+    else:
+        # Automatic sign-up with verified Google account
+        user = models.User(
+            email=claims["email"],
+            google_sub=claims["sub"],
+            password_hash=None,
         )
+        db.add(user)
+        await db.commit()
+        await db.refresh(user)
 
-    assert user is not None
-    response = JSONResponse({"ok": True})
+    response = RedirectResponse(url="/system-prompts", status_code=303)
     set_session_cookie(response, user.id)
     return response

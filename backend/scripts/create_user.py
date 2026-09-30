@@ -48,10 +48,11 @@ def main() -> int:
     from app.auth.passwords import hash_password
     from app.config import settings
     from app.db import models
+    from app.db.session import build_session_factory
 
     async def run() -> int:
-        engine = create_async_engine(_to_async_url(args.database_url or settings.DATABASE_URL))
-        factory = async_sessionmaker(engine, expire_on_commit=False)
+        db_url = _to_async_url(args.database_url) if args.database_url else settings.DATABASE_URL
+        factory = build_session_factory(db_url)
         async with factory() as session:
             existing = (
                 await session.execute(select(models.User).where(models.User.email == args.email))
@@ -68,7 +69,7 @@ def main() -> int:
             session.add(user)
             await session.commit()
             print(f"User {args.email} created")
-        await engine.dispose()
+        await factory.kw["bind"].dispose()
         return 0
 
     return asyncio.run(run())

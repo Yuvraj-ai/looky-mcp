@@ -1,8 +1,8 @@
 """Vision Profile routes (Architecture §11). Key never returned; blank key on
 update = unchanged; activation is transactional."""
 
-from datetime import datetime
 import uuid
+from datetime import datetime
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field

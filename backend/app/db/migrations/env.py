@@ -13,8 +13,11 @@ if not config.get_main_option("sqlalchemy.url"):
     # alembic runs synchronously — convert the app's asyncpg URL to pg8000
     db_url = make_url(settings.DATABASE_URL)
     query = dict(db_url.query)
+    had_ssl = "ssl" in query or "sslmode" in query
     query.pop("ssl", None)
     query.pop("sslmode", None)
+    if had_ssl:
+        query["ssl_context"] = "True"
     sync_url = db_url.set(drivername="postgresql+pg8000", query=query)
     config.set_main_option("sqlalchemy.url", sync_url.render_as_string(hide_password=False))
 

@@ -47,13 +47,21 @@ class McpAuthMiddleware:
     session_factory_fn returns the session factory to use; indirection exists
     so tests can point the middleware at a test database."""
 
-    def __init__(self, app, session_factory_fn=None):
+    def __init__(self, app, session_factory_fn=None, fallback=None):
         self.app = app
         self._session_factory_fn = session_factory_fn or _CachedSessionFactory()
+        self.fallback = fallback
 
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http":
             return await self.app(scope, receive, send)
+
+        path = scope.get("path", "")
+        if not (path == "/mcp" or path.startswith("/mcp/")):
+            if self.fallback is not None:
+                return await self.fallback(scope, receive, send)
+            await self._send_404(send)
+            return
 
         headers = {
             k.decode("latin-1").lower(): v.decode("latin-1") for k, v in scope.get("headers", [])
@@ -95,6 +103,21 @@ class McpAuthMiddleware:
             {
                 "type": "http.response.start",
                 "status": 401,
+                "headers": [
+                    (b"content-type", b"application/json"),
+                    (b"content-length", str(len(body)).encode()),
+                ],
+            }
+        )
+        await send({"type": "http.response.body", "body": body})
+
+    @staticmethod
+    async def _send_404(send) -> None:
+        body = b'{"detail":"Not Found"}'
+        await send(
+            {
+                "type": "http.response.start",
+                "status": 404,
                 "headers": [
                     (b"content-type", b"application/json"),
                     (b"content-length", str(len(body)).encode()),

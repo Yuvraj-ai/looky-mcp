@@ -5,8 +5,10 @@ the session manager runs inside this app's lifespan (required — Starlette does
 not run mounted sub-app lifespans). TransportSecuritySettings enables the
 SDK's Origin/DNS-rebinding validation (Decision #8)."""
 
+import os
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from pathlib import Path
 from urllib.parse import urlsplit
 
 from fastapi import FastAPI
@@ -78,9 +80,54 @@ def create_app(mcp_session_factory_fn=None) -> FastAPI:
     # is shared by auth middleware AND tool execution so both hit the test DB.
     factory_fn = mcp_session_factory_fn or _CachedSessionFactory()
     mcp_server_mod.set_session_factory_fn(factory_fn)
-    app.mount("/", McpAuthMiddleware(mcp_app, session_factory_fn=factory_fn))
+    spa_fallback = _get_spa_fallback()
+    app.mount("/", McpAuthMiddleware(mcp_app, session_factory_fn=factory_fn, fallback=spa_fallback))
 
     return app
+
+
+class _SPAStaticApp:
+    def __init__(self, static_dir: Path):
+        self.static_dir = static_dir
+
+    async def __call__(self, scope, receive, send):
+        from starlette.responses import FileResponse, Response
+
+        if scope["type"] != "http":
+            return
+
+        raw_path = scope.get("path", "/").lstrip("/")
+        file_path = (self.static_dir / raw_path).resolve()
+
+        # Prevent path traversal outside static_dir
+        if not str(file_path).startswith(str(self.static_dir)):
+            resp = Response("Forbidden", status_code=403)
+            await resp(scope, receive, send)
+            return
+
+        if raw_path and file_path.is_file():
+            resp = FileResponse(file_path)
+            await resp(scope, receive, send)
+            return
+
+        index_file = self.static_dir / "index.html"
+        if index_file.is_file():
+            resp = FileResponse(index_file)
+            await resp(scope, receive, send)
+            return
+
+        resp = Response("Not Found", status_code=404)
+        await resp(scope, receive, send)
+
+
+def _get_spa_fallback() -> _SPAStaticApp | None:
+    static_env = os.environ.get("STATIC_DIR")
+    if static_env and Path(static_env).is_dir():
+        return _SPAStaticApp(Path(static_env).resolve())
+    candidate = Path(__file__).resolve().parent.parent.parent / "frontend" / "dist"
+    if candidate.is_dir():
+        return _SPAStaticApp(candidate.resolve())
+    return None
 
 
 app = create_app()

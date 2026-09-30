@@ -19,7 +19,9 @@ if not config.get_main_option("sqlalchemy.url"):
     if had_ssl:
         query["ssl_context"] = "True"
     sync_url = db_url.set(drivername="postgresql+pg8000", query=query)
-    config.set_main_option("sqlalchemy.url", sync_url.render_as_string(hide_password=False))
+    # configparser treats % as interpolation syntax; escape % as %%
+    escaped_url = sync_url.render_as_string(hide_password=False).replace("%", "%%")
+    config.set_main_option("sqlalchemy.url", escaped_url)
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)

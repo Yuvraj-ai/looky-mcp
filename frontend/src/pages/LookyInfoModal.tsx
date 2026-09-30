@@ -69,7 +69,7 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
             <span className="looky-modal-tagline">Giving Eyes to Smart Non-Vision Open-Source Models</span>
           </div>
 
-          <div className="looky-modal-header-right">
+          <div className="looky-modal-nav">
             <div className="looky-tabs" role="tablist">
               <button
                 type="button"
@@ -118,29 +118,29 @@ export default function LookyInfoModal({ isOpen, onClose }: LookyInfoModalProps)
                 How to use?
               </button>
             </div>
-
-            <button
-              type="button"
-              className="looky-modal-close-btn"
-              onClick={onClose}
-              aria-label="Close dialog"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
           </div>
+
+          <button
+            type="button"
+            className="looky-modal-close-btn"
+            onClick={onClose}
+            aria-label="Close dialog"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
         </div>
 
         {/* Content body */}

@@ -17,7 +17,8 @@ export default function Layout() {
           <NavLink to="/mcp-access">MCP Access</NavLink>
         </nav>
         <span className="user">
-          {user?.email} <button onClick={() => void logout()}>Sign out</button>
+          <span className="user-email" title={user?.email}>{user?.email}</span>
+          <button onClick={() => void logout()}>Sign out</button>
         </span>
       </header>
       <main>

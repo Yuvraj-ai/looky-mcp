@@ -9,15 +9,16 @@ from app.db.models import Base
 
 config = context.config
 
+use_ssl = False
 if not config.get_main_option("sqlalchemy.url"):
     # alembic runs synchronously — convert the app's asyncpg URL to pg8000
     db_url = make_url(settings.DATABASE_URL)
     query = dict(db_url.query)
-    had_ssl = "ssl" in query or "sslmode" in query
+    if "ssl" in query or "sslmode" in query:
+        use_ssl = True
     query.pop("ssl", None)
     query.pop("sslmode", None)
-    if had_ssl:
-        query["ssl_context"] = "True"
+    query.pop("ssl_context", None)
     sync_url = db_url.set(drivername="postgresql+pg8000", query=query)
     # configparser treats % as interpolation syntax; escape % as %%
     escaped_url = sync_url.render_as_string(hide_password=False).replace("%", "%%")
@@ -43,10 +44,20 @@ def run_migrations_offline() -> None:
 
 
 def run_migrations_online() -> None:
+    connect_args = {}
+    if use_ssl:
+        import ssl
+
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        connect_args["ssl_context"] = ctx
+
     connectable = engine_from_config(
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
+        connect_args=connect_args,
     )
 
     with connectable.connect() as connection:

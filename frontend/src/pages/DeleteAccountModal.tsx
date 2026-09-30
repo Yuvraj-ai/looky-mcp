@@ -13,7 +13,6 @@ export default function DeleteAccountModal({
   const { user, deleteAccount } = useAuth();
   const [confirmEmail, setConfirmEmail] = useState("");
   const [agreed, setAgreed] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,7 +27,6 @@ export default function DeleteAccountModal({
     if (isOpen) {
       setConfirmEmail("");
       setAgreed(false);
-      setCopied(false);
       setError(null);
       setBusy(false);
     }
@@ -46,16 +44,6 @@ export default function DeleteAccountModal({
   }, [isOpen, busy, onClose]);
 
   if (!isOpen) return null;
-
-  async function handleCopyEmail() {
-    try {
-      await navigator.clipboard.writeText(userEmail);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Fallback: select text manually
-    }
-  }
 
   async function handleDelete(e: React.FormEvent) {
     e.preventDefault();
@@ -143,14 +131,6 @@ export default function DeleteAccountModal({
               </div>
             </li>
           </ul>
-          <div className="delete-isolation-notice">
-            <span className="notice-icon">🛡️</span>
-            <span>
-              <strong>Strict Isolation Guarantee:</strong> Only your personal
-              account data will be removed. No other user accounts, system
-              data, or server configurations will be affected.
-            </span>
-          </div>
         </div>
 
         {/* Confirmation Form */}
@@ -158,16 +138,8 @@ export default function DeleteAccountModal({
           <div className="delete-confirm-group">
             <label htmlFor="confirm-email-input" className="confirm-email-label">
               <span>To confirm, please enter or paste your exact email address:</span>
-              <div className="email-copy-helper">
+              <div className="target-email-display">
                 <code className="target-email-code">{userEmail}</code>
-                <button
-                  type="button"
-                  className="copy-email-btn"
-                  onClick={() => void handleCopyEmail()}
-                  title="Copy your email to clipboard"
-                >
-                  {copied ? "Copied! ✓" : "Copy email"}
-                </button>
               </div>
             </label>
             <input

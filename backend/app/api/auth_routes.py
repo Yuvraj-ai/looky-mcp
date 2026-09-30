@@ -63,3 +63,32 @@ async def me(
     if user is None:
         raise HTTPException(status_code=401, detail="Not authenticated")
     return UserResponse.model_validate(user)
+
+
+class DeleteAccountRequest(BaseModel):
+    confirm_email: EmailStr
+
+
+@router.delete("/me")
+async def delete_me(
+    body: DeleteAccountRequest,
+    response: Response,
+    user_id: uuid.UUID = Depends(get_current_user_id),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, str]:
+    repo = UserRepository(db)
+    user = await repo.get_by_id(user_id)
+    if user is None:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    # Strictly verify confirmation email matches account email (case-insensitive)
+    if body.confirm_email.strip().lower() != user.email.strip().lower():
+        raise HTTPException(
+            status_code=400,
+            detail="Confirmation email does not match your account email address",
+        )
+
+    # Strictly delete only this user's data (no other user affected)
+    await repo.delete_user_and_all_data(user_id)
+    clear_session_cookie(response)
+    return {"status": "deleted"}

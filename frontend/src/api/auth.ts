@@ -16,3 +16,7 @@ export async function logout(): Promise<void> {
 export async function me(): Promise<User> {
   return api.get<User>("/auth/me");
 }
+
+export async function deleteAccount(confirmEmail: string): Promise<void> {
+  return api.delete<void>("/auth/me", { confirm_email: confirmEmail });
+}

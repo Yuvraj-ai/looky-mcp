@@ -8,6 +8,7 @@ export default function Login() {
   const { login } = useAuth();
   const [searchParams] = useSearchParams();
   const oauthError = searchParams.get("error");
+  const wasDeleted = searchParams.get("deleted") === "true";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -48,6 +49,12 @@ export default function Login() {
       <div className="login-video-overlay" aria-hidden="true" />
       <form className="login-card" onSubmit={onSubmit}>
         <h1><span className="looky-brand-name">Looky</span> MCP</h1>
+        {wasDeleted && (
+          <div className="login-deleted-banner">
+            <span className="deleted-banner-icon">✓</span>
+            <span>Your account and all associated data have been permanently deleted.</span>
+          </div>
+        )}
         <label>
           Email
           <input

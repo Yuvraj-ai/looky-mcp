@@ -11,15 +11,18 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from mcp.server.transport_security import TransportSecuritySettings
+from sqlalchemy import text
+from sqlalchemy.exc import SQLAlchemyError
 
 from app.api import auth_routes, mcp_credential, system_prompts, vision_profiles
 from app.api import settings as settings_routes
 from app.auth.mcp_auth import McpAuthMiddleware, _CachedSessionFactory
 from app.auth.oauth import router as google_oauth_router
 from app.config import settings
+from app.db.session import get_session_factory
 from app.mcp import server as mcp_server_mod
 from app.mcp.server import create_mcp_server
 
@@ -74,6 +77,17 @@ def create_app(mcp_session_factory_fn=None) -> FastAPI:
 
     @app.get("/api/health")
     async def health() -> dict[str, str]:
+        return {"status": "ok"}
+
+    @app.get("/api/health/ready")
+    async def readiness(response: Response) -> dict[str, str]:
+        try:
+            async with get_session_factory()() as session:
+                await session.execute(text("SELECT 1"))
+        except SQLAlchemyError:
+            response.status_code = 503
+            return {"status": "unavailable"}
+
         return {"status": "ok"}
 
     # mounted last: REST routes above match first. The injected factory (tests)

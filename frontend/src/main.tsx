@@ -1,12 +1,13 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import { AuthProvider } from "./auth/AuthContext";
 import { ProtectedRoute, PublicOnlyRoute } from "./routes";
 import Layout from "./pages/Layout";
 import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 import SystemPrompts from "./pages/SystemPrompts";
 import VisionProfiles from "./pages/VisionProfiles";
 import McpAccess from "./pages/McpAccess";
@@ -22,7 +23,8 @@ const router = createBrowserRouter([
       {
         element: <Layout />,
         children: [
-          { path: "/", element: <SystemPrompts /> },
+          { path: "/", element: <Navigate to="/dashboard" replace /> },
+          { path: "/dashboard", element: <Dashboard /> },
           { path: "/system-prompts", element: <SystemPrompts /> },
           { path: "/vision-profiles", element: <VisionProfiles /> },
           { path: "/mcp-access", element: <McpAccess /> },

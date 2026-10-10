@@ -13,6 +13,8 @@ export default function Layout() {
       <header>
         <span className="brand"><span className="looky-brand-name">Looky</span> MCP</span>
         <nav>
+          <NavLink to="/dashboard">Dashboard</NavLink>
+          <span className="nav-divider" aria-hidden="true">|</span>
           <NavLink to="/system-prompts">System Prompts</NavLink>
           <span className="nav-divider" aria-hidden="true">|</span>
           <NavLink to="/vision-profiles">Vision Profiles</NavLink>

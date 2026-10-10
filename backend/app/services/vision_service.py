@@ -4,9 +4,12 @@ decryption, message composition, provider call, error translation.
 
 The REST API never calls this; it only manages the data VisionService reads."""
 
+import asyncio
 import logging
 import uuid
 from collections.abc import Callable
+from datetime import UTC, datetime
+from time import perf_counter
 
 import httpx
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -15,6 +18,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.config import settings
 from app.crypto import decrypt_api_key
+from app.db import models
 from app.repositories.settings import AppSettingsRepository
 from app.repositories.system_prompts import SystemPromptRepository
 from app.repositories.vision_profiles import VisionProfileRepository
@@ -81,15 +85,73 @@ class VisionService:
         except RateLimitError as exc:
             raise VisionServiceError("Vision call rate limit reached") from exc
 
+        started_at = datetime.now(UTC)
+        started = perf_counter()
+        request_details: dict[str, str | None] = {"profile_name": None, "model": None}
+        error_code: str | None = None
         try:
-            return await run_with_concurrency_limit(
-                user_id, lambda: self._execute(user_id, mode, image, prompt)
+            try:
+                return await run_with_concurrency_limit(
+                    user_id,
+                    lambda: self._execute(user_id, mode, image, prompt, request_details),
+                )
+            except ConcurrencyLimitError as exc:
+                raise VisionServiceError("Too many concurrent vision calls") from exc
+        except asyncio.CancelledError:
+            error_code = "cancelled"
+            raise
+        except Exception as exc:
+            error_code = _request_error_code(exc)
+            raise
+        finally:
+            await self._record_request(
+                user_id=user_id,
+                mode=mode,
+                started_at=started_at,
+                duration_ms=round((perf_counter() - started) * 1000),
+                succeeded=error_code is None,
+                error_code=error_code,
+                profile_name=request_details["profile_name"],
+                model=request_details["model"],
             )
-        except ConcurrencyLimitError as exc:
-            raise VisionServiceError("Too many concurrent vision calls") from exc
+
+    async def _record_request(
+        self,
+        *,
+        user_id: uuid.UUID,
+        mode: str,
+        started_at: datetime,
+        duration_ms: int,
+        succeeded: bool,
+        error_code: str | None,
+        profile_name: str | None,
+        model: str | None,
+    ) -> None:
+        try:
+            async with self._session_factory_fn()() as session:
+                session.add(
+                    models.VisionRequestLog(
+                        user_id=user_id,
+                        created_at=started_at,
+                        mode=mode,
+                        profile_name=profile_name,
+                        model=model,
+                        duration_ms=duration_ms,
+                        succeeded=succeeded,
+                        error_code=error_code,
+                    )
+                )
+                await session.commit()
+        except Exception:
+            logger.warning("Failed to save dashboard request activity")
 
     async def _execute(
-        self, user_id: uuid.UUID, mode: str, image: ImageContent | str, prompt: str
+        self,
+        user_id: uuid.UUID,
+        mode: str,
+        image: ImageContent | str,
+        prompt: str,
+        request_details: dict[str, str | None],
     ) -> str:
         raw_data = image.data if isinstance(image, ImageContent) else image
         try:
@@ -103,6 +165,7 @@ class VisionService:
             profile = await vrepo.get_active(user_id)
             if profile is None:
                 raise VisionServiceError("No active Vision Profile is configured")
+            request_details.update(profile_name=profile.name, model=profile.model)
 
             sprompt = await SystemPromptRepository(session).get_for_user(
                 profile.system_prompt_id, user_id
@@ -213,6 +276,26 @@ class VisionService:
                 mapped = "Vision service temporarily unavailable"
             return VisionServiceError(mapped or "Vision service returned invalid response")
         return VisionServiceError("Vision service returned invalid response")
+
+
+def _request_error_code(exc: Exception) -> str:
+    if isinstance(exc, ImageValidationError):
+        return "invalid_image"
+    if isinstance(exc, VisionServiceError):
+        return {
+            "Vision call rate limit reached": "rate_limited",
+            "Too many concurrent vision calls": "busy",
+            "No active Vision Profile is configured": "no_active_profile",
+            "Vision Profile authentication failed": "provider_authentication_failed",
+            "Vision service rate limit reached": "provider_rate_limited",
+            "Vision request timed out": "provider_timeout",
+            "Vision service unavailable": "provider_unavailable",
+            "Vision service temporarily unavailable": "provider_unavailable",
+            "Vision Profile configuration is invalid": "provider_configuration_error",
+            "Vision request rejected": "provider_rejected_request",
+            "Vision service returned invalid response": "invalid_provider_response",
+        }.get(str(exc), "request_failed")
+    return "request_failed"
 
 
 def build_messages(

@@ -17,7 +17,7 @@ from mcp.server.transport_security import TransportSecuritySettings
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.api import auth_routes, mcp_credential, system_prompts, vision_profiles
+from app.api import auth_routes, dashboard, mcp_credential, system_prompts, vision_profiles
 from app.api import settings as settings_routes
 from app.auth.mcp_auth import McpAuthMiddleware, _CachedSessionFactory
 from app.auth.oauth import router as google_oauth_router
@@ -69,6 +69,7 @@ def create_app(mcp_session_factory_fn=None) -> FastAPI:
     )
 
     app.include_router(auth_routes.router)
+    app.include_router(dashboard.router)
     app.include_router(google_oauth_router)
     app.include_router(system_prompts.router)
     app.include_router(vision_profiles.router)

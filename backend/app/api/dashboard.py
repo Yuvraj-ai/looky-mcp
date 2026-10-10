@@ -2,8 +2,9 @@
 
 import uuid
 from datetime import UTC, date, datetime, time, timedelta
+from math import ceil
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -11,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.auth.session import get_current_user_id
 from app.db import models
 from app.db.session import get_db
+from app.services.dashboard_rate_limiter import get_dashboard_rate_limiter
 
 router = APIRouter(prefix="/api/dashboard", tags=["dashboard"])
 
@@ -63,6 +65,15 @@ async def dashboard(
     user_id: uuid.UUID = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db),
 ) -> DashboardResponse:
+    retry_after = await get_dashboard_rate_limiter().try_acquire(user_id)
+    if retry_after is not None:
+        seconds = max(1, ceil(retry_after))
+        raise HTTPException(
+            status_code=429,
+            detail=f"Dashboard refresh limit reached. Try again in {seconds} seconds.",
+            headers={"Retry-After": str(seconds)},
+        )
+
     active = (
         await db.execute(
             select(models.VisionProfile.name, models.VisionProfile.model).where(
